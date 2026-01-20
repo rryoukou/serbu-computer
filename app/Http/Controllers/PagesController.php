@@ -3,13 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class PagesController extends Controller
 {
-    // Halaman About Us
+    // HOME (GUEST & USER)
+    public function home()
+    {
+        // ambil beberapa produk untuk halaman home
+        $products = Product::latest()->take(6)->get();
+
+        return view('pages.home', compact('products'));
+    }
+
+    // ABOUT US
     public function about()
     {
-        // Pastikan ada resources/views/pages/about.blade.php
         return view('pages.about');
     }
 }

@@ -2,34 +2,24 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| AUTH
-|--------------------------------------------------------------------------
-*/
+// ================= AUTH =================
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
-/*
-|--------------------------------------------------------------------------
-| USER
-|--------------------------------------------------------------------------
-*/
+// ================= PUBLIC =================
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ProductUserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopController;
+
+// ================= USER =================
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ShopController;
-use App\Http\Controllers\PagesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\RiwayatController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductUserController;
 
-/*
-|--------------------------------------------------------------------------
-| ADMIN
-|--------------------------------------------------------------------------
-*/
+// ================= ADMIN =================
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController;
@@ -37,10 +27,10 @@ use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
-| ROOT → GUEST LANGSUNG LIHAT PRODUK
+| HOME (GUEST & LOGIN)
 |--------------------------------------------------------------------------
 */
-Route::get('/', [ProductUserController::class, 'index'])->name('home');
+Route::get('/', [PagesController::class, 'home'])->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -48,17 +38,10 @@ Route::get('/', [ProductUserController::class, 'index'])->name('home');
 |--------------------------------------------------------------------------
 */
 Route::middleware('guest')->group(function () {
-
-    Route::get('/login', function () {
-        return view('auth.login');
-    })->name('login');
-
+    Route::get('/login', fn () => view('auth.login'))->name('login');
     Route::post('/login', [LoginController::class, 'login']);
 
-    Route::get('/register', function () {
-        return view('auth.register');
-    })->name('register');
-
+    Route::get('/register', fn () => view('auth.register'))->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
 });
 
@@ -73,7 +56,15 @@ Route::post('/logout', [LoginController::class, 'logout'])
 
 /*
 |--------------------------------------------------------------------------
-| GUEST & USER → LIHAT PRODUK
+| PUBLIC PAGES (GUEST & USER)
+|--------------------------------------------------------------------------
+*/
+Route::get('/about', [PagesController::class, 'about'])
+    ->name('pages.about');
+
+/*
+|--------------------------------------------------------------------------
+| PRODUCT (GUEST & USER)
 |--------------------------------------------------------------------------
 */
 Route::get('/products', [ProductUserController::class, 'index'])
@@ -84,7 +75,7 @@ Route::get('/products/{product}', [ProductUserController::class, 'show'])
 
 /*
 |--------------------------------------------------------------------------
-| SHOP SEARCH (WAJIB ADA, BIAR TIDAK ERROR)
+| SHOP SEARCH
 |--------------------------------------------------------------------------
 */
 Route::get('/shop/search', [ShopController::class, 'searchPage'])
@@ -95,7 +86,7 @@ Route::get('/shop/search/results', [ShopController::class, 'search'])
 
 /*
 |--------------------------------------------------------------------------
-| SEARCH GLOBAL (NAVBAR)
+| GLOBAL SEARCH
 |--------------------------------------------------------------------------
 */
 Route::get('/search', [ProductController::class, 'searchPage'])
@@ -111,52 +102,33 @@ Route::get('/search/results', [ProductController::class, 'search'])
 */
 Route::middleware(['auth', 'pengguna'])->group(function () {
 
-    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
 
     Route::post('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
 
-    // About
-    Route::get('/about', [PagesController::class, 'about'])
-        ->name('pages.about');
-
     // Cart
-    Route::get('/cart', [CartController::class, 'index'])
-        ->name('cart.index');
-
-    Route::post('/cart/add/{product}', [CartController::class, 'add'])
-        ->name('cart.add');
-
-    Route::post('/cart/update/{product}', [CartController::class, 'update'])
-        ->name('cart.update');
-
-    Route::delete('/cart/remove/{product}', [CartController::class, 'remove'])
-        ->name('cart.remove');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/update/{product}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{product}', [CartController::class, 'remove'])->name('cart.remove');
 
     // Checkout
-    Route::get('/checkout/{product}', [CheckoutController::class, 'show'])
-        ->name('checkout.show');
-
-    Route::post('/checkout/{product}', [CheckoutController::class, 'store'])
-        ->name('checkout.store');
+    Route::get('/checkout/{product}', [CheckoutController::class, 'show'])->name('checkout.show');
+    Route::post('/checkout/{product}', [CheckoutController::class, 'store'])->name('checkout.store');
 
     // Riwayat
-    Route::get('/riwayat', [RiwayatController::class, 'index'])
-        ->name('riwayat.index');
-
-    Route::delete('/riwayat/{order}', [RiwayatController::class, 'destroy'])
-        ->name('riwayat.destroy');
+    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+    Route::delete('/riwayat/{order}', [RiwayatController::class, 'destroy'])->name('riwayat.destroy');
 });
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN ONLY
+| ADMIN
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'admin'])
@@ -180,4 +152,7 @@ Route::middleware(['auth', 'admin'])
 
         Route::delete('/users/{user}', [UserController::class, 'destroy'])
             ->name('users.destroy');
+
+            Route::get('/', [PagesController::class, 'home'])->name('home');
+
 });

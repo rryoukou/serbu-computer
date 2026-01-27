@@ -43,13 +43,16 @@
     </div>
 </section>
 
-
 <!-- ABOUT SECTION -->
 <section class="bg-gradient-to-b from-[#090069] to-[#0c0c3d] px-6 md:px-16 py-20">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-        <!-- Image -->
+        <!-- Image - DIPERBESAR -->
         <div class="flex justify-center">
-            <div class="w-[260px] h-[200px] bg-white rounded-xl"></div>
+            <img 
+                src="{{ asset('images/laptop-about.png') }}" 
+                alt="About Serbu Comp"
+                class="w-full max-w-md h-auto rounded-xl shadow-lg"
+            >
         </div>
 
         <!-- Text -->
@@ -58,7 +61,10 @@
                 A Little About Us
             </h2>
             <p class="text-gray-300 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim
+                Serbu Comp adalah mitra terpercaya Anda dalam menyediakan laptop dan aksesoris berkualitas dengan harga terjangkau. 
+                Kami berkomitmen untuk membantu pelajar, profesional, dan kreator digital menemukan perangkat yang tepat untuk kebutuhan 
+                mereka. Dengan layanan pemesanan yang mudah dan dukungan purna jual yang responsif, kami hadir untuk memastikan pengalaman 
+                berbelanja teknologi Anda menjadi lebih sederhana dan menyenangkan.
             </p>
         </div>
     </div>

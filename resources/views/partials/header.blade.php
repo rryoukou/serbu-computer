@@ -6,10 +6,10 @@
 
         <!-- MENU -->
         <nav class="hidden md:flex gap-10 text-sm font-semibold text-[#F0B22B]">
-            <a href="#">Home</a>
-            <a href="#">Product</a>
-            <a href="#">About Us</a>
-            <a href="#">History</a>
+            <a href="#">aksata</a>
+            <a href="#">aksata</a>
+            <a href="#">aksata</a>
+            <a href="#">aksata</a>
         </nav>
 
         <!-- ICONS -->

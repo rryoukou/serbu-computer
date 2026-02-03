@@ -1,38 +1,26 @@
-@vite('resources/css/app.css')
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>User Panel</title>
-    <style>
-        body { margin:0; font-family: Arial; }
-        .navbar {
-            background: #2563eb;
-            padding: 15px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-        }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            margin-right: 15px;
-        }
-        .content {
-            padding: 20px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Panel - Serbu Comp</title>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    @vite('resources/css/app.css')
 </head>
-<body>
 
-@include('partials.navbar-user')
+<body class="font-[Poppins] bg-[#090069]">
 
-<div class="content">
-    @yield('content')
-</div>
+    {{-- HEADER USER --}}
+    @include('partials.header-user')
 
-@include('partials.footer')
+    <main class="min-h-screen">
+        @yield('content')
+    </main>
+
+    @include('partials.footer')
 
 </body>
 </html>

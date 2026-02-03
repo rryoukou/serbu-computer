@@ -1,45 +1,96 @@
-<header class="bg-[#090069] px-6 md:px-16 py-4">
+<header class="bg-[#090069] px-6 md:px-16 py-4 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
 
         <!-- LOGO -->
-        <img src="{{ asset('images/logo.png') }}" alt="Serbu Comp" class="h-10">
+        <a href="{{ route('home') }}">
+            <img src="{{ asset('images/logo.png') }}" class="h-10" alt="Serbu Comp">
+        </a>
 
         <!-- MENU -->
         <nav class="hidden md:flex gap-10 text-sm font-semibold text-[#F0B22B]">
-            <a href="#">aksata</a>
-            <a href="#">aksata</a>
-            <a href="#">aksata</a>
-            <a href="#">aksata</a>
+            <a href="{{ route('home') }}">Home</a>
+            <a href="{{ route('shop.index') }}">Product</a>
+            <a href="{{ route('pages.about') }}">About Us</a>
+
+            @auth
+                <a href="{{ route('riwayat.index') }}">Riwayat</a>
+            @endauth
         </nav>
 
-        <!-- ICONS -->
-        <div class="flex items-center gap-5">
-            <!-- Search -->
-           <button class="text-[#F0B22B] hover:opacity-80">
-<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
-     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <circle cx="11" cy="11" r="8" />
-  <line x1="21" y1="21" x2="16.65" y2="16.65" />
-</svg>
-</button>
+        <!-- RIGHT AREA -->
+        <div class="flex items-center gap-4">
 
-            <button class="text-[#F0B22B] hover:opacity-80">
-<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor"
-     viewBox="0 0 24 24">
-  <path d="M12 21s-6-4.35-9-8.5C-1 6 5 1 12 7c7-6 13-1 9 5.5-3 4.15-9 8.5-9 8.5z"/>
-</svg>
-</button>
+            {{-- SEARCH (SEMUA BOLEH) --}}
+            <a href="{{ route('shop.search.page') }}" class="text-[#F0B22B]">
+                🔍
+            </a>
 
+            {{-- ====== GUEST ====== --}}
+            @guest
+                <a href="{{ route('login') }}"
+                   class="bg-[#F0B22B] text-black font-semibold
+                          px-6 py-2 rounded-full">
+                    Login
+                </a>
 
-            <!-- User -->
-            <button class="text-[#F0B22B] hover:opacity-80">
-<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none"
-     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <circle cx="12" cy="7" r="4" />
-  <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
-</svg>
-</button>
+                <a href="{{ route('register') }}"
+                   class="border border-white text-white
+                          px-6 py-2 rounded-full">
+                    Register
+                </a>
+            @endguest
+
+            {{-- ====== USER LOGIN ====== --}}
+            @auth
+                {{-- CART --}}
+                <a href="{{ route('cart.index') }}" class="relative text-[#F0B22B]">
+                    🛒
+                    <span class="absolute -top-2 -right-2 bg-red-500 text-xs px-2 rounded-full">
+                        {{ session('cart_count', 0) }}
+                    </span>
+                </a>
+
+                {{-- PROFILE --}}
+                <div class="relative">
+                    <button id="userBtn" class="text-[#F0B22B]">
+                        👤
+                    </button>
+
+                    <div id="userMenu"
+                         class="hidden absolute right-0 mt-2 w-40
+                                bg-white rounded-lg shadow-lg text-black">
+                        <a href="{{ route('profile.edit') }}"
+                           class="block px-4 py-2 hover:bg-gray-100">
+                            Profile
+                        </a>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="w-full text-left px-4 py-2 hover:bg-gray-100">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @endauth
 
         </div>
     </div>
 </header>
+
+<script>
+    const btn = document.getElementById('userBtn');
+    const menu = document.getElementById('userMenu');
+
+    if (btn) {
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    }
+</script>

@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serbu Comp</title>
 
-    <!-- Google Font: Poppins -->
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     @vite('resources/css/app.css')
 </head>
+
 <body class="font-[Poppins] bg-[#090069]">
 
-    @include('partials.header')
+    {{-- HEADER GUEST --}}
+    @include('partials.header-guest')
 
     <main>
         @yield('content')

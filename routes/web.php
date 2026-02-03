@@ -18,6 +18,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\WishlistController;
 
 // ================= ADMIN =================
 use App\Http\Controllers\Admin\AdminDashboardController;
@@ -124,6 +125,13 @@ Route::middleware(['auth', 'pengguna'])->group(function () {
     // Riwayat
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
     Route::delete('/riwayat/{order}', [RiwayatController::class, 'destroy'])->name('riwayat.destroy');
+
+    Route::post('/wishlist/{product}', [WishlistController::class, 'toggle'])
+    ->name('wishlist.toggle');
+
+    Route::get('/favorite', [WishlistController::class, 'index'])
+    ->name('wishlist.index');
+
 });
 
 /*

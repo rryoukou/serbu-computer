@@ -10,7 +10,7 @@ class ShopController extends Controller
     // Halaman utama shop
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(12); // ← Gunakan paginate di sini juga
         return view('shop.index', compact('products'));
     }
 
@@ -18,17 +18,19 @@ class ShopController extends Controller
     public function searchPage()
     {
         return view('products.search', [
-            'products' => collect(),
+            'products' => Product::paginate(0), // atau Product::query()->paginate(12)
             'keyword' => null,
         ]);
     }
 
-    // Proses pencarian
+    // Proses pencarian - INI YANG HARUS DIPERBAIKI!
     public function search(Request $request)
     {
         $query = $request->q;
 
-        $products = Product::where('name', 'like', "%{$query}%")->get();
+        // GANTI .get() MENJADI .paginate()
+        $products = Product::where('name', 'like', "%{$query}%")
+            ->paginate(12); // ← INI YANG BENAR, BUKAN .get()
 
         return view('products.search', [
             'products' => $products,

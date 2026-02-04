@@ -1,55 +1,107 @@
 @extends('layouts.admin')
 
+@section('page_title', 'Product Management')
+
 @section('content')
-<h1 class="text-2xl font-bold mb-4">Daftar Produk</h1>
-
-@if(session('success'))
-    <div class="bg-green-200 text-green-800 p-2 rounded mb-4">
-        {{ session('success') }}
+<div class="flex flex-col gap-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-white text-2xl font-bold">Daftar Produk</h2>
+            <p class="text-gray-400 text-sm mt-1">Total {{ $products->total() }} produk tersedia</p>
+        </div>
+        
+        <a href="{{ route('admin.products.create') }}" 
+           class="flex items-center gap-2 bg-[#F0B22B] text-[#090069] font-bold px-6 py-3 rounded-2xl hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-[#F0B22B]/20">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Tambah Produk
+        </a>
     </div>
-@endif
 
-<a href="{{ route('admin.products.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">Tambah Produk</a>
+    @if(session('success'))
+        <div class="bg-green-500/10 border border-green-500/50 text-green-400 px-6 py-4 rounded-2xl flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span class="font-medium">{{ session('success') }}</span>
+        </div>
+    @endif
 
-<table class="min-w-full bg-white border rounded">
-    <thead>
-        <tr class="bg-gray-100">
-            <th class="px-4 py-2 border">Foto</th>
-            <th class="px-4 py-2 border">Nama</th>
-            <th class="px-4 py-2 border">Kategori</th>
-            <th class="px-4 py-2 border">Harga</th>
-            <th class="px-4 py-2 border">Stok</th>
-            <th class="px-4 py-2 border">Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($products as $product)
-        <tr class="text-center">
-            <td class="border px-2 py-2">
-                @if($product->photo)
-                    <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-16 h-16 object-cover mx-auto">
-                @else
-                    -
-                @endif
-            </td>
-            <td class="border px-4 py-2">{{ $product->name }}</td>
-            <td class="border px-4 py-2">{{ $product->category }}</td>
-            <td class="border px-4 py-2">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
-            <td class="border px-4 py-2">{{ $product->stock }}</td>
-            <td class="border px-4 py-2 space-x-2">
-                <a href="{{ route('admin.products.edit', $product->id) }}" class="bg-yellow-400 text-white px-2 py-1 rounded">Edit</a>
-                <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus produk ini?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded">Hapus</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+    <div class="bg-white/5 backdrop-blur-md rounded-[32px] border border-white/10 overflow-hidden shadow-2xl">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-white/5">
+                    <th class="px-6 py-5 text-[#F0B22B] font-bold uppercase text-xs tracking-wider">Foto</th>
+                    <th class="px-6 py-5 text-[#F0B22B] font-bold uppercase text-xs tracking-wider">Info Produk</th>
+                    <th class="px-6 py-5 text-[#F0B22B] font-bold uppercase text-xs tracking-wider">Kategori</th>
+                    <th class="px-6 py-5 text-[#F0B22B] font-bold uppercase text-xs tracking-wider text-center">Stok</th>
+                    <th class="px-6 py-5 text-[#F0B22B] font-bold uppercase text-xs tracking-wider text-right">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                @foreach($products as $product)
+                <tr class="hover:bg-white/[0.02] transition-colors group">
+                    <td class="px-6 py-4">
+                        <div class="w-16 h-16 rounded-2xl overflow-hidden border-2 border-white/10 group-hover:border-[#F0B22B]/50 transition-all shadow-lg">
+                            @if($product->photo)
+                                <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            @else
+                                <div class="w-full h-full bg-[#161B33] flex items-center justify-center text-gray-600 text-[10px]">No Image</div>
+                            @endif
+                        </div>
+                    </td>
 
-<div class="mt-4">
-    {{ $products->links() }} <!-- pagination -->
+                    <td class="px-6 py-4">
+                        <div class="font-bold text-white text-base group-hover:text-[#F0B22B] transition-colors">{{ $product->name }}</div>
+                        <div class="text-[#F0B22B] font-semibold text-sm mt-0.5">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-gray-300 text-xs font-medium border border-white/10">
+                            {{ $product->category }}
+                        </span>
+                    </td>
+
+                    <td class="px-6 py-4 text-center">
+                        <span class="text-white font-bold {{ $product->stock <= 5 ? 'text-red-400' : '' }}">
+                            {{ $product->stock }}
+                        </span>
+                    </td>
+
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex justify-end gap-2">
+                            <a href="{{ route('admin.products.edit', $product->id) }}" 
+                               class="p-2.5 bg-yellow-500/10 text-yellow-500 rounded-xl hover:bg-yellow-500 hover:text-white transition-all shadow-lg shadow-yellow-500/5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </a>
+                            
+                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus produk ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" 
+                                        class="p-2.5 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6 flex justify-center custom-pagination">
+        {{ $products->links() }}
+    </div>
 </div>
+
+<style>
+    /* Styling khusus pagination Laravel biar gak berantakan */
+    .custom-pagination nav svg { width: 24px; height: 24px; }
+    .custom-pagination nav div div span, .custom-pagination nav div div a { 
+        border-radius: 12px !important; 
+        background: rgba(255,255,255,0.05) !important;
+        color: white !important;
+        border-color: rgba(255,255,255,0.1) !important;
+        margin: 0 4px;
+    }
+</style>
 @endsection

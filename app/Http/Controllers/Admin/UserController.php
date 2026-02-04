@@ -10,8 +10,7 @@ class UserController extends Controller
     public function index()
     {
         // ambil SEMUA pengguna (bukan admin)
-        $users = User::where('role', 'pengguna')->latest()->get();
-
+$users = User::where('role', 'pengguna')->orderBy('created_at', 'desc')->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 

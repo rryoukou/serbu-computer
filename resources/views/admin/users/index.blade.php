@@ -4,16 +4,65 @@
 
 @section('content')
 <div class="w-full px-4 md:px-8 pb-12">
-    <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+
+    <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+
+        {{-- LEFT : TITLE --}}
         <div>
-            <h2 class="text-white text-2xl md:text-3xl font-black tracking-tight">Manajemen Pengguna</h2>
-            <p class="text-gray-400 text-xs md:text-base uppercase tracking-[0.2em] mt-1">Data Lengkap Member Serbu Comp</p>
+            <h2 class="text-white text-2xl md:text-3xl font-black tracking-tight">
+                Manajemen Pengguna
+            </h2>
+            <p class="text-gray-400 text-xs md:text-sm uppercase tracking-[0.25em] mt-1">
+                Data Lengkap Member Serbu Comp
+            </p>
         </div>
-        <div class="text-left md:text-right">
-            <p class="text-[#F0B22B] text-[10px] md:text-xs font-black uppercase tracking-widest">Total Members</p>
-            <p class="text-white text-xl md:text-2xl font-black">{{ $users->total() }}</p>
+
+        {{-- MIDDLE : SEARCH --}}
+        <form method="GET" action="{{ route('admin.users.index') }}"
+              class="w-full md:w-[360px]">
+            <div class="relative">
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="Cari nama / username / email..."
+                    class="w-full bg-[#0B0B5A] text-white text-sm px-5 py-3
+                           rounded-2xl outline-none
+                           border border-white/10
+                           focus:border-[#F0B22B]/60
+                           placeholder-gray-400"
+                />
+
+                {{-- icon --}}
+                <svg class="absolute right-4 top-1/2 -translate-y-1/2
+                            w-5 h-5 text-gray-400"
+                     fill="none" stroke="currentColor" stroke-width="2"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M21 21l-4.35-4.35M16 10.5A5.5 5.5 0 1 1 5 10.5a5.5 5.5 0 0 1 11 0Z"/>
+                </svg>
+            </div>
+        </form>
+
+        {{-- RIGHT : TOTAL --}}
+        <div class="flex items-center gap-3 bg-[#F0B22B]/10 px-5 py-3 rounded-2xl
+                    border border-[#F0B22B]/20">
+
+            <span class="w-2 h-2 rounded-full bg-[#F0B22B] animate-pulse"></span>
+
+            <div class="text-right">
+                <p class="text-[#F0B22B] text-[10px] font-black uppercase tracking-widest">
+                    Total Members
+                </p>
+                <p class="text-white text-xl font-black">
+                    {{ $users->total() }}
+                </p>
+            </div>
         </div>
+
     </div>
+</div>
+
 
     {{-- Container Tabel --}}
     <div class="bg-white/5 backdrop-blur-md rounded-[24px] md:rounded-[32px] border-2 border-white/10 overflow-hidden shadow-2xl">

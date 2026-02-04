@@ -9,9 +9,20 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::latest()->paginate(10);
+        $search = $request->search;
+
+        $products = Product::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('category', 'like', "%{$search}%")
+                      ->orWhere('specs', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString(); // 🔥 biar search tetap ada saat pagination
+
         return view('admin.products.index', compact('products'));
     }
 
@@ -23,14 +34,14 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|in:Laptop,Aksesoris',
-            'specs' => 'nullable|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'details' => 'nullable|string',
-            'purchase_guide' => 'nullable|string',
-            'photo' => 'nullable|image|max:2048',
+            'name'            => 'required|string|max:255',
+            'category'        => 'required|in:Laptop,Aksesoris',
+            'specs'           => 'nullable|string',
+            'price'           => 'required|numeric',
+            'stock'           => 'required|integer',
+            'details'         => 'nullable|string',
+            'purchase_guide'  => 'nullable|string',
+            'photo'           => 'nullable|image|max:2048',
         ]);
 
         if ($request->hasFile('photo')) {
@@ -39,7 +50,9 @@ class ProductController extends Controller
 
         Product::create($data);
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan!');
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Produk berhasil ditambahkan!');
     }
 
     public function edit(Product $product)
@@ -50,27 +63,29 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|in:Laptop,Aksesoris',
-            'specs' => 'nullable|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'details' => 'nullable|string',
-            'purchase_guide' => 'nullable|string',
-            'photo' => 'nullable|image|max:2048',
+            'name'            => 'required|string|max:255',
+            'category'        => 'required|in:Laptop,Aksesoris',
+            'specs'           => 'nullable|string',
+            'price'           => 'required|numeric',
+            'stock'           => 'required|integer',
+            'details'         => 'nullable|string',
+            'purchase_guide'  => 'nullable|string',
+            'photo'           => 'nullable|image|max:2048',
         ]);
 
         if ($request->hasFile('photo')) {
-            // hapus foto lama
             if ($product->photo) {
                 Storage::disk('public')->delete($product->photo);
             }
+
             $data['photo'] = $request->file('photo')->store('products', 'public');
         }
 
         $product->update($data);
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui!');
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Produk berhasil diperbarui!');
     }
 
     public function destroy(Product $product)
@@ -80,6 +95,9 @@ class ProductController extends Controller
         }
 
         $product->delete();
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dihapus!');
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Produk berhasil dihapus!');
     }
 }

@@ -118,6 +118,15 @@
                                     class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
                             </div>
                         </div>
+{{-- Alamat --}}
+<div class="md:col-span-2">
+    <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">
+        Alamat
+    </label>
+    <textarea name="alamat" rows="3"
+        class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner resize-none"
+        placeholder="Masukkan alamat lengkap">{{ old('alamat', $user->alamat) }}</textarea>
+</div>
 
                         {{-- Password Section --}}
                         <div class="pt-4 border-t border-white/10 mt-6">

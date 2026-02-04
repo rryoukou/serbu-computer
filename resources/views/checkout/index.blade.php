@@ -84,9 +84,9 @@
                             </div>
 
                             <div id="info_bca_div" class="{{ old('metode_pembayaran') === 'bca' ? '' : 'hidden' }} bg-blue-900/20 border border-blue-800 rounded-lg p-3">
-                                <p class="text-blue-300 text-xs font-medium mb-1">Info Rekening BCA:</p>
-                                <p class="text-blue-200 text-xs mb-1">No. Rekening: 1234-5678-9012</p>
-                                <p class="text-blue-200 text-xs">A/N: Toko Komputer XYZ</p>
+                                <p class="text-blue-300 text-xs font-medium mb-1">Info Rekening BCA: Moch Agung Wibowo</p>
+                                <p class="text-blue-200 text-xs mb-1">No. Rekening: 3660271634</p>
+                                <p class="text-blue-200 text-xs">Toko Serbu Computer</p>
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                             <label class="block text-gray-300 text-xs mb-2">Pesan untuk Penjual (Opsional)</label>
                             <textarea name="pesan" rows="2"
                                 class="w-full bg-[#090069] border border-gray-700 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F0B22B] focus:border-transparent"
-                                placeholder="Contoh: Tolong dikirim secepatnya, warna hitam">{{ old('pesan') }}</textarea>
+                                placeholder="Contoh: Tolong jaga barangnya, warna hitam">{{ old('pesan') }}</textarea>
                         </div>
                     </div>
                 </div>

@@ -8,14 +8,32 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
-    // Tampilkan semua transaksi di admin
-    public function index()
+    /**
+     * Tampilkan semua transaksi (dengan search + pagination)
+     */
+    public function index(Request $request)
     {
-        $orders = Order::with('items', 'user')->latest()->get();
+        $search = $request->search;
+
+        $orders = Order::with(['items', 'user'])
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('username', 'like', "%{$search}%")
+                      ->orWhere('nama', 'like', "%{$search}%");
+                })
+                ->orWhere('status', 'like', "%{$search}%")
+                ->orWhere('id', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString(); // biar pagination + search nyambung
+
         return view('admin.orders.index', compact('orders'));
     }
 
-    // Update status selesai / belum selesai
+    /**
+     * Update status transaksi
+     */
     public function updateStatus(Request $request, Order $order)
     {
         $request->validate([

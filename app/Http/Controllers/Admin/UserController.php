@@ -4,19 +4,35 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // ambil SEMUA pengguna (bukan admin)
-$users = User::where('role', 'pengguna')->orderBy('created_at', 'desc')->paginate(10);
+        $query = User::where('role', 'pengguna');
+
+        // 🔍 SEARCH
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")     // ✅ FIX DI SINI
+                  ->orWhere('username', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        $users = $query
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
         return view('admin.users.index', compact('users'));
     }
 
     public function destroy(User $user)
     {
-        // proteksi admin
         if ($user->role === 'admin') {
             return back()->with('error', 'Admin tidak bisa dihapus');
         }

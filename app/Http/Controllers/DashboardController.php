@@ -24,7 +24,7 @@ class DashboardController extends Controller
             ],
             [
                 'question' => 'Apakah bisa COD atau ambil langsung di toko?',
-                'answer' => 'Bisa. Kami menyediakan opsi COD dan pengambilan langsung di toko.'
+                'answer' => 'Bisa. Kami menyediakan opsi COD dengan perlu menghubungi nomor kontak kami terlebih dahulu dan pengambilan langsung di toko.'
             ],
         ];
 

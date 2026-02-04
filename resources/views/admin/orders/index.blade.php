@@ -3,17 +3,38 @@
 @section('page_title', 'Transaction Management')
 
 @section('content')
-<div class="max-w-6xl mx-auto px-4 pb-12">
-    <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-            <h2 class="text-white text-2xl font-bold tracking-tight">Riwayat Pembelian</h2>
-            <p class="text-gray-400 text-sm mt-1 uppercase tracking-widest">Manajemen Transaksi Serbu Comp</p>
-        </div>
-        <div class="flex items-center gap-2 bg-[#F0B22B]/10 px-4 py-2 rounded-2xl border border-[#F0B22B]/20">
-            <span class="w-2 h-2 rounded-full bg-[#F0B22B] animate-pulse"></span>
-            <span class="text-[#F0B22B] text-xs font-bold uppercase">{{ $orders->count() }} Total Pesanan</span>
-        </div>
+<div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+        <h2 class="text-white text-2xl font-bold tracking-tight">Riwayat Pembelian</h2>
+        <p class="text-gray-400 text-sm mt-1 uppercase tracking-widest">
+            Manajemen Transaksi Serbu Comp
+        </p>
     </div>
+
+    {{-- RIGHT SIDE --}}
+    <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+
+        {{-- SEARCH --}}
+        <form method="GET" class="w-full md:w-72">
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Cari nama user / status / ID order..."
+                class="w-full bg-[#090069] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-[#F0B22B] focus:outline-none"
+            >
+        </form>
+
+        {{-- TOTAL --}}
+        <div class="flex items-center justify-center gap-2 bg-[#F0B22B]/10 px-4 py-2 rounded-2xl border border-[#F0B22B]/20">
+            <span class="w-2 h-2 rounded-full bg-[#F0B22B] animate-pulse"></span>
+            <span class="text-[#F0B22B] text-xs font-bold uppercase">
+                {{ $orders->count() }} Total Pesanan
+            </span>
+        </div>
+
+    </div>
+</div>
 
     @if($orders->isEmpty())
         <div class="bg-white/5 border border-white/10 rounded-[32px] p-20 text-center">

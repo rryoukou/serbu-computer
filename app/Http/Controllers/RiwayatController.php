@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +17,8 @@ class RiwayatController extends Controller
     {
         $user = Auth::user();
 
-        $orders = Order::with(['items.product'])
-            ->where('user_id', $user->id)
+        // Ambil semua order milik user login
+        $orders = Order::where('user_id', $user->id)
             ->latest()
             ->get();
 
@@ -25,40 +26,38 @@ class RiwayatController extends Controller
     }
 
     // =========================
-    // HAPUS PESANAN (JIKA BELUM SELESAI)
+    // BATALKAN PESANAN
     // =========================
-    public function destroy(Order $order)
+    public function cancel(Order $order)
     {
         // Pastikan pesanan milik user login
         if ($order->user_id !== Auth::id()) {
             abort(403, 'Akses tidak diizinkan');
         }
 
-        // Jika pesanan sudah selesai, tidak boleh dihapus
-        if ($order->status === 'selesai') {
+        // Jika pesanan sudah selesai atau sudah dibatalkan, tidak bisa dibatalkan lagi
+        if (in_array($order->status, ['selesai', 'dibatalkan'])) {
             return back()->withErrors([
-                'hapus' => 'Pesanan yang sudah selesai tidak dapat dihapus.'
+                'cancel' => 'Pesanan tidak dapat dibatalkan.'
             ]);
         }
 
         DB::transaction(function () use ($order) {
 
             // Kembalikan stok produk
-            foreach ($order->items as $item) {
-                if ($item->product) {
-                    $item->product->increment('stock', $item->qty);
-                }
+            $product = Product::find($order->product_id);
+            if ($product) {
+                $product->increment('stock', $order->qty);
             }
 
-            // Hapus order items
-            $order->items()->delete();
-
-            // Hapus order
-            $order->delete();
+            // Update status jadi dibatalkan
+            $order->update([
+                'status' => 'dibatalkan'
+            ]);
         });
 
         return redirect()
             ->route('riwayat.index')
-            ->with('success', 'Pesanan berhasil dihapus dan stok dikembalikan.');
+            ->with('success', 'Pesanan berhasil dibatalkan.');
     }
 }

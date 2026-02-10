@@ -12,28 +12,37 @@ class LoginController extends Controller
     {
         // 1️⃣ Validasi input
         $credentials = $request->validate([
-            'username' => ['required'],
-            'password' => ['required'],
+            'username' => 'required',
+            'password' => 'required',
         ]);
 
-        // 2️⃣ Proses login
-        if (!Auth::attempt($credentials)) {
+        // 2️⃣ Ambil user dulu berdasarkan username
+        $user = \App\Models\User::where('username', $request->username)->first();
+
+        // 3️⃣ Cek apakah user dibanned
+        if ($user && $user->is_banned) {
             return back()->withErrors([
-                'username' => 'Username atau password salah',
+                'username' => 'Akun kamu sudah dibanned, silahkan hubungi admin.'
             ])->withInput();
         }
 
-        // 3️⃣ Regenerasi session
+        // 4️⃣ Proses login
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors([
+                'username' => 'Username atau password salah'
+            ])->withInput();
+        }
+
+        // 5️⃣ Regenerasi session
         $request->session()->regenerate();
 
-        // 4️⃣ Redirect SESUAI ROLE (WAJIB)
         $user = auth()->user();
 
+        // 6️⃣ Redirect sesuai role
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
 
-        // default: pengguna
         return redirect()->route('dashboard');
     }
 

@@ -5,19 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderItem extends Model
+class Wishlist extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'order_id','product_id','nama_produk','spesifikasi','qty','harga'
+        'user_id',
+        'product_id',
     ];
 
-    public function order()
+    // Relasi ke user
+    public function user()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(User::class);
     }
 
+    // Relasi ke product
     public function product()
     {
         return $this->belongsTo(Product::class);

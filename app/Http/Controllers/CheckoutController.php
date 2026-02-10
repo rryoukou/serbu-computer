@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -57,14 +56,13 @@ class CheckoutController extends Controller
         // =========================
         // CEK BATAS MAKS 2 (HANYA ORDER BELUM SELESAI)
         // =========================
-        $totalSebelumnya = OrderItem::whereHas('order', function ($q) use ($user) {
-            $q->where('user_id', $user->id)
-              ->whereIn('status', [
-                  'menunggu_pembayaran_tunai',
-                  'menunggu_verifikasi'
-              ]);
-        })->where('product_id', $product->id)
-          ->sum('qty');
+        $totalSebelumnya = Order::where('user_id', $user->id)
+            ->where('product_id', $product->id)
+            ->whereIn('status', [
+                'menunggu_pembayaran_tunai',
+                'menunggu_verifikasi'
+            ])
+            ->sum('qty');
 
         if ($totalSebelumnya + $qty > 2) {
             return back()
@@ -110,34 +108,26 @@ class CheckoutController extends Controller
             $product->decrement('stock', $qty);
 
             // Simpan order
-            $order = Order::create([
+            $orderData = [
                 'user_id' => $user->id,
-                'nama_lengkap' => $request->nama_lengkap,
-                'no_hp' => $request->no_hp,
-                'pesan' => $request->pesan,
-                'metode_pembayaran' => $request->metode_pembayaran,
-                'total_harga' => $totalHarga,
-                'status' => $status,
-                'batas_waktu' => $batasWaktu,
-            ]);
-
-            // Upload bukti BCA (PASTI ADA KARENA VALIDASI)
-            if ($request->metode_pembayaran === 'bca') {
-                $path = $request->file('bukti_bayar')->store('bukti', 'public');
-                $order->update([
-                    'bukti_bayar' => $path
-                ]);
-            }
-
-            // Simpan item order
-            OrderItem::create([
-                'order_id' => $order->id,
                 'product_id' => $product->id,
                 'nama_produk' => $product->name,
                 'spesifikasi' => $product->specs,
                 'qty' => $qty,
                 'harga' => $product->price,
-            ]);
+                'metode_pembayaran' => $request->metode_pembayaran,
+                'total_harga' => $totalHarga,
+                'status' => $status,
+                'batas_waktu' => $batasWaktu,
+            ];
+
+            // Upload bukti BCA (PASTI ADA KARENA VALIDASI)
+            if ($request->metode_pembayaran === 'bca') {
+                $path = $request->file('bukti_bayar')->store('bukti', 'public');
+                $orderData['bukti_bayar'] = $path;
+            }
+
+            Order::create($orderData);
         });
 
         return redirect()

@@ -15,7 +15,7 @@ class OrderController extends Controller
     {
         $search = $request->search;
 
-        $orders = Order::with(['items', 'user'])
+        $orders = Order::with('user')
             ->when($search, function ($query) use ($search) {
                 $query->whereHas('user', function ($q) use ($search) {
                     $q->where('username', 'like', "%{$search}%")
@@ -26,7 +26,7 @@ class OrderController extends Controller
             })
             ->latest()
             ->paginate(10)
-            ->withQueryString(); // biar pagination + search nyambung
+            ->withQueryString();
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -36,8 +36,16 @@ class OrderController extends Controller
      */
     public function updateStatus(Request $request, Order $order)
     {
+        // ❌ Jika status sudah dibatalkan, admin tidak boleh mengubah
+        if ($order->status === 'dibatalkan') {
+            return back()->withErrors([
+                'status' => 'Status sudah dibatalkan oleh user, tidak dapat diubah oleh admin.'
+            ]);
+        }
+
+        // ✅ Validasi enum terbaru (tidak termasuk 'dibatalkan')
         $request->validate([
-            'status' => 'required|in:selesai,belum_selesai'
+            'status' => 'required|in:menunggu_pembayaran_tunai,menunggu_verifikasi,selesai'
         ]);
 
         $order->update([

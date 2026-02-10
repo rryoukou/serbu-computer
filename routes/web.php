@@ -103,6 +103,7 @@ Route::get('/search/results', [ProductController::class, 'search'])
 */
 Route::middleware(['auth', 'pengguna'])->group(function () {
 
+    // Dashboard & Profile
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
@@ -122,15 +123,21 @@ Route::middleware(['auth', 'pengguna'])->group(function () {
     Route::get('/checkout/{product}', [CheckoutController::class, 'show'])->name('checkout.show');
     Route::post('/checkout/{product}', [CheckoutController::class, 'store'])->name('checkout.store');
 
-    // Riwayat
-    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
-    Route::delete('/riwayat/{order}', [RiwayatController::class, 'destroy'])->name('riwayat.destroy');
+// Riwayat
+Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
 
+// Batalkan pesanan (ganti hapus)
+Route::post('/riwayat/{order}/cancel', [RiwayatController::class, 'cancel'])->name('riwayat.cancel');
+
+
+    // ================= WISHLIST =================
+    // Toggle wishlist (add/remove)
     Route::post('/wishlist/{product}', [WishlistController::class, 'toggle'])
-    ->name('wishlist.toggle');
+        ->name('wishlist.toggle');
 
+    // Lihat wishlist user
     Route::get('/favorite', [WishlistController::class, 'index'])
-    ->name('wishlist.index');
+        ->name('wishlist.index');
 
 });
 
@@ -161,6 +168,10 @@ Route::middleware(['auth', 'admin'])
         Route::delete('/users/{user}', [UserController::class, 'destroy'])
             ->name('users.destroy');
 
-            Route::get('/', [PagesController::class, 'home'])->name('home');
+        Route::get('/', [PagesController::class, 'home'])->name('home');
+
+        Route::post('users/{user}/toggle-ban', [UserController::class, 'toggleBan'])
+    ->name('users.toggleBan'); // otomatis jadi admin.users.toggleBan
+
 
 });

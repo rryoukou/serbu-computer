@@ -47,13 +47,26 @@ return new class extends Migration
             if (!Schema::hasColumn('users', 'foto')) {
                 $table->string('foto')->nullable();
             }
+
+            // ✅ Tambah kolom is_banned (sesuai controller)
+            if (!Schema::hasColumn('users', 'is_banned')) {
+                $table->boolean('is_banned')->default(false)->after('role');
+            }
         });
     }
 
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('name')->nullable();
+            // rollback kolom is_banned
+            if (Schema::hasColumn('users', 'is_banned')) {
+                $table->dropColumn('is_banned');
+            }
+
+            // rollback kolom name bawaan
+            if (!Schema::hasColumn('users', 'name')) {
+                $table->string('name')->nullable();
+            }
         });
     }
 };

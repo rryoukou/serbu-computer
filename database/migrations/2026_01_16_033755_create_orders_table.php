@@ -9,17 +9,33 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            
+            // Relasi ke user
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
-            $table->string('nama_lengkap');
-            $table->string('no_hp');
-            $table->text('pesan')->nullable();
-            $table->enum('metode_pembayaran', ['tunai', 'bca']);
-            $table->decimal('total_harga', 12, 2);
+            // Relasi ke product
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
 
-            $table->enum('status', ['menunggu_pembayaran_tunai','menunggu_verifikasi','selesai'])->default('menunggu_verifikasi');
-            $table->timestamp('batas_waktu')->nullable();
-            $table->string('bukti_bayar')->nullable();
+            // Info produk langsung di order
+            $table->string('nama_produk');                
+            $table->text('spesifikasi')->nullable();     
+            $table->integer('qty');                       
+            $table->decimal('harga', 12, 2);             
+
+            // Metode pembayaran & total
+            $table->enum('metode_pembayaran', ['tunai', 'bca']);
+            $table->decimal('total_harga', 12, 2);       
+
+            // Status order + dibatalkan
+            $table->enum('status', [
+                'menunggu_pembayaran_tunai',
+                'menunggu_verifikasi',
+                'selesai',
+                'dibatalkan'
+            ])->default('menunggu_verifikasi');
+
+            $table->timestamp('batas_waktu')->nullable(); 
+            $table->string('bukti_bayar')->nullable();    
 
             $table->timestamps();
         });

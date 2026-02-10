@@ -3,40 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
-    public function index(Request $request)
-    {
-        // ambil wishlist dari cookie
-        $wishlist = json_decode($request->cookie('wishlist', '[]'), true);
 
-        // ambil data produk lengkap dari DB
-        $products = Product::whereIn('id', $wishlist)->get();
+
+    /**
+     * Tampilkan semua produk di wishlist user yang sedang login
+     */
+    public function index()
+    {
+        $wishlists = Wishlist::with('product')
+            ->where('user_id', Auth::id())
+            ->get();
+
+        // ambil hanya data produk untuk blade
+        $products = $wishlists->pluck('product');
 
         return view('wishlist.index', compact('products'));
     }
 
+    /**
+     * Toggle wishlist: jika sudah ada hapus, jika belum ada tambah
+     */
     public function toggle(Request $request, Product $product)
     {
-        // ambil wishlist dari cookie
-        $wishlist = json_decode($request->cookie('wishlist', '[]'), true);
+        $userId = Auth::id();
 
-        // jika sudah ada → hapus
-        if (in_array($product->id, $wishlist)) {
-            $wishlist = array_values(array_diff($wishlist, [$product->id]));
+        // cek apakah produk sudah ada di wishlist user
+        $wishlistItem = Wishlist::where('user_id', $userId)
+            ->where('product_id', $product->id)
+            ->first();
 
-            return back()
-                ->withCookie(cookie('wishlist', json_encode($wishlist), 60 * 24 * 30))
-                ->with('success', 'Produk dihapus dari wishlist');
+        if ($wishlistItem) {
+            // hapus dari wishlist
+            $wishlistItem->delete();
+            return back()->with('success', 'Produk dihapus dari wishlist');
         }
 
-        // jika belum ada → tambah
-        $wishlist[] = $product->id;
+        // tambahkan ke wishlist
+        Wishlist::create([
+            'user_id' => $userId,
+            'product_id' => $product->id,
+        ]);
 
-        return back()
-            ->withCookie(cookie('wishlist', json_encode($wishlist), 60 * 24 * 30))
-            ->with('success', 'Produk ditambahkan ke wishlist');
+        return back()->with('success', 'Produk ditambahkan ke wishlist');
     }
 }

@@ -117,14 +117,21 @@
                         </td>
 
                         {{-- ACTION BUTTON --}}
-                        <td class="px-0 md:px-6 py-2 md:py-5 text-center flex md:table-cell justify-end">
-                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Hapus user ini?')">
-                                @csrf @method('DELETE')
-                                <button class="p-3 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                                </button>
-                            </form>
-                        </td>
+<td class="px-0 md:px-6 py-2 md:py-5 text-center flex md:table-cell justify-end">
+    <form action="{{ route('admin.users.toggleBan', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin {{ $user->is_banned ? 'mengaktifkan' : 'membanned' }} user ini?')">
+        @csrf
+        <button type="submit"
+            class="p-3 rounded-xl transition-all
+            {{ $user->is_banned ? 'bg-green-500/10 text-green-500 hover:bg-green-500 hover:text-white' : 'bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white' }}">
+            @if($user->is_banned)
+                Unbanned
+            @else
+                Banned
+            @endif
+        </button>
+    </form>
+</td>
+
                     </tr>
                     @endforeach
                 </tbody>

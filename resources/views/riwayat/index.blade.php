@@ -118,42 +118,7 @@
                         </div>
                     </div>
 
-                    <!-- Order Items -->
-                    <div class="p-6">
-                        @foreach($order->items as $itemIndex => $item)
-                        <div class="flex gap-4 mb-4 pb-4 {{ !$loop->last ? 'border-b border-gray-700/30' : '' }}">
-                            <!-- Product Image -->
-                            <div class="flex-shrink-0">
-                                <div class="w-20 h-20 bg-gradient-to-b from-[#003A8F] to-[#002a6a] rounded-lg overflow-hidden flex items-center justify-center">
-                                    <img
-                                        src="{{ $item->product && $item->product->photo
-                                            ? asset('storage/' . $item->product->photo)
-                                            : 'https://via.placeholder.com/80' }}"
-                                        class="w-full h-full object-cover"
-                                        alt="{{ $item->nama_produk }}"
-                                    >
-                                </div>
-                            </div>
-                            
-                            <!-- Product Details -->
-                            <div class="flex-1">
-                                <h3 class="font-semibold text-white mb-1">{{ $item->nama_produk }}</h3>
-                                <p class="text-gray-400 text-sm mb-2">Spesifikasi: {{ $item->spesifikasi }}</p>
-                                
-                                <div class="flex flex-wrap gap-4 text-sm">
-                                    <span class="text-gray-300">
-                                        Qty: <span class="text-white font-medium">{{ $item->qty }}</span>
-                                    </span>
-                                    <span class="text-gray-300">
-                                        Harga: <span class="text-[#F0B22B] font-medium">Rp {{ number_format($item->harga, 0, ',', '.') }}</span>
-                                    </span>
-                                    <span class="text-gray-300">
-                                        Subtotal: <span class="text-[#F0B22B] font-medium">Rp {{ number_format($item->harga * $item->qty, 0, ',', '.') }}</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
+                
 
                         <!-- Payment Method -->
                         <div class="mb-3">
@@ -214,29 +179,28 @@
                                 </p>
                             </div>
                             
-                            <!-- Delete Button (if not completed) -->
-                            @if($order->status !== 'selesai')
-                            <form action="{{ route('riwayat.destroy', $order->id) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Yakin ingin menghapus pesanan ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button
-                                    class="px-4 py-2 bg-gradient-to-r from-red-500/20 to-red-600/20 text-red-300 border border-red-500/30 rounded-lg hover:bg-red-500/30 hover:text-white transition-colors text-sm font-medium flex items-center">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                    Hapus Pesanan
-                                </button>
-                            </form>
-                            @else
-                            <div class="text-green-400 text-sm font-medium flex items-center">
-                                <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                </svg>
-                                Pesanan Selesai
-                            </div>
-                            @endif
+                           <!-- Tombol Cancel -->
+@if(!in_array($order->status, ['selesai', 'dibatalkan']))
+<form action="{{ route('riwayat.cancel', $order->id) }}" method="POST"
+      onsubmit="return confirm('Yakin ingin membatalkan pesanan ini?')">
+    @csrf
+    <button
+        class="px-4 py-2 bg-gradient-to-r from-red-500/20 to-red-600/20 text-red-300 border border-red-500/30 rounded-lg hover:bg-red-500/30 hover:text-white transition-colors text-sm font-medium flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+        Batalkan Pesanan
+    </button>
+</form>
+@elseif($order->status === 'dibatalkan')
+<div class="text-red-400 text-sm font-medium flex items-center">
+    <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1.414-11.414a1 1 0 00-1.414 1.414L10.586 10l-1.293 1.293a1 1 0 101.414 1.414L12 11.414l1.293 1.293a1 1 0 001.414-1.414L13.414 10l1.293-1.293a1 1 0 00-1.414-1.414L12 8.586l-0.586-0.586z" clip-rule="evenodd"/>
+    </svg>
+    Pesanan Dibatalkan
+</div>
+@endif
+
                         </div>
                     </div>
 

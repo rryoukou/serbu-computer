@@ -105,23 +105,26 @@
                     </td>
 
                     <td class="px-6 py-4 text-right">
-                        <div class="flex justify-end gap-2">
-                            <a href="{{ route('admin.products.edit', $product->id) }}" 
-                               class="p-2.5 bg-yellow-500/10 text-yellow-500 rounded-xl hover:bg-yellow-500 hover:text-white transition-all shadow-lg shadow-yellow-500/5">
-                                ✏️
-                            </a>
+    <div class="flex justify-end gap-2">
+        <!-- Tombol edit tetap ada -->
+        <a href="{{ route('admin.products.edit', $product->id) }}" 
+           class="p-2.5 bg-yellow-500/10 text-yellow-500 rounded-xl hover:bg-yellow-500 hover:text-white transition-all shadow-lg shadow-yellow-500/5">
+            ✏️
+        </a>
 
-                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
-                                  onsubmit="return confirm('Yakin hapus produk ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="p-2.5 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/5">
-                                    🗑️
-                                </button>
-                            </form>
-                        </div>
-                    </td>
+        <!-- Tombol hapus dihilangkan -->
+        <!-- <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
+              onsubmit="return confirm('Yakin hapus produk ini?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit"
+                    class="p-2.5 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-lg shadow-red-500/5">
+                🗑️
+            </button>
+        </form> -->
+    </div>
+</td>
+
                 </tr>
                 @empty
                 <tr>

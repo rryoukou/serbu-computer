@@ -31,21 +31,15 @@
     <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 
         <div class="rounded-2xl h-64 overflow-hidden">
-    <img src="{{ asset('images/masag.jpeg') }}"
-         alt="Owner Serbu Computer"
-         class="w-full h-full object-cover">
-</div>
+            <img src="{{ asset('images/masag.jpeg') }}"
+                 class="w-full h-full object-cover">
+        </div>
 
         <div class="text-white">
             <h3 class="text-[#F0B22B] text-2xl font-semibold mb-4">
                 Pemilik & Pendiri
             </h3>
-            <p class="text-gray-300 leading-relaxed">
-    Agong Wibowo adalah pendiri Serbu Computer Sawojajar yang berpengalaman
-    dalam penjualan dan servis laptop. Dengan mengutamakan kejujuran dan
-    kualitas layanan, Serbu Computer hadir sebagai solusi terpercaya
-    untuk kebutuhan laptop dan teknologi pelanggan.
-</p>
+            <p class="text-gray-300 leading-relaxed"> Agong Wibowo adalah pendiri Serbu Computer Sawojajar yang berpengalaman dalam penjualan dan servis laptop. Dengan mengutamakan kejujuran dan kualitas layanan, Serbu Computer hadir sebagai solusi terpercaya untuk kebutuhan laptop dan teknologi pelanggan. </p>
         </div>
     </div>
 </section>
@@ -58,18 +52,13 @@
             <h3 class="text-[#F0B22B] text-2xl font-semibold mb-4">
                 Profil Toko
             </h3>
-            <p class="text-gray-300 leading-relaxed">
-    Serbu Computer merupakan toko laptop dan aksesoris di Sawojajar, Kota Malang
-    yang melayani jual beli, upgrade, dan servis laptop dengan harga bersaing
-    serta pelayanan yang cepat dan transparan.
-</p>
+            <p class="text-gray-300 leading-relaxed"> Serbu Computer merupakan toko laptop dan aksesoris di Sawojajar, Kota Malang yang melayani jual beli, upgrade, dan servis laptop dengan harga bersaing serta pelayanan yang cepat dan transparan. </p>
         </div>
 
         <div class="rounded-2xl h-64 overflow-hidden">
-    <img src="{{ asset('images/warung.jpeg') }}"
-         alt="Toko Serbu Computer"
-         class="w-full h-full object-cover">
-</div>
+            <img src="{{ asset('images/warung.jpeg') }}"
+                 class="w-full h-full object-cover">
+        </div>
     </div>
 </section>
 
@@ -92,14 +81,10 @@
             @endphp
 
             @foreach($items as $item)
-            <div class="flex gap-4 bg-[#0c0c3d] rounded-xl p-6 text-white
-                        transition-all duration-300
-                        hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(240,178,43,0.15)]">
-
+            <div class="flex gap-4 bg-[#0c0c3d] rounded-xl p-6 text-white transition hover:-translate-y-1">
                 <svg class="w-8 h-8 text-[#F0B22B]" fill="currentColor" viewBox="0 0 24 24">
                     <path d="{{ $item['icon'] }}"/>
                 </svg>
-
                 <div>
                     <h4 class="font-semibold mb-1">{{ $item['title'] }}</h4>
                     <p class="text-gray-300 text-sm">{{ $item['desc'] }}</p>
@@ -110,29 +95,52 @@
     </div>
 </section>
 
-<!-- MAP -->
+<!-- MAP (ONE CARD, NYATU) -->
 <section class="bg-gradient-to-b from-[#090069] to-[#0c0c3d] py-20 px-6 md:px-16 reveal">
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto space-y-6">
 
-        <h3 class="text-[#F0B22B] text-2xl font-semibold mb-4">
+        <h3 class="text-[#F0B22B] text-2xl font-semibold">
             Lokasi Toko Kami
         </h3>
 
-        <div class="relative group">
-            <div id="map"
-                class="w-full h-72 rounded-2xl overflow-hidden cursor-pointer
-                       ring-1 ring-white/10
-                       group-hover:ring-[#F0B22B]/40 transition"></div>
+        <!-- CARD WRAPPER -->
+        <div class="rounded-2xl overflow-hidden border border-white/10 bg-[#0c0c3d]">
 
-            <!-- Hint UX -->
-            <div class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-3 py-1 rounded-full">
-                Double click untuk buka Google Maps
+            <!-- MAP -->
+            <div id="map" class="w-full h-72"></div>
+
+            <!-- INFO BAR -->
+            <div class="p-5
+                        flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                <div class="flex items-start gap-3 text-gray-200">
+                    <svg class="w-5 h-5 text-[#F0B22B] mt-1" fill="none" stroke="currentColor" stroke-width="2"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 11.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M19 10c0 6-7 12-7 12S5 16 5 10a7 7 0 1114 0z"/>
+                    </svg>
+
+                    <div>
+                        <p class="font-semibold">Serbu Computer Sawojajar</p>
+                        <p class="text-sm text-gray-400">
+                            Jl. Danau Djonge H8/H19, Kota Malang
+                        </p>
+                    </div>
+                </div>
+
+                <a href="https://www.google.com/maps?q=-7.975041062529727,112.67047620610623"
+                   target="_blank"
+                   class="inline-flex items-center justify-center
+                          px-6 py-2.5 rounded-full
+                          bg-[#F0B22B] text-[#090069]
+                          font-semibold text-sm
+                          hover:brightness-110 transition">
+                    Lihat di Google Maps
+                </a>
             </div>
         </div>
-
-        <p class="text-gray-300 text-sm mt-4">
-            Jl. Danau Djonge H8/H19, Sawojajar, Kota Malang
-        </p>
     </div>
 </section>
 
@@ -143,45 +151,35 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const coords = [-7.975041062529727, 112.67047620610623];
-    const googleMapsUrl = `https://www.google.com/maps?q=${coords[0]},${coords[1]}`;
 
     const map = L.map('map', {
         center: coords,
         zoom: 16,
-        scrollWheelZoom: false,
-        doubleClickZoom: false
+        scrollWheelZoom: true
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.marker(coords).addTo(map);
 
-    const marker = L.marker(coords).addTo(map)
-        .bindPopup('<b>Serbu Computer</b><br>Sawojajar<br><small>Klik untuk buka Maps</small>');
-
-    // double click → Google Maps
-    map.on('dblclick', () => {
-        window.open(googleMapsUrl, '_blank');
-    });
-
-    // klik marker → Google Maps
-    marker.on('click', () => {
-        window.open(googleMapsUrl, '_blank');
-    });
-
-    // reveal animation
-    document.querySelectorAll('.reveal').forEach(el => {
-        el.classList.add('opacity-0','translate-y-10','transition','duration-700');
+    // REVEAL FIX (AMAN)
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(40px)';
+        el.style.transition = 'all .8s ease';
     });
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(e => {
             if (e.isIntersecting) {
-                e.target.classList.remove('opacity-0','translate-y-10');
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateY(0)';
                 observer.unobserve(e.target);
             }
         });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    reveals.forEach(el => observer.observe(el));
 });
 </script>
 

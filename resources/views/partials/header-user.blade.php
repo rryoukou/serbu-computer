@@ -31,7 +31,7 @@
         <!-- DESKTOP ICONS -->
         <div class="hidden md:flex items-center gap-4">
             <!-- Search -->
-            <a href="{{ route('shop.search.page') }}" 
+            <!-- <a href="{{ route('shop.search.page') }}" 
                class="text-[#F0B22B] hover:text-white transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" 
                      class="w-5 h-5 sm:w-6 sm:h-6" 
@@ -42,7 +42,7 @@
                     <circle cx="11" cy="11" r="8"/>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
-            </a>
+            </a> -->
 
             <!-- Wishlist / Favorite -->
 <a href="{{ route('wishlist.index') }}"
@@ -185,7 +185,7 @@
                 <hr class="border-white/10 my-2">
 
                 {{-- Search Mobile --}}
-                <a href="{{ route('shop.search.page') }}" 
+                <!-- <a href="{{ route('shop.search.page') }}" 
                    class="flex items-center gap-3 text-white hover:text-[#F0B22B] py-2">
                     <svg xmlns="http://www.w3.org/2000/svg" 
                          class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -193,7 +193,7 @@
                         <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                     </svg>
                     <span>Search</span>
-                </a>
+                </a> -->
 
                 {{-- Wishlist Mobile --}}
                 <a href="{{ route('wishlist.index') }}"

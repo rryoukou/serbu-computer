@@ -3,7 +3,6 @@
 @section('content')
 <div class="min-h-screen bg-gradient-to-b from-[#090069] via-[#0c0c3d] to-[#090069]">
 
-    <!-- Hero Section -->
     <div class="bg-gradient-to-b from-[#090069] to-[#0c0c3d] py-12 md:py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-8 reveal">
@@ -17,12 +16,11 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {{-- FLASH MESSAGE --}}
         @if(session('success'))
-            <div class="mb-6 p-4 bg-gradient-to-r from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl text-green-300 reveal">
+            <div class="mb-6 p-4 bg-green-500/20 border border-green-500/30 rounded-xl text-green-300 reveal">
                 <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -33,7 +31,7 @@
         @endif
 
         @if($errors->any())
-            <div class="mb-6 p-4 bg-gradient-to-r from-red-500/20 to-red-600/20 border border-red-500/30 rounded-xl text-red-300 reveal">
+            <div class="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-xl text-red-300 reveal">
                 <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
@@ -44,7 +42,6 @@
         @endif
 
         @if($orders->isEmpty())
-            <!-- Empty State -->
             <div class="text-center py-12 md:py-16 reveal">
                 <div class="w-16 h-16 md:w-20 md:h-20 bg-[#0c0c3d] rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg class="w-8 h-8 md:w-10 md:h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,169 +53,137 @@
                     Mulai berbelanja untuk melihat riwayat pembelian Anda di sini
                 </p>
                 <a href="{{ route('shop.index') }}" 
-                   class="inline-block bg-[#F0B22B] text-black px-5 md:px-6 py-2 md:py-2.5 rounded-lg font-medium hover:bg-white transition-colors text-sm md:text-base">
+                   class="inline-block bg-[#F0B22B] text-black px-6 py-2.5 rounded-lg font-bold hover:bg-white transition-all transform hover:scale-105">
                     Mulai Berbelanja
                 </a>
             </div>
         @else
-            <!-- Order Count -->
             <div class="mb-6 reveal">
-                <p class="text-gray-300">
-                    Total {{ $orders->count() }} pesanan ditemukan
+                <p class="text-gray-300 font-medium">
+                    Total <span class="text-[#F0B22B]">{{ $orders->count() }}</span> pesanan ditemukan
                 </p>
             </div>
 
-            <!-- Orders Grid -->
             <div class="space-y-6 reveal">
-                @foreach($orders as $index => $order)
-                <div class="group bg-[#0c0c3d] rounded-2xl overflow-hidden text-white 
-    shadow-[0_8px_24px_rgba(0,0,0,0.3)]
-    transition-all duration-500 
-    hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(240,178,43,0.15)]
-    hover:border hover:border-[#F0B22B]/20
-    relative
-    before:absolute before:inset-0 
-    before:pointer-events-none
-    before:bg-gradient-to-br before:from-transparent before:via-transparent 
-    before:to-[#F0B22B]/5 before:opacity-0 before:transition-opacity 
-    before:duration-500 hover:before:opacity-100"
->
+                @foreach($orders as $order)
+                <div class="group bg-[#0c0c3d] rounded-2xl overflow-hidden text-white border border-white/5
+                    shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 hover:border-[#F0B22B]/30 relative">
 
-                    <!-- Header -->
-                    <div class="p-6 border-b border-gray-700/50 bg-gradient-to-r from-[#0c0c3d] to-[#090069]/50">
+                    <div class="p-5 md:p-6 border-b border-white/10 bg-white/5">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                             <div>
-                                <h2 class="font-bold text-xl text-white mb-1">
+                                <h2 class="font-bold text-lg md:text-xl text-white">
                                     Order #{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}
                                 </h2>
-                                <div class="flex items-center text-gray-400 text-sm">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="flex items-center text-gray-400 text-xs mt-1">
+                                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                     </svg>
                                     {{ $order->created_at->format('d M Y, H:i') }}
                                 </div>
                             </div>
                             
-                            <!-- Status Badge -->
                             @php
                                 $statusColors = [
                                     'selesai' => 'bg-green-500/20 text-green-300 border-green-500/30',
                                     'menunggu_pembayaran_tunai' => 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30',
-                                    'menunggu_verifikasi' => 'bg-blue-500/20 text-blue-300 border-blue-500/30'
+                                    'menunggu_verifikasi' => 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+                                    'dibatalkan' => 'bg-red-500/20 text-red-300 border-red-500/30'
                                 ];
                                 $statusTexts = [
                                     'selesai' => 'Selesai',
                                     'menunggu_pembayaran_tunai' => 'Menunggu Pembayaran',
-                                    'menunggu_verifikasi' => 'Menunggu Verifikasi'
+                                    'menunggu_verifikasi' => 'Menunggu Verifikasi',
+                                    'dibatalkan' => 'Dibatalkan'
                                 ];
                             @endphp
-                            <span class="px-4 py-2 rounded-full border {{ $statusColors[$order->status] ?? 'bg-gray-500/20 text-gray-300' }} font-medium text-sm">
+                            <span class="px-4 py-1.5 rounded-full border {{ $statusColors[$order->status] ?? 'bg-gray-500/20 text-gray-300' }} font-bold text-xs uppercase tracking-wider">
                                 {{ $statusTexts[$order->status] ?? $order->status }}
                             </span>
                         </div>
                     </div>
 
-                
-
-                        <!-- Payment Method -->
-                        <div class="mb-3">
-                            <div class="inline-flex items-center px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700">
+                    <div class="p-5 md:p-6 space-y-4">
+                        
+                        <div class="flex flex-wrap gap-3">
+                            <div class="inline-flex items-center px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                                 <svg class="w-4 h-4 mr-2 text-[#F0B22B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                                 </svg>
-                                <span class="text-sm text-gray-300">
-                                    Metode: <span class="text-white font-medium">{{ strtoupper($order->metode_pembayaran) }}</span>
+                                <span class="text-xs text-gray-300 uppercase">
+                                    Metode: <span class="text-white font-bold ml-1">{{ strtoupper($order->metode_pembayaran) }}</span>
                                 </span>
                             </div>
+
+                            @if($order->status === 'menunggu_pembayaran_tunai' && $order->batas_waktu)
+                                <div class="inline-flex items-center px-3 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-300">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span class="text-xs font-medium italic">Bayar sebelum: {{ \Carbon\Carbon::parse($order->batas_waktu)->format('d M, H:i') }}</span>
+                                </div>
+                            @endif
                         </div>
 
-                        <!-- Batas Waktu (if applicable) -->
-                        @if($order->status === 'menunggu_pembayaran_tunai' && $order->batas_waktu)
-                        <div class="mb-3 p-3 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border border-yellow-500/20 rounded-lg">
-                            <div class="flex items-center text-yellow-300 text-sm">
-                                <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Batas waktu pembayaran: <span class="font-semibold">{{ \Carbon\Carbon::parse($order->batas_waktu)->format('d M Y, H:i') }}</span></span>
-                            </div>
-                        </div>
-                        @endif
-
-                        <!-- Bukti Pembayaran -->
                         @if($order->metode_pembayaran === 'bca' && $order->bukti_bayar)
-                        <div class="mb-4">
-                            <p class="text-sm text-gray-300 mb-2 font-medium">Bukti Pembayaran:</p>
-                            <div class="relative inline-block">
+                        <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                            <p class="text-xs text-gray-400 mb-2 font-bold uppercase tracking-widest">Bukti Transfer:</p>
+                            <div class="relative w-24 h-24 md:w-32 md:h-32 group/img">
                                 <img
                                     src="{{ asset('storage/' . $order->bukti_bayar) }}"
-                                    class="w-32 h-32 object-cover rounded-lg border-2 border-gray-700 cursor-pointer hover:border-[#F0B22B] transition-colors"
+                                    class="w-full h-full object-cover rounded-lg border border-white/10 cursor-pointer hover:border-[#F0B22B] transition-all"
                                     onclick="toggleImage(this)"
                                     alt="Bukti Pembayaran"
                                 >
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <span class="text-white text-xs bg-black/50 px-2 py-1 rounded">Klik untuk zoom</span>
+                                <div class="absolute inset-0 bg-black/40 rounded-lg opacity-0 group-hover/img:opacity-100 flex items-center justify-center pointer-events-none transition-opacity">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
                         @endif
 
-                        <!-- Pesan -->
                         @if($order->pesan)
-                        <div class="mb-4 p-3 bg-gray-800/30 rounded-lg border border-gray-700/50">
-                            <p class="text-sm text-gray-300 mb-1 font-medium">Pesan:</p>
-                            <p class="text-white text-sm">{{ $order->pesan }}</p>
+                        <div class="p-3 bg-black/20 rounded-xl border border-white/5 italic">
+                            <p class="text-[11px] text-[#F0B22B] font-bold uppercase mb-1">Catatan Pesanan:</p>
+                            <p class="text-sm text-gray-300 leading-relaxed">"{{ $order->pesan }}"</p>
                         </div>
                         @endif
 
-                        <!-- Total Harga -->
-                        <div class="flex justify-between items-center pt-4 border-t border-gray-700/50">
+                        <div class="flex flex-col md:flex-row justify-between items-end md:items-center pt-4 border-t border-white/10 gap-4">
                             <div>
-                                <p class="text-sm text-gray-400">Total Pesanan</p>
-                                <p class="text-2xl font-bold text-[#F0B22B]">
+                                <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Total Pembayaran</p>
+                                <p class="text-2xl font-black text-[#F0B22B]">
                                     Rp {{ number_format($order->total_harga, 0, ',', '.') }}
                                 </p>
                             </div>
                             
-                           <!-- Tombol Cancel -->
-@if(!in_array($order->status, ['selesai', 'dibatalkan']))
-<form action="{{ route('riwayat.cancel', $order->id) }}" method="POST"
-      onsubmit="return confirm('Yakin ingin membatalkan pesanan ini?')">
-    @csrf
-    <button
-        class="px-4 py-2 bg-gradient-to-r from-red-500/20 to-red-600/20 text-red-300 border border-red-500/30 rounded-lg hover:bg-red-500/30 hover:text-white transition-colors text-sm font-medium flex items-center">
-        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-        Batalkan Pesanan
-    </button>
-</form>
-@elseif($order->status === 'dibatalkan')
-<div class="text-red-400 text-sm font-medium flex items-center">
-    <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1.414-11.414a1 1 0 00-1.414 1.414L10.586 10l-1.293 1.293a1 1 0 101.414 1.414L12 11.414l1.293 1.293a1 1 0 001.414-1.414L13.414 10l1.293-1.293a1 1 0 00-1.414-1.414L12 8.586l-0.586-0.586z" clip-rule="evenodd"/>
-    </svg>
-    Pesanan Dibatalkan
-</div>
-@endif
-
+                            <div class="w-full md:w-auto">
+                                @if(!in_array($order->status, ['selesai', 'dibatalkan']))
+                                <form action="{{ route('riwayat.cancel', $order->id) }}" method="POST"
+                                      onsubmit="return confirm('Yakin ingin membatalkan pesanan ini?')">
+                                    @csrf
+                                    <button class="w-full md:w-auto px-5 py-2 bg-red-500/10 text-red-400 border border-red-500/30 rounded-xl hover:bg-red-500 hover:text-white transition-all text-sm font-bold flex items-center justify-center">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                        Batalkan Pesanan
+                                    </button>
+                                </form>
+                                @endif
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Corner Accent -->
-                    <div class="absolute top-0 right-0 w-12 h-12 
-                                bg-gradient-to-bl from-[#F0B22B]/0 via-[#F0B22B]/0 to-[#F0B22B]/10 
-                                rounded-bl-2xl transition-all duration-500 
-                                group-hover:from-[#F0B22B]/10 group-hover:via-[#F0B22B]/5 
-                                group-hover:to-[#F0B22B]/20">
-                    </div>
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-[#F0B22B]/10 to-transparent opacity-50"></div>
                 </div>
                 @endforeach
             </div>
 
-            <!-- Show total orders count -->
-            <div class="mt-8 pt-6 border-t border-gray-700/30 text-center reveal">
-                <p class="text-gray-400 text-sm">
-                    Menampilkan semua {{ $orders->count() }} pesanan. Urutan terbaru ke terlama.
+            <div class="mt-10 pt-6 border-t border-white/5 text-center reveal">
+                <p class="text-gray-500 text-xs tracking-widest uppercase">
+                    Menampilkan {{ $orders->count() }} pesanan terbaru
                 </p>
             </div>
         @endif
@@ -232,23 +197,24 @@ function toggleImage(img) {
         img.classList.remove('zoomed');
         img.style = '';
         document.body.style.overflow = 'auto';
+        const overlay = document.getElementById('image-overlay');
+        if(overlay) document.body.removeChild(overlay);
     } else {
         img.classList.add('zoomed');
         img.style.position = 'fixed';
         img.style.top = '50%';
         img.style.left = '50%';
-        img.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        img.style.transform = 'translate(-50%, -50%) scale(1)';
         img.style.width = 'auto';
         img.style.maxWidth = '90vw';
-        img.style.maxHeight = '90vh';
+        img.style.maxHeight = '80vh';
         img.style.zIndex = '9999';
         img.style.cursor = 'zoom-out';
-        img.style.borderRadius = '8px';
-        img.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.75)';
-        img.style.border = '3px solid #F0B22B';
+        img.style.borderRadius = '12px';
+        img.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.8)';
+        img.style.border = '2px solid #F0B22B';
         document.body.style.overflow = 'hidden';
         
-        // Add overlay
         const overlay = document.createElement('div');
         overlay.id = 'image-overlay';
         overlay.style.position = 'fixed';
@@ -256,65 +222,31 @@ function toggleImage(img) {
         overlay.style.left = '0';
         overlay.style.width = '100%';
         overlay.style.height = '100%';
-        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
         overlay.style.zIndex = '9998';
         overlay.style.cursor = 'zoom-out';
-        overlay.onclick = function() {
-            img.classList.remove('zoomed');
-            img.style = '';
-            document.body.style.overflow = 'auto';
-            document.body.removeChild(overlay);
-        };
+        overlay.onclick = function() { toggleImage(img); };
         document.body.appendChild(overlay);
     }
 }
 
-// SCROLL REVEAL ANIMATION
 document.addEventListener('DOMContentLoaded', function() {
     const reveals = document.querySelectorAll('.reveal');
-    
     reveals.forEach(el => {
-        el.classList.add(
-            'opacity-0',
-            'translate-y-10',
-            'transition',
-            'duration-700',
-            'ease-out'
-        );
+        el.classList.add('opacity-0', 'translate-y-8', 'transition', 'duration-700', 'ease-out');
     });
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.remove('opacity-0', 'translate-y-10');
+                entry.target.classList.remove('opacity-0', 'translate-y-8');
                 entry.target.classList.add('opacity-100', 'translate-y-0');
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1 });
 
     reveals.forEach(el => observer.observe(el));
 });
 </script>
-
-<style>
-    /* Line clamp for text */
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    
-    /* Better mobile spacing */
-    @media (max-width: 640px) {
-        .flex-col.md\:flex-row {
-            gap: 12px;
-        }
-        
-        .text-2xl {
-            font-size: 1.5rem;
-        }
-    }
-</style>
 @endsection

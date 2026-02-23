@@ -5,47 +5,87 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
+    /*
+    |--------------------------------------------------------------------------
+    | LOGIN PENGGUNA
+    |--------------------------------------------------------------------------
+    */
+    public function loginUser(Request $request)
     {
-        // 1️⃣ Validasi input
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
 
-        // 2️⃣ Ambil user dulu berdasarkan username
-        $user = \App\Models\User::where('username', $request->username)->first();
+        $user = User::where('username', $request->username)->first();
 
-        // 3️⃣ Cek apakah user dibanned
+        // Cek banned
         if ($user && $user->is_banned) {
             return back()->withErrors([
                 'username' => 'Akun kamu sudah dibanned, silahkan hubungi admin.'
             ])->withInput();
         }
 
-        // 4️⃣ Proses login
+        // Coba login
         if (!Auth::attempt($credentials)) {
             return back()->withErrors([
                 'username' => 'Username atau password salah'
             ])->withInput();
         }
 
-        // 5️⃣ Regenerasi session
         $request->session()->regenerate();
 
-        $user = auth()->user();
-
-        // 6️⃣ Redirect sesuai role
-        if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard');
+        // Pastikan role pengguna
+        if (auth()->user()->role !== 'pengguna') {
+            Auth::logout();
+            return back()->withErrors([
+                'username' => 'Login ini khusus pengguna.'
+            ]);
         }
 
         return redirect()->route('dashboard');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | LOGIN ADMIN
+    |--------------------------------------------------------------------------
+    */
+    public function loginAdmin(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors([
+                'username' => 'Username atau password salah'
+            ])->withInput();
+        }
+
+        $request->session()->regenerate();
+
+        // Pastikan role admin
+        if (auth()->user()->role !== 'admin') {
+            Auth::logout();
+            return back()->withErrors([
+                'username' => 'Login ini khusus admin.'
+            ]);
+        }
+
+        return redirect()->route('admin.dashboard');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGOUT
+    |--------------------------------------------------------------------------
+    */
     public function logout(Request $request)
     {
         Auth::logout();
@@ -53,6 +93,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect('/');
     }
 }

@@ -11,8 +11,14 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || Auth::user()->role !== 'admin') {
-            abort(403, 'Akses khusus admin');
+        // Kalau belum login → 404
+        if (!Auth::check()) {
+            abort(404);
+        }
+
+        // Kalau login tapi bukan admin → 404
+        if (Auth::user()->role !== 'admin') {
+            abort(404);
         }
 
         return $next($request);

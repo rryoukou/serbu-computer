@@ -35,15 +35,41 @@ Route::get('/', [PagesController::class, 'home'])->name('home');
 
 /*
 |--------------------------------------------------------------------------
-| AUTH (GUEST ONLY)
+| AUTH PENGGUNA
 |--------------------------------------------------------------------------
 */
 Route::middleware('guest')->group(function () {
-    Route::get('/login', fn () => view('auth.login'))->name('login');
-    Route::post('/login', [LoginController::class, 'login']);
 
-    Route::get('/register', fn () => view('auth.register'))->name('register');
+    // Login Pengguna
+    Route::get('/login', fn () => view('auth.login'))
+        ->name('login');
+
+    Route::post('/login', [LoginController::class, 'loginUser'])
+        ->name('login.user');
+
+    // Register
+    Route::get('/register', fn () => view('auth.register'))
+        ->name('register');
+
     Route::post('/register', [RegisterController::class, 'register']);
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| AUTH ADMIN
+|--------------------------------------------------------------------------
+*/
+Route::middleware('guest')
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get('/login', fn () => view('admin.auth.login'))
+            ->name('login');
+
+        Route::post('/login', [LoginController::class, 'loginAdmin'])
+            ->name('login.submit');
 });
 
 /*
@@ -146,7 +172,7 @@ Route::post('/riwayat/{order}/cancel', [RiwayatController::class, 'cancel'])->na
 | ADMIN
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'admin'])
+Route::middleware(['admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {

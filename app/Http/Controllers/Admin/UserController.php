@@ -16,15 +16,17 @@ class UserController extends Controller
     {
         $search = $request->search;
 
-        $users = User::where('role', 'pengguna') // <-- hanya pengguna
-            ->when($search, function ($query) use ($search) {
-                $query->where('username', 'like', "%{$search}%")
-                      ->orWhere('nama', 'like', "%{$search}%")
-                      ->orWhere('email', 'like', "%{$search}%");
-            })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+        $users = User::where('role', 'pengguna')
+    ->when($search, function ($query) use ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('username', 'like', "%{$search}%")
+              ->orWhere('nama', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%");
+        });
+    })
+    ->latest()
+    ->paginate(10)
+    ->withQueryString();
 
         return view('admin.users.index', compact('users'));
     }

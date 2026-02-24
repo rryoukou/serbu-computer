@@ -9,7 +9,7 @@
     <div class="mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
             <h2 class="text-white text-2xl md:text-3xl font-black tracking-tight">
-                Manajemen Pengguna
+                Users Management
             </h2>
             <p class="text-gray-400 text-[10px] md:text-xs uppercase tracking-[0.2em] mt-1">
                 Data Lengkap Member Serbu Comp

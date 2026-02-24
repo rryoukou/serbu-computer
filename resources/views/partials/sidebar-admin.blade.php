@@ -1,20 +1,21 @@
 <div :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
      class="fixed lg:static inset-y-0 left-0 w-64 bg-[#090069] text-white flex flex-col h-screen border-r border-white/5 z-[50] transition-transform duration-300 ease-in-out lg:translate-x-0">
     
-    <div class="p-6 flex items-center relative shrink-0 min-h-[90px]">
-    <div class="flex-1 flex items-center lg:justify-start justify-center">
-        <img src="{{ asset('images/logo.png') }}" 
-             alt="Logo SC" 
-             class="w-28 md:w-32 drop-shadow-xl object-contain block mx-auto lg:mx-0">
-    </div>
+     <div class="relative px-6 py-8 flex flex-col shrink-0 min-h-[120px]">
     
     <button @click="sidebarOpen = false" 
-            class="lg:hidden absolute right-4 p-2 text-gray-400 hover:text-[#F0B22B] hover:bg-white/5 rounded-xl transition-all">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            class="lg:hidden absolute top-4 right-4 p-2 text-gray-400 hover:text-[#F0B22B] hover:bg-white/5 rounded-xl transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
     </button>
+
+    <div class="w-full flex justify-center lg:justify-start lg:pl-8">
+        <img src="{{ asset('images/logo.png') }}" 
+             alt="Logo SC" 
+             class="w-28 md:w-32 h-auto drop-shadow-2xl object-contain">
+    </div>
 </div>
 
     <nav class="flex-1 px-4 py-2 space-y-1.5 overflow-y-auto custom-scrollbar">

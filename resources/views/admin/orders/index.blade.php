@@ -3,36 +3,41 @@
 @section('page_title', 'Transaction Management')
 
 @section('content')
-<div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="mb-8 space-y-6">
+    {{-- BARIS 1: JUDUL --}}
     <div>
-        <h2 class="text-white text-2xl font-bold tracking-tight">Riwayat Pembelian</h2>
+        <h2 class="text-white text-2xl font-bold tracking-tight">Transaction Management</h2>
         <p class="text-gray-400 text-sm mt-1 uppercase tracking-widest">
             Manajemen Transaksi Serbu Comp
         </p>
     </div>
 
-    {{-- RIGHT SIDE --}}
-    <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
-
+    {{-- BARIS 2: SEARCH & INFO (TURUN LEVEL) --}}
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+        
         {{-- SEARCH --}}
-        <form method="GET" class="w-full md:w-72">
-            <input
-                type="text"
-                name="search"
-                value="{{ request('search') }}"
-                placeholder="Cari nama user / status / ID order..."
-                class="w-full bg-[#090069] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-[#F0B22B] focus:outline-none"
-            >
+        <form method="GET" class="w-full md:w-96">
+            <div class="relative">
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="Cari nama user / status / ID order..."
+                    class="w-full bg-[#090069] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all"
+                >
+                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </div>
+            </div>
         </form>
 
-        {{-- TOTAL --}}
-        <div class="flex items-center justify-center gap-2 bg-[#F0B22B]/10 px-4 py-2 rounded-2xl border border-[#F0B22B]/20">
+        {{-- TOTAL PESANAN --}}
+        <div class="flex items-center gap-3 bg-[#F0B22B]/10 px-4 py-2 rounded-xl border border-[#F0B22B]/20 w-full md:w-auto justify-center">
             <span class="w-2 h-2 rounded-full bg-[#F0B22B] animate-pulse"></span>
-            <span class="text-[#F0B22B] text-xs font-bold uppercase">
+            <span class="text-[#F0B22B] text-xs font-bold uppercase tracking-wider">
                 {{ $orders->count() }} Total Pesanan
             </span>
         </div>
-
     </div>
 </div>
 
@@ -131,7 +136,6 @@
         @endforeach
     </div>
 @endif
-</div>
 
 <style>
 /* Smooth Zoom Effect */

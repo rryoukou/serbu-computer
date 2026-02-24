@@ -4,7 +4,7 @@
 <div class="min-h-screen bg-[#090069]">
     <div class="bg-gradient-to-b from-[#090069] to-[#0c0c3d] py-12 md:py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8 reveal">
+            <div class="text-center mb-8 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
                 <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">
                     Our <span class="text-[#F0B22B]">Products</span>
                 </h1>
@@ -13,7 +13,7 @@
                 </p>
             </div>
 
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8 reveal">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
                 <div class="flex flex-wrap gap-2 w-full lg:w-auto">
                     <a href="{{ route('shop.index') }}" 
                        class="px-4 py-2 rounded-full {{ !$category ? 'bg-[#F0B22B] text-black' : 'bg-white/10 text-white hover:bg-white/20' }} transition-colors font-medium text-xs md:text-base">
@@ -52,7 +52,7 @@
             </div>
 
             @if($category || $search)
-            <div class="mb-6 reveal">
+            <div class="mb-6 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
                 <div class="flex flex-wrap gap-2 items-center">
                     <span class="text-gray-400 text-sm">Active filters:</span>
                     @if($category)
@@ -70,15 +70,11 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         @if($products->count() > 0)
-        <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6">
+        <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6">
             @foreach ($products as $index => $product)
-            <div class="group bg-[#0c0c3d] rounded-2xl overflow-hidden text-white 
-                        shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-all duration-500 
-                        hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(240,178,43,0.15)]
-                        hover:border hover:border-[#F0B22B]/20 relative
-                        before:absolute before:inset-0 before:bg-gradient-to-br before:from-transparent 
-                        before:via-transparent before:to-[#F0B22B]/5 before:opacity-0 
-                        before:transition-opacity before:duration-500 hover:before:opacity-100 reveal">
+            <div class="reveal-item opacity-0 transform translate-y-8 transition-all duration-700 group bg-[#0c0c3d] rounded-2xl overflow-hidden text-white 
+                        shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(240,178,43,0.15)]
+                        hover:border hover:border-[#F0B22B]/20 relative">
 
                 <div class="absolute top-2 left-2 md:top-4 md:left-4 z-20">
                     <span class="px-2 py-0.5 md:px-3 md:py-1 text-[7px] md:text-[10px] font-semibold rounded-full {{ $product->category == 'Laptop' ? 'bg-blue-500' : 'bg-green-500' }} text-white uppercase">
@@ -106,7 +102,7 @@
                         </h3>
                         <div class="mt-auto">
                             <p class="text-gray-300 text-[8px] md:text-[10px] mb-0.5 md:mb-1">starts from :</p>
-                            <p class="text-[#F0B22B] text-[9px] md:text-xs font-semibold transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-1">
+                            <p class="text-[#F0B22B] text-[9px] md:text-xs font-semibold">
                                 Rp {{ number_format($product->price, 0, ',', '.') }}
                             </p>
                         </div>
@@ -121,19 +117,17 @@
                         </p>
 
                         <a href="{{ route('shop.show', $product->id) }}"
-                           class="mt-auto inline-block bg-[#F0B22B] text-black px-2 md:px-4 py-1 md:py-1.5 rounded-full text-[8px] md:text-[10px] self-end font-bold transition-all duration-300 hover:bg-white hover:scale-105 hover:shadow-lg hover:shadow-[#F0B22B]/30 relative overflow-hidden after:absolute after:inset-0 after:bg-gradient-to-r after:from-white/10 after:to-transparent after:translate-x-[-100%] hover:after:translate-x-100 after:transition-transform after:duration-500">
+                           class="mt-auto inline-block bg-[#F0B22B] text-black px-2 md:px-4 py-1 md:py-1.5 rounded-full text-[8px] md:text-[10px] self-end font-bold transition-all duration-300 hover:bg-white hover:scale-105">
                             View Details
                         </a>
                     </div>
                 </div>
-
-                <div class="absolute top-0 right-0 w-12 h-12 bg-gradient-to-bl from-[#F0B22B]/0 via-[#F0B22B]/0 to-[#F0B22B]/10 rounded-bl-2xl transition-all duration-500 group-hover:from-[#F0B22B]/10 group-hover:to-[#F0B22B]/20"></div>
             </div>
             @endforeach
         </div>
 
         @if($products->hasPages())
-        <div class="mt-12 flex justify-center reveal">
+        <div class="mt-12 flex justify-center reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
             <div class="flex items-center gap-2 bg-[#0c0c3d] p-2 rounded-xl border border-white/10 shadow-lg">
                 @if(!$products->onFirstPage())
                 <a href="{{ $products->previousPageUrl() }}" class="px-3 py-1.5 bg-white/5 hover:bg-[#F0B22B] hover:text-black rounded-lg text-white transition-all text-sm">←</a>
@@ -147,7 +141,7 @@
         @endif
 
         @else
-        <div class="text-center py-20 reveal">
+        <div class="text-center py-20 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
             <div class="w-20 h-20 bg-[#0c0c3d] rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
                 <svg class="w-10 h-10 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -163,6 +157,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Sort Logic
         const sortSelect = document.getElementById('sortSelect');
         if (sortSelect) {
             const urlParams = new URLSearchParams(window.location.search);
@@ -175,23 +170,33 @@
             });
         }
         
-        // Intersection Observer for Reveal Animation
+        // --- REVEAL ANIMATION LOGIC ---
+        const revealItems = document.querySelectorAll('.reveal-item');
+        
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
+                    // Cek semua elemen reveal-item
+                    const allItems = Array.from(revealItems);
+                    const index = allItems.indexOf(entry.target);
+                    
+                    // Gunakan setTimeout untuk efek staggered (bergantian)
+                    setTimeout(() => {
+                        entry.target.classList.remove('opacity-0', 'translate-y-8');
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                    }, index * 50); // Kecepatan muncul antar kartu (50ms)
+
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        revealItems.forEach(el => observer.observe(el));
     });
 </script>
 
 <style>
     .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .reveal { opacity: 0; transform: translateY(20px); transition: all 0.7s ease-out; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
     
     select {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23F0B22B' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");

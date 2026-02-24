@@ -5,7 +5,7 @@
 
     <div class="bg-gradient-to-b from-[#090069] to-[#0c0c3d] py-12 md:py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8 reveal">
+            <div class="text-center mb-8 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
                 <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">
                     <span class="text-[#F0B22B]">Riwayat</span> Pembelian
                 </h1>
@@ -20,7 +20,7 @@
         
         {{-- FLASH MESSAGE --}}
         @if(session('success'))
-            <div class="mb-6 p-4 bg-green-500/20 border border-green-500/30 rounded-xl text-green-300 reveal">
+            <div class="mb-6 p-4 bg-green-500/20 border border-green-500/30 rounded-xl text-green-300 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
                 <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -31,7 +31,7 @@
         @endif
 
         @if($errors->any())
-            <div class="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-xl text-red-300 reveal">
+            <div class="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-xl text-red-300 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
                 <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
@@ -42,7 +42,7 @@
         @endif
 
         @if($orders->isEmpty())
-            <div class="text-center py-12 md:py-16 reveal">
+            <div class="text-center py-12 md:py-16 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
                 <div class="w-16 h-16 md:w-20 md:h-20 bg-[#0c0c3d] rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg class="w-8 h-8 md:w-10 md:h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
@@ -50,24 +50,24 @@
                 </div>
                 <h3 class="text-lg md:text-xl font-semibold text-white mb-2">Belum ada riwayat pembelian</h3>
                 <p class="text-gray-400 text-sm md:text-base mb-6 max-w-md mx-auto">
-                    Mulai berbelanja untuk melihat riwayat pembelian Anda di sini
+                    Mulailah berbelanja untuk melihat riwayat pembelian Anda di sini
                 </p>
                 <a href="{{ route('shop.index') }}" 
-                   class="inline-block bg-[#F0B22B] text-black px-6 py-2.5 rounded-lg font-bold hover:bg-white transition-all transform hover:scale-105">
+                    class="inline-block bg-[#F0B22B] text-black px-6 py-2.5 rounded-lg font-bold hover:bg-white transition-all transform hover:scale-105">
                     Mulai Berbelanja
                 </a>
             </div>
         @else
-            <div class="mb-6 reveal">
+            <div class="mb-6 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
                 <p class="text-gray-300 font-medium">
                     Total <span class="text-[#F0B22B]">{{ $orders->count() }}</span> pesanan ditemukan
                 </p>
             </div>
 
-            <div class="space-y-6 reveal">
+            <div id="orders-container" class="space-y-6">
                 @foreach($orders as $order)
-                <div class="group bg-[#0c0c3d] rounded-2xl overflow-hidden text-white border border-white/5
-                    shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 hover:border-[#F0B22B]/30 relative">
+                <div class="reveal-item opacity-0 transform translate-y-8 transition-all duration-700 group bg-[#0c0c3d] rounded-2xl overflow-hidden text-white border border-white/5
+                    shadow-[0_8px_32px_rgba(0,0,0,0.4)] hover:border-[#F0B22B]/30 relative">
 
                     <div class="p-5 md:p-6 border-b border-white/10 bg-white/5">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -104,7 +104,6 @@
                     </div>
 
                     <div class="p-5 md:p-6 space-y-4">
-                        
                         <div class="flex flex-wrap gap-3">
                             <div class="inline-flex items-center px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                                 <svg class="w-4 h-4 mr-2 text-[#F0B22B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +180,7 @@
                 @endforeach
             </div>
 
-            <div class="mt-10 pt-6 border-t border-white/5 text-center reveal">
+            <div class="mt-10 pt-6 border-t border-white/5 text-center reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
                 <p class="text-gray-500 text-xs tracking-widest uppercase">
                     Menampilkan {{ $orders->count() }} pesanan terbaru
                 </p>
@@ -190,8 +189,9 @@
     </div>
 </div>
 
-{{-- SCRIPT ZOOM GAMBAR --}}
+{{-- SCRIPT --}}
 <script>
+// Fungsi Zoom Gambar
 function toggleImage(img) {
     if (img.classList.contains('zoomed')) {
         img.classList.remove('zoomed');
@@ -230,17 +230,22 @@ function toggleImage(img) {
     }
 }
 
+// Reveal Logic
 document.addEventListener('DOMContentLoaded', function() {
-    const reveals = document.querySelectorAll('.reveal');
-    reveals.forEach(el => {
-        el.classList.add('opacity-0', 'translate-y-8', 'transition', 'duration-700', 'ease-out');
-    });
-
+    const reveals = document.querySelectorAll('.reveal-item');
+    
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.remove('opacity-0', 'translate-y-8');
-                entry.target.classList.add('opacity-100', 'translate-y-0');
+                // Menghitung index elemen di dalam list untuk memberikan delay staggered
+                const allItems = Array.from(reveals);
+                const index = allItems.indexOf(entry.target);
+                
+                setTimeout(() => {
+                    entry.target.classList.remove('opacity-0', 'translate-y-8');
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                }, index * 100); // Delay 100ms antar tiap kartu pesanan
+
                 observer.unobserve(entry.target);
             }
         });

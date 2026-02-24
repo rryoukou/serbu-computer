@@ -6,33 +6,32 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <section class="relative bg-[#F3F3F3] overflow-x-hidden reveal">
-    <div class="hidden md:block absolute inset-y-0 left-0 w-[220px] bg-[#090069]"
-        style="clip-path: polygon(0 0, 3% 0, 70% 100%, 0% 100%);">
+    <div class="hidden md:block absolute inset-y-0 left-0 w-[240px] bg-[#090069]"
+        style="clip-path: polygon(0 0, 3% 0, 85% 101%, 0% 101%);">
     </div>
 
     <div class="md:hidden absolute top-0 left-0 w-full h-20 bg-[#090069]"
-        style="clip-path: polygon(0 0, 100% 0, 100% 25%, 0 100%);">
+        style="clip-path: polygon(0 0, 100% 0, 100% 25%, 0 101%);">
     </div>
 
-    <div class="relative max-w-7xl mx-auto px-6 sm:px-10 md:px-16 py-8 md:py-16
-                grid grid-cols-1 md:grid-cols-2 items-center
-                md:translate-x-7">
+    <div class="relative max-w-7xl mx-auto px-6 sm:px-10 md:px-16 py-6 md:py-8
+                grid grid-cols-1 md:grid-cols-2 items-center md:translate-x-7">
 
-        <div class="relative flex justify-center md:justify-end items-center order-1 md:order-2 mt-4 md:mt-0 mb-6 md:mb-0">
+        <div class="relative flex justify-center md:justify-end items-center order-1 md:order-2 mt-2 md:mt-0 mb-4 md:mb-0">
             <img src="{{ asset('images/hero.png') }}" alt="Laptop"
-                class="relative z-10 w-[260px] sm:w-[320px] md:w-[500px] object-contain md:translate-x-6 drop-shadow-2xl">
+                class="relative z-10 w-[260px] sm:w-[320px] md:w-[480px] object-contain md:translate-x-6 drop-shadow-2xl">
         </div>
 
         <div class="relative z-10 order-2 md:order-1 text-center md:text-left">
-            <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold text-black leading-tight mb-4 md:mb-6">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-black leading-tight mb-4 md:mb-6">
                 <span class="block">Complete Your</span>
                 <span class="block">Laptop Setup Today</span>
             </h1>
-            <p class="text-gray-700 text-sm sm:text-lg md:text-xl mb-8 md:mb-10 max-w-md mx-auto md:mx-0 leading-relaxed">
+            <p class="text-gray-700 text-base sm:text-lg md:text-xl mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed font-medium">
                 Laptops and accessories you can book easily at Serbu Comp.
             </p>
             <button onclick="scrollToAbout()"
-                class="w-full sm:w-auto bg-[#F0B22B] px-10 py-4 rounded-full font-bold hover:scale-105 transition-all shadow-lg text-sm sm:text-base uppercase tracking-widest">
+                class="w-full sm:w-auto bg-[#F0B22B] px-10 py-3.5 rounded-full font-bold hover:scale-105 active:scale-95 transition-all shadow-lg text-sm uppercase tracking-widest text-black">
                 Started Now
             </button>
         </div>

@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Serbu Comp</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     @vite('resources/css/app.css')
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #090069; margin: 0; }
-        .main-container { background-color: #111161; border-top-left-radius: 40px; }
+        .main-container { background-color: #111161; border-top-left-radius: 0px; }
         @media (max-width: 1024px) { .main-container { border-top-left-radius: 0; } }
         [x-cloak] { display: none !important; }
     </style>

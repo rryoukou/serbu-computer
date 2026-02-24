@@ -1,22 +1,28 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="min-h-screen bg-[#090069] py-6">
+<div class="min-h-screen bg-[#090069] py-8">
     <div class="max-w-5xl mx-auto px-4">
         
-        {{-- Header --}}
-        <div class="mb-6 reveal">
-            <h1 class="text-2xl font-bold text-white mb-1">Transaksi Pembelian</h1>
-            <p class="text-gray-300 text-sm">Lengkapi data untuk menyelesaikan pembelian</p>
+        {{-- Header Section --}}
+        <div class="mb-8 reveal opacity-0 transform translate-y-10 transition duration-700">
+            <h1 class="text-3xl font-black text-white mb-2 uppercase tracking-tight">Finalisasi Pembelian</h1>
+            <div class="flex items-center gap-2">
+                <span class="h-1 w-12 bg-[#F0B22B] rounded-full"></span>
+                <p class="text-gray-300 text-sm italic">Lengkapi detail pembayaran Anda di bawah ini</p>
+            </div>
         </div>
 
-        {{-- TAMPILKAN ERROR VALIDASI --}}
+        {{-- Validation Errors --}}
         @if ($errors->any())
-            <div class="mb-6 p-4 bg-red-900/30 border border-red-700 rounded-lg text-red-300 reveal">
-                <p class="font-semibold mb-2 text-sm">⚠️ Periksa kembali data berikut:</p>
-                <ul class="list-disc pl-4 space-y-1">
+            <div class="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-2xl text-red-400 reveal shadow-lg">
+                <div class="flex items-center gap-2 mb-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    <p class="font-bold text-sm uppercase">Peringatan Input:</p>
+                </div>
+                <ul class="list-disc pl-9 space-y-1">
                     @foreach ($errors->all() as $error)
-                        <li class="text-xs">{{ $error }}</li>
+                        <li class="text-xs font-medium">{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
@@ -25,404 +31,252 @@
         <form method="POST" action="{{ route('checkout.store', $product->id) }}" enctype="multipart/form-data">
             @csrf
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                {{-- KOLOM KIRI: DATA PEMBELI --}}
-                <div class="lg:col-span-2 space-y-5">
-                    {{-- DATA PEMBELI --}}
-                    <div class="bg-[#0c0c3d] rounded-xl p-4 md:p-5 border border-gray-800 reveal">
-                        <h2 class="text-lg font-bold text-white mb-3 pb-2 border-b border-gray-800">Data Pembeli</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {{-- KOLOM KIRI: DATA PEMBELI & PEMBAYARAN --}}
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    {{-- FORM: DATA PEMBELI --}}
+                    <div class="bg-[#0c0c3d] rounded-2xl p-6 border border-white/5 reveal shadow-xl">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2 bg-[#F0B22B]/10 rounded-lg">
+                                <svg class="w-5 h-5 text-[#F0B22B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                            </div>
+                            <h2 class="text-lg font-bold text-white uppercase tracking-wider">Informasi Kontak</h2>
+                        </div>
                         
-                        <div class="space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-gray-300 text-xs mb-2">Nama Lengkap</label>
+                                <label class="block text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-2 ml-1">Nama Lengkap</label>
                                 <input type="text" name="nama_lengkap"
                                     value="{{ old('nama_lengkap', $lastOrder->nama_lengkap ?? auth()->user()->nama) }}"
-                                    class="w-full bg-[#090069] border border-gray-700 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F0B22B] focus:border-transparent"
-                                    placeholder="Masukkan nama lengkap"
-                                    required>
+                                    class="w-full bg-[#090069] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:ring-2 focus:ring-[#F0B22B] transition-all"
+                                    placeholder="Nama sesuai identitas" required>
                             </div>
 
                             <div>
-                                <label class="block text-gray-300 text-xs mb-2">Nomor HP/WhatsApp</label>
+                                <label class="block text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-2 ml-1">Nomor WhatsApp</label>
                                 <input type="text" name="no_hp"
                                     value="{{ old('no_hp', $lastOrder->no_hp ?? auth()->user()->no_hp) }}"
-                                    class="w-full bg-[#090069] border border-gray-700 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F0B22B] focus:border-transparent"
-                                    placeholder="Contoh: 081234567890"
-                                    required>
+                                    class="w-full bg-[#090069] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:ring-2 focus:ring-[#F0B22B] transition-all"
+                                    placeholder="Contoh: 0812xxxx" required>
                             </div>
                         </div>
                     </div>
 
-                    {{-- METODE PEMBAYARAN --}}
-                    <div class="bg-[#0c0c3d] rounded-xl p-4 md:p-5 border border-gray-800 reveal">
-                        <h2 class="text-lg font-bold text-white mb-3 pb-2 border-b border-gray-800">Metode Pembayaran</h2>
+                    {{-- FORM: METODE PEMBAYARAN --}}
+                    <div class="bg-[#0c0c3d] rounded-2xl p-6 border border-white/5 reveal shadow-xl">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2 bg-[#F0B22B]/10 rounded-lg">
+                                <svg class="w-5 h-5 text-[#F0B22B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                            </div>
+                            <h2 class="text-lg font-bold text-white uppercase tracking-wider">Metode Pembayaran</h2>
+                        </div>
                         
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-gray-300 text-xs mb-2">Pilih Metode Pembayaran</label>
-                                <select name="metode_pembayaran" id="metode_pembayaran"
-                                    class="w-full bg-[#090069] border border-gray-700 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F0B22B] focus:border-transparent appearance-none"
-                                    required>
-                                    <option value="">-- Pilih Metode Pembayaran --</option>
-                                    <option value="tunai" {{ old('metode_pembayaran') === 'tunai' ? 'selected' : '' }}>Bayar Tunai</option>
-                                    <option value="bca" {{ old('metode_pembayaran') === 'bca' ? 'selected' : '' }}>Transfer BCA</option>
-                                </select>
+                        <div class="space-y-4">
+                            <select name="metode_pembayaran" id="metode_pembayaran"
+                                class="w-full bg-[#090069] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:ring-2 focus:ring-[#F0B22B] appearance-none cursor-pointer"
+                                required>
+                                <option value="">Pilih cara pembayaran</option>
+                                <option value="tunai" {{ old('metode_pembayaran') === 'tunai' ? 'selected' : '' }}>Cash / Tunai di Toko</option>
+                                <option value="bca" {{ old('metode_pembayaran') === 'bca' ? 'selected' : '' }}>Transfer Bank (BCA)</option>
+                            </select>
+
+                            {{-- Info Tunai --}}
+                            <div id="info_tunai_div" class="hidden bg-blue-500/5 border border-blue-500/20 rounded-xl p-4 animate-fade-in">
+                                <div class="flex gap-3 text-blue-300">
+                                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <p class="text-xs leading-relaxed">Silakan lakukan pembayaran langsung di kasir **Toko Serbu Computer** saat pengambilan barang. Pesanan akan dibatalkan otomatis jika tidak diambil dalam 1x24 jam.</p>
+                                </div>
                             </div>
 
-                            {{-- Upload bukti transfer BCA --}}
-                            <div id="bukti_bayar_div" class="{{ old('metode_pembayaran') === 'bca' ? '' : 'hidden' }}">
-                                <label class="block text-gray-300 text-xs mb-2">Upload Bukti Pembayaran BCA</label>
-                                <input type="file" name="bukti_bayar" 
-                                    class="w-full file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-[#F0B22B] file:text-black hover:file:bg-yellow-500 bg-[#090069] border border-gray-700 rounded-lg px-3 py-2 text-white text-sm">
-                                <p class="text-gray-400 text-xs mt-1">Format: JPG, PNG (Maks. 5MB)</p>
-                            </div>
+                            {{-- Info BCA & Upload --}}
+                            <div id="info_bca_div" class="hidden space-y-4 animate-fade-in">
+                                <div class="bg-blue-500/5 border border-blue-500/20 rounded-xl p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Rekening Tujuan</span>
+                                        <span class="text-[#F0B22B] text-xs font-bold uppercase">BCA Personal</span>
+                                    </div>
+                                    <p class="text-white font-black text-lg tracking-widest">3660 2716 34</p>
+                                    <p class="text-gray-400 text-xs">a.n Moch Agung Wibowo</p>
+                                </div>
 
-                            {{-- Informasi Pembayaran --}}
-                            <div id="info_tunai_div" class="{{ old('metode_pembayaran') === 'tunai' ? '' : 'hidden' }} bg-blue-900/20 border border-blue-800 rounded-lg p-3">
-                                <p class="text-blue-300 text-xs font-medium mb-1">Info Pembayaran Tunai:</p>
-                                <p class="text-blue-200 text-xs">Bayar langsung di kasir saat barang diambil. Pastikan datang dalam batas waktu yang ditentukan.</p>
-                            </div>
-
-                            <div id="info_bca_div" class="{{ old('metode_pembayaran') === 'bca' ? '' : 'hidden' }} bg-blue-900/20 border border-blue-800 rounded-lg p-3">
-                                <p class="text-blue-300 text-xs font-medium mb-1">Info Rekening BCA: Moch Agung Wibowo</p>
-                                <p class="text-blue-200 text-xs mb-1">No. Rekening: 3660271634</p>
-                                <p class="text-blue-200 text-xs">Toko Serbu Computer</p>
+                                <div id="bukti_bayar_div">
+                                    <label class="block text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-2 ml-1">Upload Bukti Transfer</label>
+                                    <div class="relative group">
+                                        <input type="file" name="bukti_bayar" id="bukti_input"
+                                            class="w-full file:hidden bg-[#090069] border border-dashed border-white/20 rounded-xl px-4 py-8 text-center text-xs text-gray-400 cursor-pointer hover:border-[#F0B22B]/50 transition-all">
+                                        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none" id="file_label_container">
+                                            <svg class="w-6 h-6 text-gray-500 mb-2 group-hover:text-[#F0B22B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                                            <span id="file_name_display">Klik untuk pilih foto struk</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-[10px] text-gray-500 mt-2 italic text-center">*Format JPG/PNG, Maksimal 5MB</p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    {{-- PESAN --}}
-                    <div class="bg-[#0c0c3d] rounded-xl p-4 md:p-5 border border-gray-800 reveal">
-                        <h2 class="text-lg font-bold text-white mb-3 pb-2 border-b border-gray-800">Pesan Tambahan</h2>
-                        
-                        <div>
-                            <label class="block text-gray-300 text-xs mb-2">Pesan untuk Penjual (Opsional)</label>
-                            <textarea name="pesan" rows="2"
-                                class="w-full bg-[#090069] border border-gray-700 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F0B22B] focus:border-transparent"
-                                placeholder="Contoh: Tolong jaga barangnya, warna hitam">{{ old('pesan') }}</textarea>
-                        </div>
+                    {{-- PESAN TAMBAHAN --}}
+                    <div class="bg-[#0c0c3d] rounded-2xl p-6 border border-white/5 reveal shadow-xl">
+                        <label class="block text-white font-bold uppercase tracking-wider text-sm mb-4">Catatan Pesanan (Opsional)</label>
+                        <textarea name="pesan" rows="2"
+                            class="w-full bg-[#090069] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:ring-2 focus:ring-[#F0B22B] transition-all resize-none"
+                            placeholder="Contoh: 'Tolong siapkan nota fisik' atau 'Saya ambil sore hari'">{{ old('pesan') }}</textarea>
                     </div>
                 </div>
 
-                {{-- KOLOM KANAN: DETAIL PRODUK & RINGKASAN --}}
-                <div class="space-y-5">
-                    {{-- DETAIL PRODUK --}}
-                    <div class="bg-[#0c0c3d] rounded-xl p-4 border border-gray-800 reveal">
-                        <h2 class="text-base font-bold text-white mb-3 pb-2 border-b border-gray-800">Produk yang Dibeli</h2>
+                {{-- KOLOM KANAN: RINGKASAN --}}
+                <div class="space-y-6">
+                    {{-- CARD: PRODUK --}}
+                    <div class="bg-[#0c0c3d] rounded-2xl p-5 border border-white/5 reveal shadow-xl overflow-hidden relative">
+                        <div class="absolute top-0 right-0 p-3">
+                            <span class="bg-[#F0B22B] text-black text-[9px] font-black px-2 py-0.5 rounded uppercase">{{ $product->category ?? 'Produk' }}</span>
+                        </div>
                         
-                        <div class="space-y-3">
-                            {{-- Gambar Produk --}}
-                            <div class="relative w-full h-48 bg-[#003A8F] rounded-lg border border-gray-700 overflow-hidden flex items-center justify-center">
-            <img src="{{ $product->photo ? asset('storage/' . $product->photo) : 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400' }}"
-                 alt="{{ $product->name }}"
-                 class="w-full h-full object-cover"> </div>
-                            
-                            {{-- Info Produk --}}
-                            <div>
-                                <h3 class="font-semibold text-white text-sm mb-1">{{ $product->name }}</h3>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="px-2 py-0.5 bg-[#F0B22B] text-black text-xs font-semibold rounded-full">
-                                        {{ $product->category ?? 'Produk' }}
-                                    </span>
-                                    @if($product->stock > 0)
-                                        <span class="px-2 py-0.5 bg-green-500 text-white text-xs font-semibold rounded-full">
-                                            Stok: {{ $product->stock }}
-                                        </span>
-                                    @else
-                                        <span class="px-2 py-0.5 bg-red-500 text-white text-xs font-semibold rounded-full">
-                                            Habis
-                                        </span>
-                                    @endif
-                                </div>
+                        <h2 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Item Pesanan</h2>
+                        <div class="flex items-center gap-4">
+                            <div class="w-20 h-20 bg-[#003A8F] rounded-xl overflow-hidden shrink-0 border border-white/5">
+                                <img src="{{ $product->photo ? asset('storage/' . $product->photo) : asset('images/placeholder.png') }}"
+                                     alt="{{ $product->name }}" class="w-full h-full object-cover">
                             </div>
-
-                            {{-- Panduan Pembelian --}}
-                            @if($product->purchase_guide)
-                            <div class="pt-2 border-t border-gray-800">
-                                <p class="text-gray-300 text-xs mb-1">Panduan Pembelian:</p>
-                                <p class="text-white text-xs line-clamp-3">
-                                    {{ Str::limit($product->purchase_guide, 100) }}
-                                </p>
+                            <div class="min-w-0">
+                                <h3 class="text-white font-bold text-sm truncate leading-tight mb-1">{{ $product->name }}</h3>
+                                <p class="text-[#F0B22B] font-black text-sm">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
                             </div>
-                            @endif
                         </div>
                     </div>
 
-                    {{-- RINGKASAN PEMBAYARAN --}}
-                    <div class="bg-[#0c0c3d] rounded-xl p-4 border border-gray-800 reveal">
-                        <h2 class="text-base font-bold text-white mb-3 pb-2 border-b border-gray-800">Ringkasan Pembayaran</h2>
+                    {{-- CARD: TOTAL --}}
+                    <div class="bg-[#0c0c3d] rounded-2xl p-6 border border-[#F0B22B]/20 reveal shadow-2xl relative overflow-hidden">
+                        {{-- Decorative background --}}
+                        <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-[#F0B22B]/5 rounded-full blur-2xl"></div>
                         
-                        <div class="space-y-3">
-                            {{-- Input Jumlah --}}
-                            <div>
-                                <label class="block text-gray-300 text-xs mb-2">Jumlah Pesanan</label>
-                                <div class="flex items-center space-x-3">
-                                    <div class="flex items-center border-2 border-[#F0B22B] rounded-lg overflow-hidden bg-black/30">
-                                        <button 
-                                            type="button" 
-                                            onclick="decreaseQuantity()"
-                                            class="px-2.5 py-1.5 text-white hover:bg-[#F0B22B]/20 transition text-sm">
-                                            −
-                                        </button>
-                                        <input 
-                                            type="number" 
-                                            id="quantity" 
-                                            name="qty" 
-                                            value="{{ old('qty', request('quantity', 1)) }}" 
-                                            min="1" 
-                                            max="{{ min($product->stock, 2) }}"
-                                            class="w-12 text-center border-0 focus:ring-0 bg-transparent text-white font-semibold text-sm">
-                                        <button 
-                                            type="button" 
-                                            onclick="increaseQuantity()"
-                                            class="px-2.5 py-1.5 text-white hover:bg-[#F0B22B]/20 transition text-sm">
-                                            +
-                                        </button>
-                                    </div>
-                                    <div class="text-gray-400 text-xs">
-                                        Maks: {{ min($product->stock, 2) }} unit
-                                    </div>
+                        <h2 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Ringkasan Biaya</h2>
+                        
+                        <div class="space-y-4">
+                            {{-- Quantity Selector --}}
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400 text-xs font-bold uppercase">Jumlah</span>
+                                <div class="flex items-center bg-[#090069] border border-white/10 rounded-lg p-1">
+                                    <button type="button" onclick="decreaseQuantity()" class="w-8 h-8 text-white hover:text-[#F0B22B] transition-colors font-bold text-lg">−</button>
+                                    <input type="number" id="quantity" name="qty" 
+                                        value="{{ old('qty', request('quantity', 1)) }}" 
+                                        min="1" max="{{ min($product->stock, 2) }}"
+                                        class="w-10 bg-transparent text-center text-white font-black text-sm border-none focus:ring-0 appearance-none">
+                                    <button type="button" onclick="increaseQuantity()" class="w-8 h-8 text-white hover:text-[#F0B22B] transition-colors font-bold text-lg">+</button>
                                 </div>
                             </div>
 
-                            {{-- Detail Harga --}}
-                            <div class="pt-2 border-t border-gray-800 space-y-1.5">
+                            <div class="pt-4 border-t border-white/5 space-y-3">
                                 <div class="flex justify-between items-center">
-                                    <span class="text-gray-300 text-xs">Harga Satuan</span>
-                                    <span class="text-white text-sm">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                    <span class="text-gray-400 text-xs">Harga Subtotal</span>
+                                    <span class="text-white font-bold text-sm" id="subtotal_display">Rp 0</span>
                                 </div>
-                                
                                 <div class="flex justify-between items-center">
-                                    <span class="text-gray-300 text-xs">Jumlah</span>
-                                    <span id="quantity-display" class="text-white text-sm">1 unit</span>
+                                    <span class="text-gray-400 text-xs">Biaya Layanan</span>
+                                    <span class="text-green-400 font-bold text-sm uppercase text-[10px]">Gratis</span>
                                 </div>
-                                
-                                <div class="flex justify-between items-center pt-2 border-t border-gray-800">
-                                    <span class="text-gray-300 text-sm font-semibold">Total Pembayaran</span>
-                                    <span id="total_harga" class="text-[#F0B22B] font-bold text-base">
-                                        Rp {{ number_format($product->price, 0, ',', '.') }}
-                                    </span>
+                                <div class="flex justify-between items-center pt-3 border-t border-white/10">
+                                    <span class="text-white text-xs font-black uppercase tracking-tighter">Total Akhir</span>
+                                    <span id="total_harga" class="text-[#F0B22B] font-black text-xl tracking-tight">Rp 0</span>
                                 </div>
                             </div>
-
-                            {{-- Informasi Stok --}}
-                            @if($product->stock <= 5)
-                            <div class="bg-orange-900/30 border border-orange-700 rounded-lg p-2 mt-2">
-                                <p class="text-orange-300 text-xs flex items-center">
-                                    <span class="mr-1.5">⚠️</span>
-                                    Stok terbatas! Hanya tersedia {{ $product->stock }} unit
-                                </p>
-                            </div>
-                            @endif
                         </div>
+
+                        {{-- TOMBOL SUBMIT --}}
+                        <button type="submit" 
+                                class="w-full mt-8 bg-[#F0B22B] hover:bg-white text-black font-black py-4 rounded-xl transition-all duration-500 shadow-[0_10px_30px_rgba(240,178,43,0.2)] hover:shadow-[0_15px_35px_rgba(240,178,43,0.3)] text-sm uppercase tracking-widest transform hover:-translate-y-1">
+                            Konfirmasi
+                        </button>
                     </div>
 
-                    {{-- TOMBOL SUBMIT --}}
-                    <button type="submit" 
-                            class="w-full bg-gradient-to-r from-[#F0B22B] to-[#e0a020] hover:from-[#ffc233] hover:to-[#f0b22b] text-black font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 shadow hover:shadow-lg text-sm reveal">
-                        Buat Pesanan
-                    </button>
-                    
-                    {{-- Kembali ke Detail --}}
-                       <a href="{{ route('shop.show', $product->id) }}"
-   id="backButton"
-   class="fixed bottom-4 left-4 z-50
-          inline-flex items-center gap-2
-          px-4 py-2 rounded-full
-          bg-[#0c0c3d] border border-gray-700
-          text-sm font-medium text-gray-200
-          shadow-lg
-          opacity-0 translate-y-4 pointer-events-none
-          hover:border-[#F0B22B] hover:text-[#F0B22B]
-          transition-all duration-300">
-    ← Kembali
-</a>
+                    {{-- Keamanan --}}
+                    <div class="flex items-center justify-center gap-2 text-gray-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 4.925-3.367 8.684-9.031 10.956L10 18l-.969-.043C3.367 15.684 0 11.925 0 7.001c0-.681.056-1.35.166-2.002zm3.333 4.89l3.098 3.097L15.42 6.5l-1.06-1.06-5.773 5.774-2.038-2.038-1.06 1.06z" clip-rule="evenodd"/></svg>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">Transaksi Aman & Terenkripsi</span>
+                    </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-{{-- Script untuk interaksi --}}
+{{-- Tombol Kembali Floating --}}
+<a href="{{ route('shop.show', $product->id) }}"
+   class="fixed bottom-6 left-6 z-50 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0c0c3d]/90 backdrop-blur-md border border-white/10 text-xs font-bold text-gray-300 shadow-2xl hover:text-[#F0B22B] transition-all">
+    ← BATALKAN
+</a>
+
+<style>
+    @keyframes fade-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
+    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('backButton');
-    if (!btn) return;
+        const select = document.getElementById('metode_pembayaran');
+        const infoTunaiDiv = document.getElementById('info_tunai_div');
+        const infoBcaDiv = document.getElementById('info_bca_div');
+        const qtyInput = document.getElementById('quantity');
+        const fileInput = document.getElementById('bukti_input');
+        const fileNameDisplay = document.getElementById('file_name_display');
 
-    window.addEventListener('scroll', () => {
-        const trigger = 200; // muncul setelah scroll 200px
-
-        if (window.scrollY > trigger) {
-            btn.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-            btn.classList.add('opacity-100', 'translate-y-0');
-        } else {
-            btn.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
-            btn.classList.remove('opacity-100', 'translate-y-0');
-        }
-    });
-});
-
-    // Untuk upload bukti transfer BCA
-    const select = document.getElementById('metode_pembayaran');
-    const buktiDiv = document.getElementById('bukti_bayar_div');
-    const infoTunaiDiv = document.getElementById('info_tunai_div');
-    const infoBcaDiv = document.getElementById('info_bca_div');
-
-    select.addEventListener('change', () => {
-        if(select.value === 'bca') {
-            buktiDiv.classList.remove('hidden');
-            infoTunaiDiv.classList.add('hidden');
-            infoBcaDiv.classList.remove('hidden');
-        } else if(select.value === 'tunai') {
-            buktiDiv.classList.add('hidden');
-            infoTunaiDiv.classList.remove('hidden');
-            infoBcaDiv.classList.add('hidden');
-        } else {
-            buktiDiv.classList.add('hidden');
+        // Logic Toggle Metode Pembayaran
+        select.addEventListener('change', () => {
             infoTunaiDiv.classList.add('hidden');
             infoBcaDiv.classList.add('hidden');
-        }
-    });
-
-    // Quantity Control
-    function increaseQuantity() {
-        const input = document.getElementById('quantity');
-        const max = parseInt(input.max);
-        if (parseInt(input.value) < max) {
-            input.value = parseInt(input.value) + 1;
-            updateTotalPrice();
-        }
-    }
-
-    function decreaseQuantity() {
-        const input = document.getElementById('quantity');
-        if (parseInt(input.value) > 1) {
-            input.value = parseInt(input.value) - 1;
-            updateTotalPrice();
-        }
-    }
-
-    // Update Total Price
-    function updateTotalPrice() {
-        const quantity = parseInt(document.getElementById('quantity').value) || 1;
-        const price = {{ $product->price }};
-        const total = quantity * price;
-        
-        // Update display
-        document.getElementById('total_harga').textContent = 'Rp ' + total.toLocaleString('id-ID');
-        document.getElementById('quantity-display').textContent = quantity + ' unit';
-        
-        // Limit max quantity
-        const input = document.getElementById('quantity');
-        if (quantity > {{ min($product->stock, 2) }}) {
-            input.value = {{ min($product->stock, 2) }};
-            updateTotalPrice();
-        }
-    }
-
-    // Initialize
-    document.getElementById('quantity').addEventListener('input', updateTotalPrice);
-    document.addEventListener('DOMContentLoaded', function() {
-        updateTotalPrice();
-        
-        // Check if quantity exceeds stock
-        const quantityInput = document.getElementById('quantity');
-        if (quantityInput) {
-            quantityInput.addEventListener('change', function() {
-                const max = parseInt(this.max);
-                if (parseInt(this.value) > max) {
-                    this.value = max;
-                    updateTotalPrice();
-                    alert('Jumlah melebihi batas maksimal!');
-                }
-            });
-        }
-        
-        // Initialize file input styling
-        const fileInput = document.querySelector('input[type="file"]');
-        if (fileInput) {
-            fileInput.addEventListener('change', function(e) {
-                const fileName = e.target.files[0]?.name || 'Pilih file...';
-                const label = this.nextElementSibling;
-                if (label && label.tagName === 'P') {
-                    label.textContent = 'File terpilih: ' + fileName;
-                }
-            });
-        }
-
-        // Initialize payment method info based on current selection
-        const currentMethod = select.value;
-        if(currentMethod === 'bca') {
-            buktiDiv.classList.remove('hidden');
-            infoBcaDiv.classList.remove('hidden');
-        } else if(currentMethod === 'tunai') {
-            infoTunaiDiv.classList.remove('hidden');
-        }
-
-        /* ===============================
-           SCROLL REVEAL ANIMATION
-        =============================== */
-        const reveals = document.querySelectorAll('.reveal');
-
-        reveals.forEach(el => {
-            el.classList.add(
-                'opacity-0',
-                'translate-y-10',
-                'transition',
-                'duration-700',
-                'ease-out'
-            );
+            
+            if(select.value === 'bca') infoBcaDiv.classList.remove('hidden');
+            if(select.value === 'tunai') infoTunaiDiv.classList.remove('hidden');
         });
 
+        // Styling File Input
+        fileInput.addEventListener('change', (e) => {
+            const name = e.target.files[0]?.name || 'Klik untuk pilih foto struk';
+            fileNameDisplay.textContent = name;
+            fileNameDisplay.classList.add('text-[#F0B22B]', 'font-bold');
+        });
+
+        // Quantity & Price Logic
+        window.updatePrice = function() {
+            const qty = parseInt(qtyInput.value) || 1;
+            const price = {{ $product->price }};
+            const total = qty * price;
+            
+            const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+            
+            document.getElementById('subtotal_display').textContent = formatter.format(total);
+            document.getElementById('total_harga').textContent = formatter.format(total);
+        };
+
+        window.increaseQuantity = function() {
+            if (parseInt(qtyInput.value) < parseInt(qtyInput.max)) {
+                qtyInput.value = parseInt(qtyInput.value) + 1;
+                updatePrice();
+            }
+        };
+
+        window.decreaseQuantity = function() {
+            if (parseInt(qtyInput.value) > 1) {
+                qtyInput.value = parseInt(qtyInput.value) - 1;
+                updatePrice();
+            }
+        };
+
+        // Scroll Reveal
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.remove('opacity-0', 'translate-y-10');
                     entry.target.classList.add('opacity-100', 'translate-y-0');
-                    observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
 
-        reveals.forEach(el => observer.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        updatePrice(); // Init price
     });
 </script>
-
-<style>
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    
-    input[type="number"] {
-        -moz-appearance: textfield;
-    }
-    
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    
-    .line-clamp-3 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    
-    select {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23F0B22B' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-        background-position: right 0.75rem center;
-        background-repeat: no-repeat;
-        background-size: 1em 1em;
-        padding-right: 2rem;
-    }
-    
-    select::-ms-expand {
-        display: none;
-    }
-</style>
 @endsection

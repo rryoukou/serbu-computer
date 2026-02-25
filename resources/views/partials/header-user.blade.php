@@ -30,19 +30,6 @@
 
         <!-- DESKTOP ICONS -->
         <div class="hidden md:flex items-center gap-4">
-            <!-- Search -->
-            <!-- <a href="{{ route('shop.search.page') }}" 
-               class="text-[#F0B22B] hover:text-white transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                     class="w-5 h-5 sm:w-6 sm:h-6" 
-                     fill="none" 
-                     viewBox="0 0 24 24" 
-                     stroke="currentColor" 
-                     stroke-width="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-            </a> -->
 
             <!-- Wishlist / Favorite -->
 <a href="{{ route('wishlist.index') }}"
@@ -60,27 +47,6 @@
                  L12 21.35z"/>
     </svg>
 </a>
-
-            <!-- Cart -->
-            <!-- <a href="{{ route('cart.index') }}" 
-               class="relative text-[#F0B22B] hover:text-white transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                     class="w-5 h-5 sm:w-6 sm:h-6" 
-                     fill="none" 
-                     viewBox="0 0 24 24" 
-                     stroke="currentColor" 
-                     stroke-width="2">
-                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/>
-                    <circle cx="7" cy="21" r="1"/>
-                    <circle cx="20" cy="21" r="1"/>
-                </svg>
-                @if(session('cart_count', 0) > 0)
-                <span class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs 
-                             px-1.5 rounded-full min-w-[18px] text-center">
-                    {{ session('cart_count', 0) }}
-                </span>
-                @endif
-            </a> -->
 
             <!-- User Dropdown -->
             <div class="relative">
@@ -183,17 +149,6 @@
                 </a>
 
                 <hr class="border-white/10 my-2">
-
-                {{-- Search Mobile --}}
-                <!-- <a href="{{ route('shop.search.page') }}" 
-                   class="flex items-center gap-3 text-white hover:text-[#F0B22B] py-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" 
-                         class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                    <span>Search</span>
-                </a> -->
 
                 {{-- Wishlist Mobile --}}
                 <a href="{{ route('wishlist.index') }}"

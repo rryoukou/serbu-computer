@@ -29,8 +29,8 @@
             
             <div class="text-center mb-8">
                 <h1 class="text-xl font-semibold tracking-tight">
-                    <span class="text-white">Register</span>
-                    <span class="text-[#F0B22B]">Account</span>
+                    <span class="text-white">Enter your</span>
+                    <span class="text-[#F0B22B]">Personal Information</span>
                 </h1>
             </div>
 
@@ -86,14 +86,14 @@
 
                 <button type="submit" 
                         class="w-full bg-gradient-to-r from-[#B8860B] to-[#F0B22B] text-white text-sm font-bold py-3.5 rounded-xl shadow-lg hover:brightness-110 active:scale-[0.98] transition-all uppercase tracking-wide mt-4">
-                    Daftar Sekarang
+                    Register Now
                 </button>
             </form>
 
             <div class="text-center mt-6">
                 <p class="text-gray-400 text-[13px]">
-                    Sudah punya akun? 
-                    <a href="{{ route('login') }}" class="text-[#F0B22B] hover:text-white transition-colors font-medium ml-1">Login di sini</a>
+                    You already have an account?
+                    <a href="{{ route('login') }}" class="text-[#F0B22B] hover:text-white transition-colors font-medium ml-1">Login here</a>
                 </p>
             </div>
         </div>

@@ -1,40 +1,3 @@
-<style>
-    /* Animasi Utama */
-    @keyframes slideInLeft {
-        from { opacity: 0; transform: translateX(-20px); }
-        to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes fadeInRight {
-        from { opacity: 0; transform: translateX(-10px); }
-        to { opacity: 1; transform: translateX(0); }
-    }
-
-    /* Jalankan animasi hanya jika class 'has-visited' TIDAK ada */
-    :not(.has-visited) .animate-sidebar { animation: slideInLeft 0.5s ease-out forwards; }
-    :not(.has-visited) .nav-item-anim { 
-        opacity: 0; 
-        animation: fadeInRight 0.4s ease-out forwards; 
-    }
-
-    /* Reset kondisi jika sudah dikunjungi agar langsung tampil */
-    .has-visited .animate-sidebar,
-    .has-visited .nav-item-anim {
-        opacity: 1 !important;
-        transform: none !important;
-        animation: none !important;
-    }
-</style>
-
-<script>
-    // Cek session sebelum HTML di-render sepenuhnya untuk hindari 'flicker'
-    if (sessionStorage.getItem('sidebar_visited')) {
-        document.documentElement.classList.add('has-visited');
-    } else {
-        sessionStorage.setItem('sidebar_visited', 'true');
-    }
-</script>
-
 <div :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
      class="fixed lg:static inset-y-0 left-0 w-64 bg-[#090069] text-white flex flex-col h-screen border-r border-white/5 z-[50] transition-transform duration-300 ease-in-out lg:translate-x-0 animate-sidebar">
     
@@ -47,11 +10,11 @@
             </svg>
         </button>
 
-        <div class="w-full flex justify-center lg:justify-start lg:pl-8 transition-transform duration-700 transform hover:scale-105">
+        <a href="{{ route('admin.dashboard') }}" class="w-full flex justify-center lg:justify-start lg:pl-8 transition-transform duration-700 transform hover:scale-105">
             <img src="{{ asset('images/logo.png') }}" 
                  alt="Logo SC" 
                  class="w-28 md:w-32 h-auto drop-shadow-2xl object-contain">
-        </div>
+        </a>
     </div>
 
     <nav class="flex-1 px-4 py-2 space-y-1.5 overflow-y-auto custom-scrollbar">
@@ -116,3 +79,41 @@
         </form>
     </div>
 </div>
+
+<style>
+    /* Animasi Utama */
+    @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-20px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeInRight {
+        from { opacity: 0; transform: translateX(-10px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Jalankan animasi hanya jika class 'has-visited' TIDAK ada */
+    :not(.has-visited) .animate-sidebar { animation: slideInLeft 0.5s ease-out forwards; }
+    :not(.has-visited) .nav-item-anim { 
+        opacity: 0; 
+        animation: fadeInRight 0.4s ease-out forwards; 
+    }
+
+    /* Reset kondisi jika sudah dikunjungi agar langsung tampil */
+    .has-visited .animate-sidebar,
+    .has-visited .nav-item-anim {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+</style>
+
+<script>
+    // Cek session sebelum HTML di-render sepenuhnya untuk hindari 'flicker'
+    if (sessionStorage.getItem('sidebar_visited')) {
+        document.documentElement.classList.add('has-visited');
+    } else {
+        sessionStorage.setItem('sidebar_visited', 'true');
+    }
+</script>
+

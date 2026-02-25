@@ -139,12 +139,6 @@ Route::middleware(['auth', 'pengguna'])->group(function () {
     Route::post('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
 
-    // Cart
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-    Route::post('/cart/update/{product}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/remove/{product}', [CartController::class, 'remove'])->name('cart.remove');
-
     // Checkout
     Route::get('/checkout/{product}', [CheckoutController::class, 'show'])->name('checkout.show');
     Route::post('/checkout/{product}', [CheckoutController::class, 'store'])->name('checkout.store');

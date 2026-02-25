@@ -28,7 +28,7 @@
                 <span class="block">Laptop Setup Today</span>
             </h1>
             <p class="text-gray-700 text-base sm:text-lg md:text-xl mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed font-medium">
-                Laptops and accessories you can book easily at Serbu Comp.
+                Laptops and accessories you can book easily at Serbu Computer.
             </p>
             <button onclick="scrollToAbout()"
                 class="w-full sm:w-auto bg-[#F0B22B] px-10 py-3.5 rounded-full font-bold hover:scale-105 active:scale-95 transition-all shadow-lg text-sm uppercase tracking-widest text-black">

@@ -46,7 +46,7 @@
     </div>
 
     <div class="reveal-item bg-[#F0B22B] py-3 text-xs font-medium text-black opacity-0 transform translate-y-8 transition-all duration-700">
-        © {{ date('Y') }} Serbu Comp. All Rights Reserved.
+        © {{ date('Y') }} Serbu Computer. All Rights Reserved.
     </div>
 
     <script>

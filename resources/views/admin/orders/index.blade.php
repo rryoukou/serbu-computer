@@ -14,10 +14,7 @@
 
     {{-- BARIS 2: SEARCH & INFO --}}
     <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
-        
-        {{-- SEARCH & SHOW PER PAGE --}}
         <form method="GET" class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-            {{-- SELECT SHOW PER PAGE --}}
             <select name="per_page" onchange="this.form.submit()" class="bg-[#090069] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all cursor-pointer">
                 <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>Show 5</option>
                 <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>Show 10</option>
@@ -39,7 +36,6 @@
             </div>
         </form>
 
-        {{-- TOTAL PESANAN --}}
         <div class="flex items-center gap-3 bg-[#F0B22B]/10 px-4 py-2 rounded-xl border border-[#F0B22B]/20 w-full md:w-auto justify-center">
             <span class="w-2 h-2 rounded-full bg-[#F0B22B] animate-pulse"></span>
             <span class="text-[#F0B22B] text-xs font-bold uppercase tracking-wider">
@@ -67,74 +63,94 @@
                 <div class="p-6 md:p-8">
                     <div class="flex flex-col lg:flex-row gap-8">
                         
-                        <div class="flex-1 space-y-4">
-                            <div class="flex items-start justify-between">
-                                <div class="space-y-1">
-                                    <p class="text-[#F0B22B] text-[10px] font-black uppercase tracking-widest">Customer</p>
-                                    <h3 class="text-white text-lg font-bold">{{ $order->nama_lengkap }}</h3>
-                                    <p class="text-gray-500 text-xs">{{ $order->user->email ?? 'Guest Account' }}</p>
+                        {{-- KOLOM KIRI: CUSTOMER (Locked Width) --}}
+                        <div class="flex-none lg:w-64 space-y-4">
+                            <div class="space-y-2">
+                                <div>
+                                    <p class="text-[#F0B22B] text-xs font-black uppercase tracking-widest mb-1">Customer</p>
+                                    <h3 class="text-white text-xl font-bold tracking-tight">{{ $order->nama_lengkap }}</h3>
+                                    <p class="text-gray-400 text-sm truncate">{{ $order->user->email ?? 'Guest Account' }}</p>
                                 </div>
-                                <div class="text-right">
-                                    <p class="text-[#F0B22B] text-[10px] font-black uppercase tracking-widest">Total Harga</p>
-                                    <p class="text-white text-xl font-black italic">Rp {{ number_format($order->total_harga,0,',','.') }}</p>
+                                <div class="pt-2">
+                                    <p class="text-[#F0B22B] text-[10px] font-black uppercase tracking-widest mb-1">Total Harga</p>
+                                    <p class="text-white text-2xl font-black italic tracking-tighter whitespace-nowrap">Rp {{ number_format($order->total_harga,0,',','.') }}</p>
                                 </div>
                             </div>
 
-                            {{-- ITEM PRODUK --}}
                             <div class="p-4 bg-black/20 rounded-2xl border border-white/5">
                                 <p class="text-[#F0B22B] text-[10px] font-black uppercase tracking-widest mb-2">Item Produk</p>
-                                <div class="space-y-2">
-                                    <div class="flex justify-between items-center text-sm">
-                                        <span class="text-gray-300 font-medium">{{ $order->nama_produk }}</span>
-                                        <span class="text-[#F0B22B] font-bold">x{{ $order->qty }}</span>
-                                    </div>
+                                <div class="flex justify-between items-center text-sm gap-2">
+                                    <span class="text-gray-300 font-medium text-base truncate">{{ $order->nama_produk }}</span>
+                                    <span class="text-[#F0B22B] font-extrabold text-lg flex-none">x{{ $order->qty }}</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex-1 border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-8 space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <p class="text-gray-500 text-[10px] font-bold uppercase mb-1 tracking-tight">Payment Method</p>
-                                    <p class="text-white text-sm font-semibold italic uppercase">{{ str_replace('_',' ',$order->metode_pembayaran) }}</p>
+                        {{-- KOLOM TENGAH: PAYMENT & STATUS (Flexible but no-wrap) --}}
+                        <div class="flex-1 border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-8">
+                            <div class="flex flex-col sm:flex-row gap-6 sm:gap-10">
+                                <div class="min-w-fit">
+                                    <p class="text-gray-500 text-[10px] font-bold uppercase mb-2 tracking-widest">Payment Method</p>
+                                    <p class="text-white text-base font-bold italic uppercase whitespace-nowrap">{{ str_replace('_',' ',$order->metode_pembayaran) }}</p>
                                 </div>
-                                <div>
-                                    <p class="text-gray-500 text-[10px] font-bold uppercase mb-1 tracking-tight">Order Status</p>
-                                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase {{ $order->status === 'selesai' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400 animate-pulse' }}">
-                                        {{ str_replace('_',' ',$order->status) }}
-                                    </span>
+
+                                <div class="min-w-fit">
+                                    <p class="text-gray-500 text-[10px] font-bold uppercase mb-2 tracking-widest">Order Status</p>
+                                    <div class="flex">
+                                        @php
+                                            $statusClasses = match($order->status) {
+                                                'selesai' => 'bg-green-500/20 text-green-400 border-green-500/30',
+                                                'menunggu_verifikasi' => 'bg-blue-500/20 text-blue-400 border-blue-500/30 animate-pulse',
+                                                'menunggu_pembayaran_tunai' => 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+                                                default => 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+                                            };
+                                        @endphp
+                                        <span class="inline-flex items-center whitespace-nowrap px-4 py-2 rounded-xl border text-[11px] font-black uppercase tracking-widest {{ $statusClasses }}">
+                                            <span class="w-2 h-2 rounded-full bg-current mr-2 shrink-0"></span>
+                                            {{ str_replace('_',' ',$order->status) }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
                             @if($order->bukti_bayar)
-                                <div>
+                                <div class="mt-8">
                                     <p class="text-gray-500 text-[10px] font-bold uppercase mb-2">Bukti Pembayaran</p>
-                                    <div class="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-white/10 hover:border-[#F0B22B] transition-all cursor-zoom-in group/img" onclick="toggleImage(this)">
+                                    <div class="relative w-32 h-32 rounded-2xl overflow-hidden border-2 border-white/10 hover:border-[#F0B22B] transition-all cursor-zoom-in group/img shadow-2xl" onclick="toggleImage(this)">
                                         <img src="{{ asset('storage/' . $order->bukti_bayar) }}" class="w-full h-full object-cover">
-                                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 flex items-center justify-center transition-all text-[8px] text-white font-bold uppercase">View Large</div>
+                                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 flex flex-col items-center justify-center transition-all text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                            </svg>
+                                            <span class="text-[10px] font-black uppercase">Enlarge</span>
+                                        </div>
                                     </div>
                                 </div>
                             @endif
                         </div>
 
-                        <div class="flex flex-col justify-between items-end gap-6 border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-8">
-                            <div class="text-right w-full">
+                        {{-- KOLOM KANAN: ACTION (Locked Width) --}}
+                        <div class="flex-none lg:w-64 flex flex-col gap-8 lg:items-end border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-8">
+                            <div class="text-left lg:text-right w-full">
                                 <p class="text-gray-500 text-[10px] font-bold uppercase mb-3">Update Order Status</p>
-                                <form action="{{ route('admin.orders.status', $order->id) }}" method="POST" class="flex flex-col sm:flex-row gap-2">
+                                <form action="{{ route('admin.orders.status', $order->id) }}" method="POST" class="flex flex-col gap-2">
                                     @csrf
                                     <select name="status" class="bg-[#090069] border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:border-[#F0B22B] focus:outline-none cursor-pointer">
                                         <option value="menunggu_pembayaran_tunai" {{ $order->status === 'menunggu_pembayaran_tunai' ? 'selected' : '' }}>Menunggu Pembayaran Tunai</option>
                                         <option value="menunggu_verifikasi" {{ $order->status === 'menunggu_verifikasi' ? 'selected' : '' }}>Menunggu Verifikasi</option>
                                         <option value="selesai" {{ $order->status === 'selesai' ? 'selected' : '' }}>Selesai</option>
                                     </select>
-                                    <button type="submit" class="bg-[#F0B22B] text-[#090069] px-4 py-2 rounded-xl text-[10px] font-black uppercase hover:scale-105 active:scale-95 transition-all">
-                                        Apply
+                                    <button type="submit" class="bg-[#F0B22B] text-[#090069] px-4 py-2.5 rounded-xl text-[10px] font-black uppercase hover:scale-105 active:scale-95 transition-all shadow-lg shadow-[#F0B22B]/20">
+                                        Apply Change
                                     </button>
                                 </form>
                             </div>
-                            <div class="text-right italic">
-                                <p class="text-gray-600 text-[10px] uppercase font-bold">Batas Waktu</p>
-                                <p class="text-gray-400 text-xs font-medium">{{ $order->batas_waktu ? \Carbon\Carbon::parse($order->batas_waktu)->format('d M, H:i') : '-' }}</p>
+                            
+                            <div class="text-left lg:text-right pb-2">
+                                <p class="text-gray-600 text-[10px] uppercase font-bold tracking-tighter">Batas Waktu</p>
+                                <p class="text-gray-400 text-sm font-medium italic whitespace-nowrap">
+                                    {{ $order->batas_waktu ? \Carbon\Carbon::parse($order->batas_waktu)->format('d M, H:i') : '-' }}
+                                </p>
                             </div>
                         </div>
 
@@ -144,7 +160,6 @@
         @endforeach
     </div>
 
-    {{-- PAGINATION NAVIGATION --}}
     @if ($orders->hasPages())
         <div class="mt-10 flex justify-center custom-pagination overflow-x-auto pb-4">
             {{ $orders->appends(['per_page' => request('per_page')])->links() }}
@@ -153,20 +168,17 @@
 @endif
 
 <style>
-/* Smooth Zoom Effect */
 .modal-overlay {
     position: fixed; top:0; left:0; width:100%; height:100%;
-    background: rgba(9, 0, 105, 0.95);
+    background: rgba(9, 0, 105, 0.95); backdrop-filter: blur(10px);
     z-index: 9999; display: flex; align-items: center; justify-content: center;
     cursor: zoom-out; animation: fadeIn 0.3s ease;
 }
-.modal-overlay img { max-width: 90%; max-height: 90%; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+.modal-overlay img { max-width: 90%; max-height: 85%; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); border: 2px solid rgba(255,255,255,0.1); }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Custom Pagination Styling */
 .custom-pagination nav svg { width: 20px; height: 20px; }
-.custom-pagination nav div div span, 
-.custom-pagination nav div div a {
+.custom-pagination nav div div span, .custom-pagination nav div div a {
     border-radius: 12px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     color: white !important;
@@ -192,7 +204,12 @@ function toggleImage(el) {
     const imgSrc = el.querySelector('img').src;
     const overlay = document.createElement('div');
     overlay.className = 'modal-overlay';
-    overlay.innerHTML = `<img src="${imgSrc}">`;
+    overlay.innerHTML = `
+        <div class="relative flex flex-col items-center px-4">
+            <img src="${imgSrc}">
+            <p class="text-white font-bold mt-6 uppercase tracking-widest text-xs bg-black/50 px-8 py-3 rounded-full border border-white/10">Klik dimana saja untuk menutup</p>
+        </div>
+    `;
     overlay.onclick = () => overlay.remove();
     document.body.appendChild(overlay);
 }

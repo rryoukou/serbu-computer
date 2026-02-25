@@ -5,39 +5,50 @@
 @section('content')
 <div class="w-full px-4 md:px-0 pb-12">
 
-    {{-- HEADER SECTION --}}
-    <div class="mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <div>
-            <h2 class="text-white text-2xl md:text-3xl font-black tracking-tight">
-                Users Management
-            </h2>
-            <p class="text-gray-400 text-[10px] md:text-xs uppercase tracking-[0.2em] mt-1">
-                Data Lengkap Member Serbu Comp
-            </p>
-        </div>
+    {{-- BARIS 1: JUDUL --}}
+    <div class="mb-6">
+        <h2 class="text-white text-2xl md:text-2xl font-black tracking-tight">
+            Users Management</span>
+        </h2>
+        <p class="text-gray-400 text-[10px] md:text-sm uppercase tracking-[0.2em] mt-1">
+            Data Lengkap Member Serbu Comp
+        </p>
+    </div>
 
-        <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
-            {{-- SEARCH --}}
-            <form method="GET" action="{{ route('admin.users.index') }}" class="relative w-full md:w-80">
+    {{-- BARIS 2: SEARCH & PER PAGE CONTAINER --}}
+    <div class="mb-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-md shadow-xl">
+        
+        {{-- SEARCH & SHOW PER PAGE --}}
+        <form method="GET" action="{{ route('admin.users.index') }}" class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+            {{-- SELECT SHOW PER PAGE --}}
+            <select name="per_page" onchange="this.form.submit()" class="w-full sm:w-auto bg-[#090069] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all cursor-pointer font-bold">
+                <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>Show 10</option>
+                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>Show 25</option>
+                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>Show 50</option>
+                <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>Show 100</option>
+            </select>
+
+            {{-- SEARCH INPUT --}}
+            <div class="relative w-full sm:w-80">
                 <input
                     type="text"
                     name="search"
                     value="{{ request('search') }}"
                     placeholder="Cari member..."
-                    class="w-full bg-white/5 text-white text-sm px-5 py-3 rounded-2xl outline-none border border-white/10 focus:border-[#F0B22B]/60 placeholder-gray-500 transition-all"
+                    class="w-full bg-[#090069] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all placeholder-gray-500"
                 />
-                <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16 10.5A5.5 5.5 0 1 1 5 10.5a5.5 5.5 0 0 1 11 0Z"/>
-                </svg>
-            </form>
-
-            {{-- TOTAL COUNTER --}}
-            <div class="flex items-center gap-3 bg-[#F0B22B]/10 px-5 py-2.5 rounded-2xl border border-[#F0B22B]/20 shrink-0">
-                <span class="w-2 h-2 rounded-full bg-[#F0B22B] animate-pulse"></span>
-                <div class="text-left">
-                    <p class="text-[#F0B22B] text-[9px] font-black uppercase tracking-wider">Total Members</p>
-                    <p class="text-white text-lg font-black leading-none">{{ $users->total() }}</p>
+                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 </div>
+            </div>
+        </form>
+
+        {{-- TOTAL COUNTER --}}
+        <div class="flex items-center gap-3 bg-[#F0B22B]/10 px-5 py-2.5 rounded-2xl border border-[#F0B22B]/20 w-full md:w-auto justify-center">
+            <span class="w-2 h-2 rounded-full bg-[#F0B22B] animate-pulse"></span>
+            <div class="text-left">
+                <p class="text-[#F0B22B] text-[9px] font-black uppercase tracking-wider leading-none">Total Members</p>
+                <p class="text-white text-lg font-black leading-none mt-1">{{ $users->total() }}</p>
             </div>
         </div>
     </div>
@@ -97,30 +108,31 @@
                                 Detail Profil
                             </button>
                         </td>
+
                         {{-- ACTION BUTTON (Toggle Ban) --}}
-<td class="px-0 md:px-6 py-2 md:py-5 text-center">
-    <form action="{{ route('admin.users.toggleBan', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin {{ $user->is_banned ? 'mengaktifkan' : 'membanned' }} user ini?')" class="w-full md:w-auto">
-        @csrf
-        <button type="submit"
-            class="w-full md:w-auto px-6 py-2.5 rounded-xl text-[10px] font-black uppercase transition-all shadow-lg
-            {{ $user->is_banned 
-                ? 'bg-green-500/20 text-green-400 hover:bg-green-500 hover:text-white shadow-green-500/10' 
-                : 'bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white shadow-red-500/10' }}">
-            
-            @if($user->is_banned)
-                <span class="flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    Unbanned
-                </span>
-            @else
-                <span class="flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
-                    Banned
-                </span>
-            @endif
-        </button>
-    </form>
-</td>
+                        <td class="px-0 md:px-6 py-2 md:py-5 text-center">
+                            <form action="{{ route('admin.users.toggleBan', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin {{ $user->is_banned ? 'mengaktifkan' : 'membanned' }} user ini?')" class="w-full md:w-auto">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full md:w-auto px-6 py-2.5 rounded-xl text-[10px] font-black uppercase transition-all shadow-lg
+                                    {{ $user->is_banned 
+                                        ? 'bg-green-500/20 text-green-400 hover:bg-green-500 hover:text-white shadow-green-500/10' 
+                                        : 'bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white shadow-red-500/10' }}">
+                                    
+                                    @if($user->is_banned)
+                                        <span class="flex items-center justify-center gap-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                            Unbanned
+                                        </span>
+                                    @else
+                                        <span class="flex items-center justify-center gap-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                                            Banned
+                                        </span>
+                                    @endif
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -128,30 +140,25 @@
         </div>
     </div>
 
-    {{-- PAGINATION --}}
-    <div class="mt-8 flex justify-center custom-pagination overflow-x-auto pb-4">
-        {{ $users->links() }}
-    </div>
+    {{-- PAGINATION NAVIGATION --}}
+    @if ($users->hasPages())
+        <div class="mt-10 flex justify-center custom-pagination overflow-x-auto pb-4">
+            {{ $users->appends(['per_page' => request('per_page'), 'search' => request('search')])->links() }}
+        </div>
+    @endif
 </div>
 
 {{-- MODAL DETAIL --}}
 <div id="userModal" class="fixed inset-0 z-[9999] hidden flex items-center justify-center p-4">
-    {{-- Backdrop --}}
     <div class="absolute inset-0 bg-[#090069]/90 backdrop-blur-md" onclick="closeModal()"></div>
-    
-    {{-- Modal Content --}}
     <div class="bg-[#161B33] border border-white/10 w-full max-w-xl rounded-[32px] p-6 md:p-10 relative z-10 shadow-2xl animate-in zoom-in duration-200">
-        
         <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-500 hover:text-[#F0B22B] transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
-
         <div class="flex flex-col items-center text-center">
             <img id="modalFoto" src="" class="w-24 h-24 md:w-32 md:h-32 rounded-3xl border-4 border-[#F0B22B]/20 object-cover shadow-xl mb-4">
-            
             <h2 id="modalNama" class="text-white text-xl md:text-2xl font-black"></h2>
             <p id="modalUsername" class="text-[#F0B22B] text-sm font-bold italic mb-8"></p>
-
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
                 <div class="bg-white/5 p-4 rounded-2xl border border-white/5 text-left">
                     <p class="text-[#F0B22B] text-[8px] font-black uppercase tracking-widest mb-1">Email Address</p>
@@ -170,7 +177,6 @@
                     <p id="modalGender" class="text-white text-xs font-bold"></p>
                 </div>
             </div>
-
             <div class="w-full mt-3 bg-white/5 p-4 rounded-2xl border border-white/5 text-left">
                 <p class="text-[#F0B22B] text-[8px] font-black uppercase tracking-widest mb-1">Home Address</p>
                 <p id="modalAlamat" class="text-white text-xs italic leading-relaxed"></p>
@@ -188,13 +194,11 @@ function showUserDetail(user) {
     document.getElementById('modalTglLahir').innerText = user.tanggal_lahir || '-';
     document.getElementById('modalGender').innerText = user.jenis_kelamin === 'L' ? 'Laki-Laki' : 'Perempuan';
     document.getElementById('modalAlamat').innerText = user.alamat || 'Belum mengisi alamat.';
-    
     const fotoUrl = user.foto ? `/storage/foto/${user.foto}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.nama)}&background=F0B22B&color=090069`;
     document.getElementById('modalFoto').src = fotoUrl;
-
     const modal = document.getElementById('userModal');
     modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // prevent scroll
+    document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
@@ -208,17 +212,24 @@ function closeModal() {
     .custom-pagination nav svg { width: 20px; height: 20px; }
     .custom-pagination nav div div span,
     .custom-pagination nav div div a {
-        border-radius: 10px !important;
+        border-radius: 12px !important;
         background: rgba(255,255,255,0.05) !important;
         color: white !important;
         border-color: rgba(255,255,255,0.1) !important;
-        padding: 6px 12px !important;
+        padding: 8px 16px !important;
         font-size: 12px;
+        margin: 0 2px;
     }
-    .custom-pagination nav span[aria-current="page"] {
+    .custom-pagination nav div div a:hover {
+        background: rgba(240, 178, 43, 0.2) !important;
+        color: #F0B22B !important;
+        border-color: #F0B22B !important;
+    }
+    .custom-pagination nav span[aria-current="page"] > span {
         background: #F0B22B !important;
         color: #090069 !important;
         font-weight: 800;
+        border-radius: 12px !important;
     }
 </style>
 @endsection

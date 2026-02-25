@@ -12,12 +12,20 @@
         </p>
     </div>
 
-    {{-- BARIS 2: SEARCH & INFO (TURUN LEVEL) --}}
+    {{-- BARIS 2: SEARCH & INFO --}}
     <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
         
-        {{-- SEARCH --}}
-        <form method="GET" class="w-full md:w-96">
-            <div class="relative">
+        {{-- SEARCH & SHOW PER PAGE --}}
+        <form method="GET" class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+            {{-- SELECT SHOW PER PAGE --}}
+            <select name="per_page" onchange="this.form.submit()" class="bg-[#090069] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all cursor-pointer">
+                <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>Show 5</option>
+                <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>Show 10</option>
+                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>Show 25</option>
+                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>Show 50</option>
+            </select>
+
+            <div class="relative w-full sm:w-80">
                 <input
                     type="text"
                     name="search"
@@ -35,7 +43,7 @@
         <div class="flex items-center gap-3 bg-[#F0B22B]/10 px-4 py-2 rounded-xl border border-[#F0B22B]/20 w-full md:w-auto justify-center">
             <span class="w-2 h-2 rounded-full bg-[#F0B22B] animate-pulse"></span>
             <span class="text-[#F0B22B] text-xs font-bold uppercase tracking-wider">
-                {{ $orders->count() }} Total Pesanan
+                {{ $orders->total() }} Total Pesanan
             </span>
         </div>
     </div>
@@ -135,6 +143,13 @@
             </div>
         @endforeach
     </div>
+
+    {{-- PAGINATION NAVIGATION --}}
+    @if ($orders->hasPages())
+        <div class="mt-10 flex justify-center custom-pagination overflow-x-auto pb-4">
+            {{ $orders->appends(['per_page' => request('per_page')])->links() }}
+        </div>
+    @endif
 @endif
 
 <style>
@@ -147,6 +162,29 @@
 }
 .modal-overlay img { max-width: 90%; max-height: 90%; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Custom Pagination Styling */
+.custom-pagination nav svg { width: 20px; height: 20px; }
+.custom-pagination nav div div span, 
+.custom-pagination nav div div a {
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    margin: 0 2px;
+    padding: 8px 16px !important;
+    font-size: 12px;
+}
+.custom-pagination nav div div a:hover {
+    background: rgba(240, 178, 43, 0.2) !important;
+    color: #F0B22B !important;
+    border-color: #F0B22B !important;
+}
+.custom-pagination nav div div span[aria-current="page"] > span {
+    background: #F0B22B !important;
+    color: #090069 !important;
+    border-radius: 12px;
+}
 </style>
 
 <script>

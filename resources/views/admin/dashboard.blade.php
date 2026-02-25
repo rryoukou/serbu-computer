@@ -58,17 +58,22 @@
         </div>
     </div>
 
-    <div class="bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-md transition-shadow">
-        <div>
-            <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Pending Orders</p>
-            <h3 class="text-3xl font-bold text-red-500 mt-1">{{ $pendingOrders }}</h3>
-        </div>
-        <div class="bg-red-50/50 p-3 rounded-2xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-        </div>
+    {{-- Ganti bagian card Pending Orders dengan ini --}}
+<a href="{{ route('admin.orders.index', ['status' => 'pending']) }}" 
+   class="bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:border-red-500/30 hover:shadow-md transition-all group">
+    <div>
+        <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Pending Orders</p>
+        <h3 class="text-3xl font-bold text-red-500 mt-1">{{ $pendingOrders }}</h3>
+        <p class="text-[10px] text-red-400/60 font-bold mt-1 uppercase tracking-tighter group-hover:text-red-500 transition-colors italic">
+            *Perlu tindakan segera
+        </p>
     </div>
+    <div class="bg-red-50 p-3 rounded-2xl group-hover:bg-red-100 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+    </div>
+</a>
 
     <a href="{{ route('admin.products.index') }}" 
        class="bg-[#F0B22B] p-6 rounded-[24px] shadow-lg flex items-center justify-between hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer group">

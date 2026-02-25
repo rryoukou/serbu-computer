@@ -12,24 +12,28 @@ class OrderController extends Controller
      * Tampilkan semua transaksi (dengan search + pagination)
      */
     public function index(Request $request)
-    {
-        $search = $request->search;
+{
+    $search = $request->search;
+    // Ambil nilai per_page dari input, jika tidak ada default ke 10
+    $perPage = $request->get('per_page', 10); 
 
-        $orders = Order::with('user')
-            ->when($search, function ($query) use ($search) {
-                $query->whereHas('user', function ($q) use ($search) {
-                    $q->where('username', 'like', "%{$search}%")
-                      ->orWhere('nama', 'like', "%{$search}%");
+    $orders = Order::with('user')
+        ->when($search, function ($query) use ($search) {
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', function ($sub) use ($search) {
+                    $sub->where('username', 'like', "%{$search}%")
+                        ->orWhere('nama', 'like', "%{$search}%");
                 })
                 ->orWhere('status', 'like', "%{$search}%")
                 ->orWhere('id', 'like', "%{$search}%");
-            })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+            });
+        })
+        ->latest()
+        ->paginate($perPage) // Gunakan variabel $perPage di sini
+        ->withQueryString();
 
-        return view('admin.orders.index', compact('orders'));
-    }
+    return view('admin.orders.index', compact('orders'));
+}
 
     /**
      * Update status transaksi

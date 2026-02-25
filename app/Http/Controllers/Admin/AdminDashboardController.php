@@ -26,8 +26,7 @@ class AdminDashboardController extends Controller
         $totalRevenue = (float) Order::where('status', 'selesai')->sum('total_harga');
 
         // 3. Statistik Order Spesifik
-        $pendingOrders = Order::where('status', 'menunggu_verifikasi')->count();
-        
+        $pendingOrders = Order::whereIn('status', ['menunggu_verifikasi', 'menunggu_pembayaran_tunai'])->count();        
         // Tambahan (Optional): Biar abang tau ada berapa duit yang masih nunggu dibayar user
         $potentialRevenue = (float) Order::whereIn('status', ['menunggu_verifikasi', 'menunggu_pembayaran_tunai'])
                                         ->sum('total_harga');

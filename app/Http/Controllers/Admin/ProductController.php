@@ -10,21 +10,24 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     public function index(Request $request)
-    {
-        $search = $request->search;
+{
+    $search = $request->search;
+    
+    // 🔥 Ambil nilai per_page dari request, default-nya 10 kalau user belum pilih
+    $perPage = $request->get('per_page', 10); 
 
-        $products = Product::query()
-            ->when($search, function ($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%")
-                      ->orWhere('category', 'like', "%{$search}%")
-                      ->orWhere('specs', 'like', "%{$search}%");
-            })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString(); // 🔥 biar search tetap ada saat pagination
+    $products = Product::query()
+        ->when($search, function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('category', 'like', "%{$search}%")
+                  ->orWhere('specs', 'like', "%{$search}%");
+        })
+        ->latest()
+        ->paginate($perPage) // 🔥 Gunakan variabel $perPage, bukan angka statis
+        ->withQueryString(); 
 
-        return view('admin.products.index', compact('products'));
-    }
+    return view('admin.products.index', compact('products'));
+}
 
     public function create()
     {

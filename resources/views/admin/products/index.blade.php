@@ -5,7 +5,7 @@
 @section('content')
 <div class="space-y-8 px-4 md:px-0">
     {{-- BARIS 1: JUDUL & HEADER --}}
-    <div>
+    <div class="reveal-anim" style="animation-delay: 0.1s">
         <h2 class="text-white text-2xl font-bold tracking-tight">Product Management</h2>
         <p class="text-gray-400 text-sm mt-1 uppercase tracking-widest">
             Katalog Produk Serbu Comp
@@ -13,7 +13,7 @@
     </div>
 
     {{-- BARIS 2: SEARCH, SHOW PER PAGE & BUTTON --}}
-    <div class="flex flex-col lg:flex-row items-center justify-between gap-4 bg-white/5 p-4 rounded-[28px] border border-white/10 shadow-2xl backdrop-blur-md">
+    <div class="reveal-anim flex flex-col lg:flex-row items-center justify-between gap-4 bg-white/5 p-4 rounded-[28px] border border-white/10 shadow-2xl backdrop-blur-md" style="animation-delay: 0.2s">
         
         {{-- FORM FILTER --}}
         <form method="GET" action="{{ route('admin.products.index') }}" class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
@@ -59,14 +59,14 @@
     </div>
 
     @if(session('success'))
-        <div class="bg-green-500/10 border border-green-500/50 text-green-400 px-6 py-4 rounded-2xl flex items-center gap-3 animate-pulse">
+        <div class="reveal-anim bg-green-500/10 border border-green-500/50 text-green-400 px-6 py-4 rounded-2xl flex items-center gap-3" style="animation-delay: 0.3s">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             <span class="font-medium text-sm">{{ session('success') }}</span>
         </div>
     @endif
 
     {{-- TABLE SECTION --}}
-    <div class="bg-white/5 backdrop-blur-md rounded-[32px] border border-white/10 overflow-hidden shadow-2xl">
+    <div class="reveal-anim bg-white/5 backdrop-blur-md rounded-[32px] border border-white/10 overflow-hidden shadow-2xl" style="animation-delay: 0.4s">
         <div class="hidden md:block overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
@@ -79,7 +79,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/5">
-                    @forelse($products as $product)
+                    @forelse($products as $index => $product)
                     <tr class="hover:bg-white/[0.02] transition-colors group">
                         <td class="px-8 py-5">
                             <div class="flex justify-center">
@@ -148,16 +148,27 @@
         </div>
     </div>
 
-    {{-- PAGINATION NAVIGATION (Gaya Transaction) --}}
+    {{-- PAGINATION NAVIGATION --}}
     @if ($products->hasPages())
-        <div class="mt-10 flex justify-center custom-pagination overflow-x-auto pb-4">
+        <div class="reveal-anim mt-10 flex justify-center custom-pagination overflow-x-auto pb-4" style="animation-delay: 0.5s">
             {{ $products->appends(['per_page' => request('per_page'), 'search' => request('search')])->links() }}
         </div>
     @endif
 </div>
 
 <style>
-/* Custom Pagination Styling */
+/* 1. ANIMASI REVEAL */
+@keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-anim {
+    opacity: 0;
+    animation: cardFadeIn 0.5s ease-out forwards;
+}
+
+/* 2. CUSTOM PAGINATION STYLING */
 .custom-pagination nav svg { width: 20px; height: 20px; }
 .custom-pagination nav div div span, 
 .custom-pagination nav div div a {

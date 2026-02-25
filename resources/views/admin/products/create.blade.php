@@ -5,7 +5,8 @@
 @section('content')
 <div class="max-w-4xl mx-auto px-4 pb-20">
     
-    <div class="mb-8 flex items-center justify-between">
+    {{-- HEADER DENGAN ANIMASI --}}
+    <div class="mb-8 flex items-center justify-between reveal-anim" style="animation-delay: 0.1s">
         <div class="flex items-center gap-4">
             <a href="{{ route('admin.products.index') }}" 
                class="p-2.5 bg-white/5 text-[#F0B22B] rounded-xl hover:bg-[#F0B22B] hover:text-[#090069] transition-all shadow-md">
@@ -18,7 +19,8 @@
         </div>
     </div>
 
-    <div class="bg-white/5 backdrop-blur-md rounded-[24px] md:rounded-[28px] border border-white/10 p-5 md:p-8 shadow-2xl">
+    {{-- CARD FORM DENGAN ANIMASI --}}
+    <div class="reveal-anim bg-white/5 backdrop-blur-md rounded-[24px] md:rounded-[28px] border border-white/10 p-5 md:p-8 shadow-2xl" style="animation-delay: 0.2s">
         <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
 
@@ -98,4 +100,33 @@
         </form>
     </div>
 </div>
+
+<style>
+/* 1. ANIMASI REVEAL (FADE IN SLIDE UP) */
+@keyframes slideUpFade {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.reveal-anim {
+    opacity: 0;
+    animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 2. HOVER EFFECT PADA INPUT (Opsional) */
+input:hover, textarea:hover, select:hover {
+    border-color: rgba(240, 178, 43, 0.4);
+}
+
+/* 3. FOCUS EFFECT */
+input:focus, textarea:focus, select:focus {
+    box-shadow: 0 0 20px rgba(240, 178, 43, 0.15);
+}
+</style>
 @endsection

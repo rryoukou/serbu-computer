@@ -3,14 +3,17 @@
 @section('page_title', 'Dashboard')
 
 @section('content')
-<div class="mb-10">
+
+{{-- Header dengan animasi --}}
+<div class="mb-10 reveal-anim" style="animation-delay: 0.1s">
     <h2 class="text-white text-3xl font-bold">Admin Dashboard Overview</h2>
     <p class="text-gray-400 mt-2">Selamat datang kembali! Berikut adalah ringkasan performa toko Serbu Comp hari ini.</p>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     
-    <div class="bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-md transition-shadow">
+    {{-- Total User --}}
+    <div class="reveal-anim bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-md transition-shadow" style="animation-delay: 0.2s">
         <div>
             <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Total User</p>
             <h3 class="text-3xl font-bold text-[#090069] mt-1">{{ $totalUsers }}</h3>
@@ -22,7 +25,8 @@
         </div>
     </div>
 
-    <div class="bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-md transition-shadow">
+    {{-- Total Product --}}
+    <div class="reveal-anim bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-md transition-shadow" style="animation-delay: 0.3s">
         <div>
             <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Total Product</p>
             <h3 class="text-3xl font-bold text-[#090069] mt-1">{{ $totalProducts }}</h3>
@@ -34,7 +38,8 @@
         </div>
     </div>
 
-    <div class="bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-md transition-shadow">
+    {{-- Total Transaction --}}
+    <div class="reveal-anim bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-md transition-shadow" style="animation-delay: 0.4s">
         <div>
             <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Total Transaction</p>
             <h3 class="text-3xl font-bold text-[#090069] mt-1">{{ $totalOrders }}</h3>
@@ -46,7 +51,8 @@
         </div>
     </div>
 
-    <div class="bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-md transition-shadow">
+    {{-- Revenue --}}
+    <div class="reveal-anim bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-md transition-shadow" style="animation-delay: 0.5s">
         <div>
             <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Revenue</p>
             <h3 class="text-2xl font-bold text-[#090069] mt-1">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
@@ -58,25 +64,26 @@
         </div>
     </div>
 
-    {{-- Ganti bagian card Pending Orders dengan ini --}}
-<a href="{{ route('admin.orders.index', ['status' => 'pending']) }}" 
-   class="bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:border-red-500/30 hover:shadow-md transition-all group">
-    <div>
-        <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Pending Orders</p>
-        <h3 class="text-3xl font-bold text-red-500 mt-1">{{ $pendingOrders }}</h3>
-        <p class="text-[10px] text-red-400/60 font-bold mt-1 uppercase tracking-tighter group-hover:text-red-500 transition-colors italic">
-            *Perlu tindakan segera
-        </p>
-    </div>
-    <div class="bg-red-50 p-3 rounded-2xl group-hover:bg-red-100 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
-    </div>
-</a>
+    {{-- Pending Orders --}}
+    <a href="{{ route('admin.orders.index', ['status' => 'pending']) }}" 
+       class="reveal-anim bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:border-red-500/30 hover:shadow-md transition-all group" style="animation-delay: 0.6s">
+        <div>
+            <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Pending Orders</p>
+            <h3 class="text-3xl font-bold text-red-500 mt-1">{{ $pendingOrders }}</h3>
+            <p class="text-[10px] text-red-400/60 font-bold mt-1 uppercase tracking-tighter group-hover:text-red-500 transition-colors italic">
+                *Perlu tindakan segera
+            </p>
+        </div>
+        <div class="bg-red-50 p-3 rounded-2xl group-hover:bg-red-100 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+        </div>
+    </a>
 
+    {{-- Quick Action --}}
     <a href="{{ route('admin.products.index') }}" 
-       class="bg-[#F0B22B] p-6 rounded-[24px] shadow-lg flex items-center justify-between hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer group">
+       class="reveal-anim bg-[#F0B22B] p-6 rounded-[24px] shadow-lg flex items-center justify-between hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer group" style="animation-delay: 0.7s">
         <div>
             <p class="text-[#090069]/60 text-sm font-bold uppercase tracking-wider">Quick Action</p>
             <h3 class="text-xl font-extrabold text-[#090069] mt-1">Manage Product</h3>
@@ -89,4 +96,18 @@
     </a>
 
 </div>
+
+<style>
+    /* Keyframe untuk efek muncul halus */
+    @keyframes cardFadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Class pemicu animasi */
+    .reveal-anim {
+        opacity: 0; /* Standby sebelum jalan */
+        animation: cardFadeIn 0.5s ease-out forwards;
+    }
+</style>
 @endsection

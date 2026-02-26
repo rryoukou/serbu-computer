@@ -66,27 +66,28 @@
 
     {{-- Pending Orders (Kondisional dengan Hover Spesifik) --}}
     <a href="{{ route('admin.orders.index', ['status' => 'pending']) }}" 
-        class="reveal-anim bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 transition-all duration-300 group hover:scale-[1.03] {{ $pendingOrders > 0 ? 'hover:border-red-500/30 hover:shadow-red-100 hover:shadow-xl' : 'hover:shadow-xl' }}" 
-        style="animation-delay: 0.6s">
-        <div>
-            <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">Pending Orders</p>
-            <h3 class="text-3xl font-bold mt-1 {{ $pendingOrders > 0 ? 'text-red-500' : 'text-[#090069]' }}">
-                {{ $pendingOrders }}
-            </h3>
+    class="reveal-anim bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-gray-50 transition-all duration-500 group hover:scale-[1.02] {{ $pendingOrders > 0 ? 'hover:border-red-200 hover:shadow-lg hover:shadow-red-500/5' : 'hover:shadow-lg hover:border-gray-200' }}" 
+    style="animation-delay: 0.6s">
+    
+    <div>
+        <p class="text-gray-400 text-sm font-medium uppercase tracking-wider group-hover:text-gray-500 transition-colors">Pending Orders</p>
+        <h3 class="text-3xl font-bold mt-1 {{ $pendingOrders > 0 ? 'text-red-500' : 'text-[#090069]' }}">
+            {{ $pendingOrders }}
+        </h3>
 
-            @if($pendingOrders > 0)
-                <p class="text-[10px] text-red-400/60 font-bold mt-1 uppercase tracking-tighter group-hover:text-red-500 transition-colors italic">
-                    *Perlu tindakan segera
-                </p>
-            @endif
-        </div>
+        @if($pendingOrders > 0)
+            <p class="text-[10px] text-red-400/40 font-bold mt-1 uppercase tracking-tighter group-hover:text-red-500/70 transition-colors italic">
+                *Perlu tindakan segera
+            </p>
+        @endif
+    </div>
 
-        <div class="{{ $pendingOrders > 0 ? 'bg-red-50 text-red-500 group-hover:bg-red-100' : 'bg-[#F0B22B]/10 text-[#F0B22B] group-hover:bg-[#F0B22B]/20' }} p-3 rounded-2xl transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-        </div>
-    </a>
+    <div class="{{ $pendingOrders > 0 ? 'bg-red-50 text-red-400 group-hover:bg-red-500 group-hover:text-white' : 'bg-[#F0B22B]/5 text-[#F0B22B] group-hover:bg-[#F0B22B] group-hover:text-white' }} p-3 rounded-2xl transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+    </div>
+</a>
 
     {{-- Quick Action --}}
     <a href="{{ route('admin.products.index') }}" 

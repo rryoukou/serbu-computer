@@ -136,7 +136,7 @@
         
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {{-- WhatsApp --}}
-            <a href="https://wa.me/628xxxxxxxxxx" target="_blank" 
+            <a href="https://wa.me/6285755705143" target="_blank" 
                class="flex flex-col items-center p-8 bg-[#090069] rounded-2xl border border-white/5 hover:border-green-500/50 hover:scale-105 transition-all duration-300 group shadow-lg">
                 <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all">
                     <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -148,7 +148,7 @@
             </a>
 
             {{-- Instagram --}}
-            <a href="https://instagram.com/username_toko" target="_blank" 
+            <a href="https://instagram.com/serbucomputer" target="_blank" 
                class="flex flex-col items-center p-8 bg-[#090069] rounded-2xl border border-white/5 hover:border-pink-500/50 hover:scale-105 transition-all duration-300 group shadow-lg">
                 <div class="w-16 h-16 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] transition-all">
                     <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -160,7 +160,7 @@
             </a>
 
             {{-- Facebook --}}
-            <a href="https://facebook.com/username_toko" target="_blank" 
+            <a href="https://facebook.com/serbucomputer" target="_blank" 
                class="flex flex-col items-center p-8 bg-[#090069] rounded-2xl border border-white/5 hover:border-blue-500/50 hover:scale-105 transition-all duration-300 group shadow-lg">
                 <div class="w-16 h-16 bg-[#1877F2] rounded-full flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(24,119,242,0.4)] transition-all">
                     <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">

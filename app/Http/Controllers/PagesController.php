@@ -11,7 +11,7 @@ class PagesController extends Controller
     public function home()
     {
         // ambil beberapa produk untuk halaman home
-        $products = Product::latest()->take(6)->get();
+        $products = Product::latest()->take(4)->get();
 
         // data FAQ (manual, tanpa database)
         $faqs = [

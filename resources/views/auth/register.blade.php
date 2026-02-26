@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Serbu Comp</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
             background: radial-gradient(circle, #090069 0%, #0000FF 100%);
@@ -12,7 +13,6 @@
         .register-card {
             background-color: #161B33;
         }
-        /* Style untuk input date & select agar teksnya tidak hilang */
         input[type="date"]::-webkit-calendar-picker-indicator {
             filter: invert(1);
         }
@@ -77,11 +77,21 @@
                           class="w-full bg-[#2A314D]/50 text-gray-300 text-sm placeholder-gray-500 px-4 py-3 rounded-xl border border-white/5 focus:border-[#F0B22B]/50 focus:outline-none transition-all resize-none">{{ old('alamat') }}</textarea>
 
                 <div class="grid grid-cols-2 gap-3">
-                    <input type="password" name="password" placeholder="Password" required
-                           class="w-full bg-[#2A314D]/50 text-gray-300 text-sm placeholder-gray-500 px-4 py-3 rounded-xl border border-white/5 focus:border-[#F0B22B]/50 focus:outline-none transition-all">
+                    <div class="relative group">
+                        <input type="password" id="reg-pass" name="password" placeholder="Password" required
+                               class="w-full bg-[#2A314D]/50 text-gray-300 text-sm placeholder-gray-500 px-4 py-3 pr-10 rounded-xl border border-white/5 focus:border-[#F0B22B]/50 focus:outline-none transition-all">
+                        <button type="button" onclick="toggleRegPassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#F0B22B]">
+                            <i id="eye-icon-1" data-lucide="eye" class="w-4 h-4"></i>
+                        </button>
+                    </div>
                     
-                    <input type="password" name="password_confirmation" placeholder="Confirm" required
-                           class="w-full bg-[#2A314D]/50 text-gray-300 text-sm placeholder-gray-500 px-4 py-3 rounded-xl border border-white/5 focus:border-[#F0B22B]/50 focus:outline-none transition-all">
+                    <div class="relative group">
+                        <input type="password" id="reg-confirm" name="password_confirmation" placeholder="Confirm" required
+                               class="w-full bg-[#2A314D]/50 text-gray-300 text-sm placeholder-gray-500 px-4 py-3 pr-10 rounded-xl border border-white/5 focus:border-[#F0B22B]/50 focus:outline-none transition-all">
+                        <button type="button" onclick="toggleRegPassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#F0B22B]">
+                            <i id="eye-icon-2" data-lucide="eye" class="w-4 h-4"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit" 
@@ -99,5 +109,46 @@
         </div>
     </div>
 
+    <script>
+        lucide.createIcons();
+        let regTimer;
+
+        function toggleRegPassword() {
+            const pass = document.getElementById('reg-pass');
+            const confirm = document.getElementById('reg-confirm');
+            const icon1 = document.getElementById('eye-icon-1');
+            const icon2 = document.getElementById('eye-icon-2');
+            
+            clearTimeout(regTimer);
+
+            if (pass.type === 'password') {
+                // Tampilkan keduanya
+                pass.type = 'text';
+                confirm.type = 'text';
+                icon1.setAttribute('data-lucide', 'eye-off');
+                icon2.setAttribute('data-lucide', 'eye-off');
+                lucide.createIcons();
+
+                regTimer = setTimeout(() => {
+                    hideRegPassword();
+                }, 3000);
+            } else {
+                hideRegPassword();
+            }
+        }
+
+        function hideRegPassword() {
+            const pass = document.getElementById('reg-pass');
+            const confirm = document.getElementById('reg-confirm');
+            const icon1 = document.getElementById('eye-icon-1');
+            const icon2 = document.getElementById('eye-icon-2');
+            
+            pass.type = 'password';
+            confirm.type = 'password';
+            icon1.setAttribute('data-lucide', 'eye');
+            icon2.setAttribute('data-lucide', 'eye');
+            lucide.createIcons();
+        }
+    </script>
 </body>
 </html>

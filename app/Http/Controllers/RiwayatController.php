@@ -10,14 +10,39 @@ use Illuminate\Support\Facades\DB;
 
 class RiwayatController extends Controller
 {
+    // 🔥 BATAS HARI AUTO CANCEL (UBAH DI SINI)
+    private $limitDays = 2;
+
     // =========================
-    // TAMPILKAN RIWAYAT PEMBELIAN USER
+    // TAMPILKAN RIWAYAT + AUTO CANCEL
     // =========================
     public function index()
     {
         $user = Auth::user();
 
-        // Ambil semua order milik user login
+        // 🔥 AUTO CANCEL ORDER CASH YANG LEWAT BATAS
+        $expiredOrders = Order::where('user_id', $user->id)
+            ->where('status', 'menunggu_pembayaran_tunai')
+            ->where('created_at', '<', now()->subDays($this->limitDays))
+            ->get();
+
+        foreach ($expiredOrders as $order) {
+            DB::transaction(function () use ($order) {
+
+                // Balikin stok
+                $product = Product::find($order->product_id);
+                if ($product) {
+                    $product->increment('stock', $order->qty);
+                }
+
+                // Update status
+                $order->update([
+                    'status' => 'dibatalkan'
+                ]);
+            });
+        }
+
+        // Ambil ulang data setelah auto cancel
         $orders = Order::where('user_id', $user->id)
             ->latest()
             ->get();
@@ -26,16 +51,14 @@ class RiwayatController extends Controller
     }
 
     // =========================
-    // BATALKAN PESANAN
+    // CANCEL MANUAL
     // =========================
     public function cancel(Order $order)
     {
-        // Pastikan pesanan milik user login
         if ($order->user_id !== Auth::id()) {
             abort(403, 'Akses tidak diizinkan');
         }
 
-        // Jika pesanan sudah selesai atau sudah dibatalkan, tidak bisa dibatalkan lagi
         if (in_array($order->status, ['selesai', 'dibatalkan'])) {
             return back()->withErrors([
                 'cancel' => 'Pesanan tidak dapat dibatalkan.'
@@ -44,13 +67,11 @@ class RiwayatController extends Controller
 
         DB::transaction(function () use ($order) {
 
-            // Kembalikan stok produk
             $product = Product::find($order->product_id);
             if ($product) {
                 $product->increment('stock', $order->qty);
             }
 
-            // Update status jadi dibatalkan
             $order->update([
                 'status' => 'dibatalkan'
             ]);
@@ -60,4 +81,28 @@ class RiwayatController extends Controller
             ->route('riwayat.index')
             ->with('success', 'Pesanan berhasil dibatalkan.');
     }
+
+    // =========================
+    // 🔥 TEST AUTO CANCEL (UNTUK DEMO KE DOSEN)
+    // =========================
+    public function simulateExpired()
+{
+    $user = Auth::user();
+
+    $orders = Order::where('user_id', $user->id)
+        ->where('status', 'menunggu_pembayaran_tunai')
+        ->get();
+
+    foreach ($orders as $order) {
+
+        // Paksa update tanpa sentuh updated_at
+        DB::table('orders')
+            ->where('id', $order->id)
+            ->update([
+                'created_at' => now()->subDays(3),
+            ]);
+    }
+
+    return back()->with('success', 'Tanggal order dimundurkan 3 hari. Refresh halaman.');
+}
 }

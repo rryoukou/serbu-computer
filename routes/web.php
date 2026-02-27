@@ -149,6 +149,9 @@ Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index
 // Batalkan pesanan (ganti hapus)
 Route::post('/riwayat/{order}/cancel', [RiwayatController::class, 'cancel'])->name('riwayat.cancel');
 
+Route::post('/riwayat/simulate-expired', [RiwayatController::class, 'simulateExpired'])
+    ->name('riwayat.simulate');
+
 
     // ================= WISHLIST =================
     // Toggle wishlist (add/remove)

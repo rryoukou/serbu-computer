@@ -64,6 +64,36 @@
         </div>
     </a>
 
+    {{-- Revenue Today --}}
+<a href="{{ route('admin.orders.index') }}" 
+   class="reveal-anim bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-white/10 hover:shadow-xl hover:scale-[1.03] transition-all duration-300 group" 
+   style="animation-delay: 0.55s">
+
+    <div>
+        <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">
+            Revenue Today
+        </p>
+        <h3 class="text-2xl font-bold text-green-600 mt-1">
+            Rp {{ number_format($todayRevenue, 0, ',', '.') }}
+        </h3>
+    </div>
+
+    <div class="bg-green-100 p-3 rounded-2xl group-hover:bg-green-200 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="w-8 h-8 text-green-600" 
+             fill="none" 
+             viewBox="0 0 24 24" 
+             stroke="currentColor" 
+             stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" 
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 
+                     3 .895 3 2-1.343 2-3 2m0-8V7m0 1v8m0 0v1m0-1
+                     c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 
+                     11-18 0 9 9 0 0118 0z"/>
+        </svg>
+    </div>
+</a>
+
     {{-- Pending Orders (Kondisional dengan Hover Spesifik) --}}
     <a href="{{ route('admin.orders.index', ['status' => 'pending']) }}" 
     class="reveal-anim bg-white p-6 rounded-[24px] shadow-sm flex items-center justify-between border border-gray-50 transition-all duration-500 group hover:scale-[1.02] {{ $pendingOrders > 0 ? 'hover:border-red-200 hover:shadow-lg hover:shadow-red-500/5' : 'hover:shadow-lg hover:border-gray-200' }}" 

@@ -6,38 +6,45 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
+use Carbon\Carbon;
 
 class AdminDashboardController extends Controller
 {
     public function index()
-    {
-        // Jalankan pembersihan order expired otomatis saat admin buka dashboard
-        // Ini memastikan data yang tampil adalah data yang valid (stok sudah balik)
-        Order::clearExpiredCashOrders();
+{
+    Order::clearExpiredCashOrders();
 
-        // 1. Statistik Dasar
-        $totalUsers = User::count();
-        $totalProducts = Product::count();
-        $totalOrders = Order::count();
+    $totalUsers = User::count();
+    $totalProducts = Product::count();
+    $totalOrders = Order::count();
 
-        // 2. Logic Revenue (PENTING)
-        // Kita hanya hitung total_harga dari order yang statusnya 'selesai'
-        // Pakai (float) agar jika database kosong, hasilnya 0 bukan null
-        $totalRevenue = (float) Order::where('status', 'selesai')->sum('total_harga');
+    // ✅ Total revenue semua waktu
+    $totalRevenue = (float) Order::where('status', 'selesai')
+        ->sum('total_harga');
 
-        // 3. Statistik Order Spesifik
-        $pendingOrders = Order::whereIn('status', ['menunggu_verifikasi', 'menunggu_pembayaran_tunai'])->count();        
-        // Tambahan (Optional): Biar abang tau ada berapa duit yang masih nunggu dibayar user
-        $potentialRevenue = (float) Order::whereIn('status', ['menunggu_verifikasi', 'menunggu_pembayaran_tunai'])
-                                        ->sum('total_harga');
+    // 🔥 Revenue hari ini (AUTO RESET TIAP HARI)
+    $todayRevenue = (float) Order::where('status', 'selesai')
+        ->whereDate('created_at', Carbon::today())
+        ->sum('total_harga');
 
-        return view('admin.dashboard', compact(
-            'totalUsers', 
-            'totalProducts', 
-            'totalOrders', 
-            'totalRevenue', 
-            'pendingOrders',
-            'potentialRevenue'
-        ));
-    }
+    $pendingOrders = Order::whereIn('status', [
+        'menunggu_verifikasi',
+        'menunggu_pembayaran_tunai'
+    ])->count();
+
+    $potentialRevenue = (float) Order::whereIn('status', [
+        'menunggu_verifikasi',
+        'menunggu_pembayaran_tunai'
+    ])->sum('total_harga');
+
+    return view('admin.dashboard', compact(
+        'totalUsers',
+        'totalProducts',
+        'totalOrders',
+        'totalRevenue',
+        'todayRevenue', // 🔥 kirim ke blade
+        'pendingOrders',
+        'potentialRevenue'
+    ));
+}
 }

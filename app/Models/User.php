@@ -10,47 +10,31 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-  protected $fillable = [
-    'username',
-    'password',
-    'role',
-    'nama',
-    'tanggal_lahir',
-    'jenis_kelamin',
-    'email',
-    'no_hp',
-    'alamat',
-    'foto',
-    'is_banned', // ✅ harus sama dengan DB
-];
+    protected $fillable = [
+        'username',
+        'password',
+        'role',
+        'nama',
+        'tanggal_lahir',
+        'jenis_kelamin',
+        'email',
+        'no_hp',
+        'alamat',
+        'foto',
+        'is_banned',
+    ];
 
-protected $casts = [
-    'email_verified_at' => 'datetime',
-    'password' => 'hashed',
-    'is_banned' => 'boolean', // ✅ sama dengan DB
-];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'is_banned' => 'boolean',
+    ];
 
-// Accessor untuk cek banned
-public function getIsBannedAttribute($value)
-{
-    return $value;
-}
-
-// Toggle ban (misal di UserController Admin)
-public function toggleBan(User $user)
-{
-    if ($user->role === 'admin') {
-        return back()->withErrors([
-            'banned' => 'Admin tidak bisa dibanned.'
-        ]);
+    // ===============================
+    // ✅ RELASI WISHLIST (WAJIB ADA)
+    // ===============================
+    public function wishlist()
+    {
+        return $this->hasMany(\App\Models\Wishlist::class);
     }
-
-    $user->update([
-        'is_banned' => !$user->is_banned // ✅ pakai is_banned
-    ]);
-
-    $statusText = $user->is_banned ? 'dibanned' : 'aktif';
-    return back()->with('success', "User berhasil diubah statusnya menjadi: $statusText.");
-}
-
 }

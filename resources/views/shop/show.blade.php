@@ -16,20 +16,36 @@
                     </div>
                 </div>
 
-                @php
-                    $isWishlisted = session('wishlist') && isset(session('wishlist')[$product->id]);
-                @endphp
+            
 
                 <div class="absolute top-6 right-6 z-20">
-                    <form action="{{ route('wishlist.toggle', $product->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="bg-[#090069]/50 backdrop-blur-md p-2 rounded-full transition-transform duration-300 hover:scale-110 border border-white/10">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-7 h-7 transition-all duration-300 {{ $isWishlisted ? 'fill-[#F0B22B]' : 'fill-none stroke-white' }}" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 9.24 3 10.91 3.81 12 5.08 13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5 22 12.28 18.6 15.36 13.45 20.04 L12 21.35z"/>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
+    @auth
+    <form action="{{ route('wishlist.toggle', $product->id) }}" method="POST">
+        @csrf
+        <button type="submit"
+            class="p-2 rounded-full transition-all duration-300 border
+            {{ $isWishlisted 
+                ? 'bg-[#F0B22B] border-[#F0B22B] scale-110 shadow-lg' 
+                : 'bg-[#090069]/50 backdrop-blur-md border-white/10 hover:scale-110' }}">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 class="w-7 h-7 transition-all duration-300
+                 {{ $isWishlisted ? 'fill-black' : 'fill-none stroke-white' }}"
+                 stroke-width="2">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                         2 5.42 4.42 3 7.5 3 
+                         9.24 3 10.91 3.81 12 5.08 
+                         13.09 3.81 14.76 3 16.5 3 
+                         19.58 3 22 5.42 22 8.5 
+                         22 12.28 18.6 15.36 13.45 20.04L12 21.35z"/>
+            </svg>
+        </button>
+    </form>
+    @endauth
+</div>
 
                 {{-- CATEGORY --}}
                 <div class="mt-4">

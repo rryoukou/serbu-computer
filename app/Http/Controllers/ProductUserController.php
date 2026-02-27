@@ -95,15 +95,29 @@ class ProductUserController extends Controller
 
     // halaman detail produk dengan produk terkait
     public function show(Product $product)
-    {
-        $relatedProducts = Product::where('category', $product->category)
-            ->where('id', '!=', $product->id)
-            ->inRandomOrder()
-            ->limit(4)
-            ->get();
+{
+    // 🔥 CEK STATUS WISHLIST
+    $isWishlisted = false;
 
-        return view('shop.show', compact('product', 'relatedProducts'));
+    if (auth()->check()) {
+        $isWishlisted = \App\Models\Wishlist::where('user_id', auth()->id())
+            ->where('product_id', $product->id)
+            ->exists();
     }
+
+    // Produk terkait
+    $relatedProducts = Product::where('category', $product->category)
+        ->where('id', '!=', $product->id)
+        ->inRandomOrder()
+        ->limit(4)
+        ->get();
+
+    return view('shop.show', compact(
+        'product',
+        'relatedProducts',
+        'isWishlisted' // 🔥 WAJIB ADA
+    ));
+}
 
     // halaman search (opsional)
     public function searchPage()

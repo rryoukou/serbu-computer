@@ -5,49 +5,126 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
     /**
-     * Tampilkan semua transaksi (dengan search + pagination)
+     * ================================
+     * TAMPILKAN SEMUA TRANSAKSI
+     * ================================
      */
     public function index(Request $request)
+    {
+        $search = $request->search;
+        $perPage = $request->get('per_page', 5);
+
+        $orders = Order::with('user')
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->whereHas('user', function ($sub) use ($search) {
+                        $sub->where('username', 'like', "%{$search}%")
+                            ->orWhere('nama', 'like', "%{$search}%");
+                    })
+                    ->orWhere('status', 'like', "%{$search}%")
+                    ->orWhere('id', 'like', "%{$search}%")
+                    ->orWhere('nama_lengkap', 'like', "%{$search}%")
+                    ->orWhere('nama_produk', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate($perPage)
+            ->withQueryString();
+
+        return view('admin.orders.index', compact('orders'));
+    }
+
+    /**
+     * ================================
+     * FORM TAMBAH TRANSAKSI OFFLINE
+     * ================================
+     */
+    public function create()
+    {
+        $products = Product::where('stock', '>', 0)->get();
+        $users = User::where('role', 'pengguna')->get();
+
+        return view('admin.orders.create', compact('products', 'users'));
+    }
+
+    /**
+     * ================================
+     * SIMPAN TRANSAKSI OFFLINE
+     * ================================
+     */
+    public function store(Request $request)
 {
-    $search = $request->search;
-    // Ambil nilai per_page dari input, jika tidak ada default ke 10
-    $perPage = $request->get('per_page', 10); 
+    $request->validate([
+        'product_id' => 'required|exists:products,id',
+        'qty' => 'required|integer|min:1',
+        'metode_pembayaran' => 'required|string',
+        'user_id' => 'nullable|exists:users,id',
+        'bukti_bayar' => 'nullable|image|mimes:jpg,jpeg,png|max:5120'
+    ]);
 
-    $orders = Order::with('user')
-        ->when($search, function ($query) use ($search) {
-            $query->where(function($q) use ($search) {
-                $q->whereHas('user', function ($sub) use ($search) {
-                    $sub->where('username', 'like', "%{$search}%")
-                        ->orWhere('nama', 'like', "%{$search}%");
-                })
-                ->orWhere('status', 'like', "%{$search}%")
-                ->orWhere('id', 'like', "%{$search}%");
-            });
-        })
-        ->latest()
-        ->paginate($perPage) // Gunakan variabel $perPage di sini
-        ->withQueryString();
+    DB::transaction(function () use ($request) {
 
-    return view('admin.orders.index', compact('orders'));
+        $product = Product::lockForUpdate()->findOrFail($request->product_id);
+
+        if ($product->stock < $request->qty) {
+            throw new \Exception('Stok tidak mencukupi.');
+        }
+
+        $total = $product->price * $request->qty;
+
+        // Upload bukti kalau ada
+        $buktiPath = null;
+
+        if ($request->hasFile('bukti_bayar')) {
+            $buktiPath = $request->file('bukti_bayar')
+                ->store('bukti_transfer', 'public');
+        }
+
+        // Tentukan status otomatis
+        $status = $request->metode_pembayaran === 'bca'
+            ? 'menunggu_verifikasi'
+            : 'menunggu_pembayaran_tunai';
+
+        Order::create([
+'user_id' => auth()->id(),    'nama_produk' => $product->name,
+    'product_id' => $product->id,
+    'qty' => $request->qty,
+    'harga' => $product->price, // WAJIB ADA INI
+    'total_harga' => $total,
+    'metode_pembayaran' => $request->metode_pembayaran,
+    'status' => $status,
+    'bukti_bayar' => $buktiPath,
+    'batas_waktu' => null
+]);
+
+        $product->decrement('stock', $request->qty);
+    });
+
+    return redirect()
+        ->route('admin.orders.index')
+        ->with('success', 'Transaksi offline berhasil ditambahkan.');
 }
 
     /**
-     * Update status transaksi
+     * ================================
+     * UPDATE STATUS TRANSAKSI
+     * ================================
      */
     public function updateStatus(Request $request, Order $order)
     {
-        // ❌ Jika status sudah dibatalkan, admin tidak boleh mengubah
         if ($order->status === 'dibatalkan') {
             return back()->withErrors([
-                'status' => 'Status sudah dibatalkan oleh user, tidak dapat diubah oleh admin.'
+                'status' => 'Status sudah dibatalkan oleh user dan tidak bisa diubah.'
             ]);
         }
 
-        // ✅ Validasi enum terbaru (tidak termasuk 'dibatalkan')
         $request->validate([
             'status' => 'required|in:menunggu_pembayaran_tunai,menunggu_verifikasi,selesai'
         ]);

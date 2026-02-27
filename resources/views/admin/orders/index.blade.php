@@ -42,6 +42,16 @@
                 {{ $orders->total() }} Total Pesanan
             </span>
         </div>
+
+        <a href="{{ route('admin.orders.create') }}" 
+           class="flex items-center gap-2 bg-[#F0B22B] text-[#090069] font-black uppercase text-[10px] tracking-widest px-6 py-2.5 rounded-xl hover:scale-105 active:scale-95 transition-all shadow-lg shadow-[#F0B22B]/20">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Tambah Transaksi
+        </a>
+
     </div>
 </div>
 

@@ -14,7 +14,7 @@ class ProductController extends Controller
     $search = $request->search;
     
     // 🔥 Ambil nilai per_page dari request, default-nya 10 kalau user belum pilih
-    $perPage = $request->get('per_page', 10); 
+    $perPage = $request->get('per_page', 5); 
 
     $products = Product::query()
         ->when($search, function ($query) use ($search) {

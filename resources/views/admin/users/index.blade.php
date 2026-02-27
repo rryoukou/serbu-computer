@@ -20,6 +20,7 @@
         
         <form method="GET" action="{{ route('admin.users.index') }}" class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
             <select name="per_page" onchange="this.form.submit()" class="w-full sm:w-auto bg-[#090069] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all cursor-pointer font-bold hover:bg-[#090069]/80">
+                <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>Show 5</option>
                 <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>Show 10</option>
                 <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>Show 25</option>
                 <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>Show 50</option>
@@ -133,8 +134,8 @@
     </div>
 
     @if ($users->hasPages())
-        <div class="mt-10 flex justify-center custom-pagination overflow-x-auto pb-4 reveal-anim" style="animation-delay: 0.8s">
-            {{ $users->appends(['per_page' => request('per_page'), 'search' => request('search')])->links() }}
+        <div class="mt-20 flex justify-center custom-pagination reveal-anim" style="animation-delay: 0.8s">
+            {{ $users->appends(request()->query())->links() }}
         </div>
     @endif
 </div>
@@ -239,26 +240,58 @@ function closeModal() {
     animation: slideInLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* 3. PAGINATION STYLING */
-.custom-pagination nav svg { width: 20px; height: 20px; }
-.custom-pagination nav div div span,
-.custom-pagination nav div div a {
-    border-radius: 12px !important;
-    background: rgba(255,255,255,0.05) !important;
-    color: white !important;
-    border-color: rgba(255,255,255,0.1) !important;
-    padding: 8px 16px !important;
-    font-size: 12px;
-    margin: 0 2px;
+/* 3. CUSTOM PAGINATION STYLING (FIXED SLIM VERSION) */
+.custom-pagination nav { 
+    background: transparent !important; 
+    border: none !important; 
+    box-shadow: none !important; 
 }
-.custom-pagination nav div div a:hover {
-    background: rgba(240, 178, 43, 0.2) !important;
-    color: #F0B22B !important;
+
+/* Sembunyiin info teks "Showing X to Y" */
+.custom-pagination nav div:first-child { 
+    display: none !important; 
+} 
+
+.custom-pagination nav div:last-child { 
+    background: transparent !important; 
 }
-.custom-pagination nav span[aria-current="page"] > span {
-    background: #F0B22B !important;
-    color: #090069 !important;
-    font-weight: 800;
+
+/* Styling Tombol Angka & Arrow */
+.custom-pagination nav span, 
+.custom-pagination nav a { 
+    border-radius: 12px !important; 
+    background: rgba(255,255,255,0.03) !important; 
+    color: #6b7280 !important; 
+    border: 1px solid rgba(255,255,255,0.08) !important; 
+    padding: 8px 14px !important; 
+    font-size: 11px !important; 
+    font-weight: 800 !important;
+    margin: 0 2px !important; 
+    transition: all 0.3s ease !important;
+    box-shadow: none !important;
+}
+
+/* Hover Effect */
+.custom-pagination nav a:hover { 
+    background: rgba(240,178,43,0.1) !important; 
+    color: #F0B22B !important; 
+    border-color: #F0B22B !important;
+    transform: translateY(-2px);
+}
+
+/* Active Page */
+.custom-pagination nav span[aria-current="page"] span { 
+    background: #F0B22B !important; 
+    color: #090069 !important; 
+    border-color: #F0B22B !important;
+    padding: 8px 14px !important;
+    box-shadow: 0 5px 15px rgba(240,178,43,0.2) !important;
+}
+
+/* Ukuran Icon Arrow */
+.custom-pagination nav svg {
+    width: 14px !important;
+    height: 14px !important;
 }
 </style>
 @endsection

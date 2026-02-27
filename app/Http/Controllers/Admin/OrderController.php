@@ -19,7 +19,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $perPage = $request->get('per_page', 5);
+        $perPage = $request->get('per_page', 6);
 
         $orders = Order::with('user')
             ->when($search, function ($query) use ($search) {

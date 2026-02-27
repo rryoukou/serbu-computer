@@ -16,6 +16,8 @@ class UserController extends Controller
     {
         $search = $request->search;
 
+        $perPage = $request->get('per_page', 5); 
+
         $users = User::where('role', 'pengguna')
     ->when($search, function ($query) use ($search) {
         $query->where(function ($q) use ($search) {
@@ -25,7 +27,7 @@ class UserController extends Controller
         });
     })
     ->latest()
-    ->paginate(10)
+    ->paginate($perPage)
     ->withQueryString();
 
         return view('admin.users.index', compact('users'));

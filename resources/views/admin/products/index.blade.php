@@ -45,7 +45,7 @@
             <div class="flex items-center gap-3 bg-[#F0B22B]/10 px-4 py-2 rounded-xl border border-[#F0B22B]/20">
                 <span class="w-2 h-2 rounded-full bg-[#F0B22B] animate-pulse"></span>
                 <span class="text-[#F0B22B] text-xs font-bold uppercase tracking-wider">
-                    {{ $products->total() }} Produk
+                    {{ $products->total() }} Product
                 </span>
             </div>
 
@@ -53,7 +53,7 @@
             <a href="{{ route('admin.products.create') }}" 
                class="flex items-center gap-2 bg-[#F0B22B] text-[#090069] font-black uppercase text-[10px] tracking-widest px-6 py-2.5 rounded-xl hover:scale-105 active:scale-95 transition-all shadow-lg shadow-[#F0B22B]/20">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                Tambah Produk
+                New Product
             </a>
         </div>
     </div>
@@ -148,10 +148,9 @@
         </div>
     </div>
 
-    {{-- PAGINATION NAVIGATION --}}
     @if ($products->hasPages())
-        <div class="reveal-anim mt-10 flex justify-center custom-pagination overflow-x-auto pb-4" style="animation-delay: 0.5s">
-            {{ $products->appends(['per_page' => request('per_page'), 'search' => request('search')])->links() }}
+        <div class="mt-20 flex justify-center custom-pagination reveal-anim" style="animation-delay: 0.5s">
+            {{ $products->appends(request()->query())->links() }}
         </div>
     @endif
 </div>
@@ -168,28 +167,58 @@
     animation: cardFadeIn 0.5s ease-out forwards;
 }
 
-/* 2. CUSTOM PAGINATION STYLING */
-.custom-pagination nav svg { width: 20px; height: 20px; }
-.custom-pagination nav div div span, 
-.custom-pagination nav div div a {
-    border-radius: 12px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    margin: 0 2px;
-    padding: 8px 16px !important;
-    font-size: 12px;
+/* 2. CUSTOM PAGINATION STYLING (FIXED SLIM VERSION) */
+.custom-pagination nav { 
+    background: transparent !important; 
+    border: none !important; 
+    box-shadow: none !important; 
 }
-.custom-pagination nav div div a:hover {
-    background: rgba(240, 178, 43, 0.2) !important;
-    color: #F0B22B !important;
+
+/* Sembunyiin info teks "Showing X to Y" yang bikin penuh */
+.custom-pagination nav div:first-child { 
+    display: none !important; 
+} 
+
+.custom-pagination nav div:last-child { 
+    background: transparent !important; 
+}
+
+/* Styling Tombol Angka & Arrow */
+.custom-pagination nav span, 
+.custom-pagination nav a { 
+    border-radius: 12px !important; 
+    background: rgba(255,255,255,0.03) !important; 
+    color: #6b7280 !important; 
+    border: 1px solid rgba(255,255,255,0.08) !important; 
+    padding: 8px 14px !important; 
+    font-size: 11px !important; 
+    font-weight: 800 !important;
+    margin: 0 2px !important; 
+    transition: all 0.3s ease !important;
+    box-shadow: none !important;
+}
+
+/* Hover Effect */
+.custom-pagination nav a:hover { 
+    background: rgba(240,178,43,0.1) !important; 
+    color: #F0B22B !important; 
     border-color: #F0B22B !important;
+    transform: translateY(-2px);
 }
-.custom-pagination nav div div span[aria-current="page"] > span {
-    background: #F0B22B !important;
-    color: #090069 !important;
-    border-radius: 12px;
-    font-weight: 900;
+
+/* Active Page (Halaman yang lagi dibuka) */
+.custom-pagination nav span[aria-current="page"] span { 
+    background: #F0B22B !important; 
+    color: #090069 !important; 
+    border-color: #F0B22B !important;
+    padding: 8px 14px !important;
+    box-shadow: 0 5px 15px rgba(240,178,43,0.2) !important;
+}
+
+/* Ukuran Icon Arrow (Panah) */
+.custom-pagination nav svg {
+    width: 14px !important;
+    height: 14px !important;
 }
 </style>
 @endsection

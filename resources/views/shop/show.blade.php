@@ -154,45 +154,71 @@
             </div>
         </div>
 
-        {{-- PRODUK LAINNYA --}}
-        @if(isset($relatedProducts) && count($relatedProducts) > 0)
-        <div class="mt-16 pt-10 border-t border-white/10">
-            <h2 class="text-xl font-black text-white mb-8 text-left uppercase tracking-widest reveal-item opacity-0 transform translate-y-8 transition-all duration-700">Produk Rekomendasi</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                @foreach($relatedProducts as $related)
-                <div class="reveal-item opacity-0 transform translate-y-8 transition-all duration-700 group bg-[#0c0c3d] rounded-2xl overflow-hidden text-white 
-                            shadow-lg transition-all duration-300 hover:-translate-y-2 hover:border-[#F0B22B]/20 border border-white/5">
-                    
-                    <div class="h-32 sm:h-44 bg-gradient-to-b from-[#003A8F] to-[#002a6a] flex items-center justify-center overflow-hidden">
-                        <img
-                            src="{{ $related->photo ? asset('storage/' . $related->photo) : asset('images/placeholder.png') }}"
-                            alt="{{ $related->name }}"
-                            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                    </div>
+        {{-- PRODUK REKOMENDASI --}}
+@if(isset($relatedProducts) && count($relatedProducts) > 0)
+<div class="mt-16 pt-10 border-t border-white/10">
+    <h2 class="text-xl font-black text-white mb-8 text-left uppercase tracking-widest reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
+        Produk Rekomendasi</span>
+    </h2>
 
-                    <div class="p-4 flex flex-col h-full">
-                        <h3 class="font-bold text-xs sm:text-sm mb-3 leading-tight group-hover:text-[#F0B22B] transition-colors line-clamp-2 text-left">
-                            {{ $related->name }}
-                        </h3>
+    <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6">
+        @foreach($relatedProducts as $related)
+        <div class="reveal-item opacity-0 transform translate-y-8 transition-all duration-700 group bg-[#0c0c3d] rounded-2xl overflow-hidden text-white 
+                    shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(240,178,43,0.15)]
+                    hover:border hover:border-[#F0B22B]/20 relative">
 
-                        <div class="mt-auto">
-                            <p class="text-[#F0B22B] font-black text-sm mb-3 text-left">
-                                Rp {{ number_format($related->price, 0, ',', '.') }}
-                            </p>
-                            <a href="{{ route('shop.show', $related->id) }}"
-                               class="inline-block bg-white/5 hover:bg-[#F0B22B] hover:text-black text-white px-3 py-2
-                                      rounded-lg text-[10px] font-bold w-full text-center uppercase tracking-widest
-                                      transition-all duration-300">
-                                Detail
-                            </a>
-                        </div>
+            {{-- Badge Kategori --}}
+            <div class="absolute top-2 left-2 md:top-4 md:left-4 z-20">
+                <span class="px-2 py-0.5 md:px-3 md:py-1 text-[7px] md:text-[10px] font-semibold rounded-full {{ $related->category == 'Laptop' ? 'bg-blue-500' : 'bg-green-500' }} text-white uppercase">
+                    {{ $related->category ?? 'Produk' }}
+                </span>
+            </div>
+
+            {{-- Gambar Produk --}}
+            <div class="h-32 md:h-48 bg-gradient-to-b from-[#003A8F] to-[#002a6a] overflow-hidden relative">
+                <img src="{{ $related->photo ? asset('storage/' . $related->photo) : asset('images/placeholder.png') }}"
+                    alt="{{ $related->name }}" 
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            </div>
+
+            {{-- Info Produk (Layout 2 Kolom) --}}
+            <div class="p-3 md:p-5 grid grid-cols-2 gap-2 md:gap-4 text-xs min-h-[140px] md:min-h-[160px] relative z-10">
+                {{-- Kolom Kiri: Nama & Harga --}}
+                <div class="flex flex-col">
+                    <h3 class="font-semibold text-[10px] md:text-sm mb-1 md:mb-2 leading-snug transition-colors duration-300 group-hover:text-[#F0B22B] line-clamp-2 text-left">
+                        {{ $related->name }}
+                    </h3>
+                    <div class="mt-auto text-left">
+                        <p class="text-gray-300 text-[8px] md:text-[10px] mb-0.5 md:mb-1">starts from :</p>
+                        <p class="text-[#F0B22B] text-[9px] md:text-xs font-semibold">
+                            Rp {{ number_format($related->price, 0, ',', '.') }}
+                        </p>
                     </div>
                 </div>
-                @endforeach
+
+                {{-- Kolom Kanan: Spesifikasi & Button --}}
+                <div class="flex flex-col text-right">
+                    <p class="font-semibold mb-1 md:mb-2 text-[9px] md:text-xs transition-colors duration-300 group-hover:text-[#F0B22B]">Spesifikasi</p>
+                    @php 
+                        // Pecah string specs menjadi array
+                        $specs = preg_split("/\r\n|\n|,/", $related->specs); 
+                    @endphp
+                    <p class="text-gray-400 leading-tight mb-2 md:mb-4 text-[8px] md:text-[10px] line-clamp-2">
+                        {{ $specs[0] ?? '-' }}<br>
+                        {{ $specs[1] ?? '' }}
+                    </p>
+
+                    <a href="{{ route('shop.show', $related->id) }}"
+                       class="mt-auto inline-block bg-[#F0B22B] text-black px-2 md:px-4 py-1 md:py-1.5 rounded-full text-[8px] md:text-[10px] self-end font-bold transition-all duration-300 hover:bg-white hover:scale-105">
+                        View Details
+                    </a>
+                </div>
             </div>
         </div>
-        @endif
+        @endforeach
+    </div>
+</div>
+@endif
     </div>
 </div>
 

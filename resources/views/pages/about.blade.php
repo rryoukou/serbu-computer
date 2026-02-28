@@ -101,35 +101,8 @@
     </div>
 </section>
 
-<section class="bg-gradient-to-b from-[#090069] to-[#0c0c3d] py-12 md:py-16 px-6 md:px-16 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
-    <div class="max-w-6xl mx-auto">
-        <h3 class="text-[#F0B22B] text-3xl font-bold mb-6 text-center">Lokasi Toko Kami</h3>
-
-        <div class="rounded-2xl overflow-hidden border border-white/10 bg-[#0c0c3d] shadow-2xl">
-            <div id="map" class="w-full h-60 md:h-80"></div>
-            <div class="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div class="flex items-start gap-3 text-gray-200">
-                    <div class="mt-1 shrink-0">
-                        <svg class="w-7 h-7 text-[#F0B22B]" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="font-bold">Serbu Computer Sawojajar</p>
-                        <p class="text-sm text-gray-400">Jl. Danau Djonge H8/H19, Kota Malang</p>
-                    </div>
-                </div>
-                <a href="https://maps.app.goo.gl/bjeKXvUjmE6XMz8C7" target="_blank"
-                   class="bg-[#F0B22B] text-[#090069] px-6 py-2.5 rounded-full font-bold text-sm text-center hover:bg-white transition-all duration-300">
-                    Lihat di Google Maps
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
 {{-- Section Sosial Media --}}
-<section class="bg-[#0c0c3d] py-16 px-6 md:px-16 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
+<section class=" bg-gradient-to-b from-[#090069] to-[#0c0c3d] py-16 px-6 md:px-16 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
     <div class="max-w-6xl mx-auto text-center">
         <h3 class="text-[#F0B22B] text-2xl md:text-3xl font-bold mb-4">Hubungi Kami</h3>
         <p class="text-gray-400 mb-10 max-w-2xl mx-auto">Punya pertanyaan atau ingin konsultasi seputar laptop? Jangan ragu untuk menyapa kami melalui platform media sosial berikut.</p>
@@ -173,6 +146,35 @@
         </div>
     </div>
 </section>
+
+<section class="bg-[#0c0c3d] py-12 md:py-16 px-6 md:px-16 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
+    <div class="max-w-6xl mx-auto">
+        <h3 class="text-[#F0B22B] text-3xl font-bold mb-6 text-center">Lokasi Toko Kami</h3>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto text-center">Kami berlokasi di Jl. Danau Djonge H8/H19, Kota Malang. Anda dapat mengunjungi toko kami untuk membeli komponen komputer terbaik dan layanan teknisi profesional.</p>
+
+        <div class="rounded-2xl overflow-hidden border border-white/10 bg-[#0c0c3d] shadow-2xl">
+            <div id="map" class="w-full h-60 md:h-80"></div>
+            <div class="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex items-start gap-3 text-gray-200">
+                    <div class="mt-1 shrink-0">
+                        <svg class="w-7 h-7 text-[#F0B22B]" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold">Serbu Computer Sawojajar</p>
+                        <p class="text-sm text-gray-400">Jl. Danau Djonge H8/H19, Kota Malang</p>
+                    </div>
+                </div>
+                <a href="https://maps.app.goo.gl/bjeKXvUjmE6XMz8C7" target="_blank"
+                   class="bg-[#F0B22B] text-[#090069] px-6 py-2.5 rounded-full font-bold text-sm text-center hover:bg-white transition-all duration-300">
+                    Lihat di Google Maps
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

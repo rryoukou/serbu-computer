@@ -85,45 +85,50 @@
                     </div>
 
                     {{-- INPUT FIELDS --}}
-                    <div class="flex-1 space-y-6 animate-slide-right delay-200">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {{-- Input-input tetap sama, namun container ini bergerak dari kanan --}}
-                            <div>
-                                <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Username</label>
-                                <input type="text" name="username" value="{{ old('username', $user->username) }}" 
-                                    class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
-                            </div>
-                            <div>
-                                <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Nama Lengkap</label>
-                                <input type="text" name="nama" value="{{ old('nama', $user->nama) }}" 
-                                    class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
-                            </div>
-                            <div class="md:col-span-2">
-                                <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Email</label>
-                                <input type="email" name="email" value="{{ old('email', $user->email) }}" 
-                                    class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
-                            </div>
-                            {{-- ... Input lainnya tetap sama ... --}}
-                            <div>
-                                <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Tanggal Lahir</label>
-                                <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $user->tanggal_lahir) }}"
-                                    class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
-                            </div>
-                            <div>
-                                <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Jenis Kelamin</label>
-                                <div class="relative">
-                                    <select name="jenis_kelamin" class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner appearance-none">
-                                        <option value="">Pilih</option>
-                                        <option value="L" @selected($user->jenis_kelamin == 'L')>Laki-laki</option>
-                                        <option value="P" @selected($user->jenis_kelamin == 'P')>Perempuan</option>
-                                    </select>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-700">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="flex-1 space-y-6 animate-slide-right delay-200">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Username</label>
+            <input type="text" name="username" value="{{ old('username', $user->username) }}" 
+                class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
+        </div>
+        <div>
+            <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Nama Lengkap</label>
+            <input type="text" name="nama" value="{{ old('nama', $user->nama) }}" 
+                class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
+        </div>
 
+        {{-- Baris Email & No HP --}}
+        <div>
+            <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Email</label>
+            <input type="email" name="email" value="{{ old('email', $user->email) }}" 
+                class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
+        </div>
+        <div>
+            <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Nomor HP</label>
+            <input type="text" name="no_hp" value="{{ old('no_hp', $user->no_hp) }}" placeholder="Contoh: 08123456789"
+                class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
+        </div>
+
+        <div>
+            <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Tanggal Lahir</label>
+            <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $user->tanggal_lahir) }}"
+                class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner">
+        </div>
+        <div>
+            <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Jenis Kelamin</label>
+            <div class="relative">
+                <select name="jenis_kelamin" class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner appearance-none">
+                    <option value="">Pilih</option>
+                    <option value="L" @selected($user->jenis_kelamin == 'L')>Laki-laki</option>
+                    <option value="P" @selected($user->jenis_kelamin == 'P')>Perempuan</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+            </div>
+        </div>
+    </div>
                         <div class="md:col-span-2">
                             <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Alamat</label>
                             <textarea name="alamat" rows="3" class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner resize-none">{{ old('alamat', $user->alamat) }}</textarea>

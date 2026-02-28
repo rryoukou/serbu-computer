@@ -22,5 +22,13 @@ class AdminMiddleware
         }
 
         return $next($request);
+
+        if ($request->user()->role !== 'admin') {
+        return response()->json([
+            'message' => 'Akses ditolak'
+        ], 403);
+    }
+
+    return $next($request);
     }
 }

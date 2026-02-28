@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens; // ✅ INI YANG BENAR
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable; // ✅ SATU BARIS SAJA
 
     protected $fillable = [
         'username',
@@ -30,9 +31,6 @@ class User extends Authenticatable
         'is_banned' => 'boolean',
     ];
 
-    // ===============================
-    // ✅ RELASI WISHLIST (WAJIB ADA)
-    // ===============================
     public function wishlist()
     {
         return $this->hasMany(\App\Models\Wishlist::class);

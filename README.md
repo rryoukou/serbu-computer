@@ -1,5 +1,7 @@
 # Proyek Sistem Informasi E-Commerce: Serbu Computer
 
+<h1><strong>AKSATA JAYA,BACKEND JOSJIS AKU BENCI LARAVEL</strong></h1>
+
 **Serbu Computer** merupakan platform e-commerce berbasis web yang dirancang khusus untuk manajemen penjualan dan pemesanan perangkat komputer, seperti laptop serta aksesoris pendukungnya. Proyek ini dikembangkan secara kolaboratif sebagai implementasi nyata dari pengembangan sistem informasi modern menggunakan framework Laravel.
 
 ---
@@ -48,3 +50,5 @@ Proyek ini menerapkan standar arsitektur **Model-View-Controller (MVC)** yang me
 ## Tim Pengembang
 
 Proyek ini dikembangkan secara berkelompok sebagai bentuk kolaborasi dalam mendalami pengembangan aplikasi web skala menengah. Seluruh kontribusi kode dikelola melalui sistem version control untuk memastikan integrasi yang berkelanjutan.
+
+

@@ -2,6 +2,8 @@
 
 <h1><strong>AKSATA JAYA,BACKEND JOSJIS AKU BENCI LARAVEL</strong></h1>
 
+![image](https://i.pinimg.com/736x/fb/a8/1f/fba81fdf7b0f35f5fadc99871816c8eb.jpg)
+
 **Serbu Computer** merupakan platform e-commerce berbasis web yang dirancang khusus untuk manajemen penjualan dan pemesanan perangkat komputer, seperti laptop serta aksesoris pendukungnya. Proyek ini dikembangkan secara kolaboratif sebagai implementasi nyata dari pengembangan sistem informasi modern menggunakan framework Laravel.
 
 ---

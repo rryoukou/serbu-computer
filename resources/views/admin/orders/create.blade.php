@@ -107,10 +107,10 @@
                     </label>
                     <div class="relative">
                         <select name="status" id="statusSelect"
-                            class="w-full bg-[#090069]/40 border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-[#F0B22B] appearance-none cursor-pointer transition-all">
+                            class="w-full bg-[#090069]/40 border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-[#F0B22B] appearance-none cursor-not-allowed transition-all">
                             <option value="menunggu_pembayaran_tunai" class="bg-[#090069]">Menunggu Pembayaran</option>
                             <option value="menunggu_verifikasi" class="bg-[#090069]">Menunggu Verifikasi</option>
-                            <option value="selesai" class="bg-[#090069]">Selesai (Lunas)</option>
+                            <!-- <option value="selesai" class="bg-[#090069]">Selesai (Lunas)</option> -->
                         </select>
                         <svg class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-[#F0B22B]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
                     </div>

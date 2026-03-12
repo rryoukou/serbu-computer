@@ -66,8 +66,7 @@ class ProductUserController extends Controller
             $query->latest(); // default newest
         }
 
-        // Ambil data + jaga query string
-        $products = $query->paginate(12)->withQueryString();
+        $products = $query->paginate(8)->withQueryString();
 
         // ================= STATISTIK =================
 

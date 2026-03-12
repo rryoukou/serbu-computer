@@ -1,0 +1,15 @@
+services:
+  serbu-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: serbu-computer-app
+    restart: always
+    network_mode: host
+    volumes:
+      - .:/var/www/html
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.5"
+          memory: 512M

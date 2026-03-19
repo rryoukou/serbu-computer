@@ -54,6 +54,8 @@ class OrderApiController extends Controller
             'product_id' => 'required|exists:products,id',
             'qty' => 'required|integer|min:1',
             'metode_pembayaran' => 'required|string',
+            'user_id' => 'nullable|exists:users,id',
+            'bukti_bayar' => 'nullable|image|mimes:jpg,jpeg,png|max:5120'
         ]);
 
         try {
@@ -70,12 +72,18 @@ class OrderApiController extends Controller
 
             $total = $product->price * $request->qty;
 
+            $buktiPath = null;
+            if ($request->hasFile('bukti_bayar')) {
+                $buktiPath = $request->file('bukti_bayar')
+                    ->store('bukti_transfer', 'public');
+            }
+
             $status = $request->metode_pembayaran === 'bca'
                 ? 'menunggu_verifikasi'
                 : 'menunggu_pembayaran_tunai';
 
             $order = Order::create([
-                'user_id' => auth()->id() ?? null,
+                'user_id' => $request->user_id ?? auth()->id(),
                 'nama_produk' => $product->name,
                 'product_id' => $product->id,
                 'qty' => $request->qty,
@@ -83,7 +91,7 @@ class OrderApiController extends Controller
                 'total_harga' => $total,
                 'metode_pembayaran' => $request->metode_pembayaran,
                 'status' => $status,
-                'bukti_bayar' => null,
+                'bukti_bayar' => $buktiPath,
                 'batas_waktu' => null
             ]);
 

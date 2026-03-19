@@ -18,7 +18,22 @@
 
             {{-- FORM FILTER --}}
             <form method="GET" action="{{ route('admin.products.index') }}"
-                class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+            class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+            {{-- SEARCH INPUT --}}
+            <div class="relative w-full sm:w-80">
+                <input type="text" name="search" value="{{ request('search') }}"
+                    placeholder="Cari nama produk, kategori, dll..."
+                    class="w-full bg-[#090069] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all">
+                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                </div>
+            </div>
+            
                 {{-- SELECT SHOW PER PAGE --}}
                 <select name="per_page" onchange="this.form.submit()"
                     class="bg-[#090069] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all cursor-pointer w-full sm:w-auto">
@@ -28,20 +43,14 @@
                     <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>Show 50</option>
                 </select>
 
-                {{-- SEARCH INPUT --}}
-                <div class="relative w-full sm:w-80">
-                    <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari nama produk, kategori, dll..."
-                        class="w-full bg-[#090069] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all">
-                    <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.3-4.3" />
-                        </svg>
-                    </div>
-                </div>
+                {{-- SELECT CATEGORY --}}
+                <select name="category" onchange="this.form.submit()"
+                    class="bg-[#090069] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all cursor-pointer w-full sm:w-auto">
+                    <option value="">Semua Kategori</option>
+                    <option value="Laptop" {{ request('category') == 'Laptop' ? 'selected' : '' }}>Laptop</option>
+                    <option value="Aksesoris" {{ request('category') == 'Aksesoris' ? 'selected' : '' }}>Aksesoris</option>
+                </select>
+
             </form>
 
             <div class="flex flex-wrap items-center justify-center gap-4 w-full lg:w-auto">

@@ -69,7 +69,7 @@
 
                 <button type="submit"
                         class="w-full bg-gradient-to-r from-[#B8860B] to-[#F0B22B] text-white text-sm font-bold py-3.5 rounded-xl shadow-lg hover:brightness-110 active:scale-[0.96] transition-all uppercase tracking-widest mt-2">
-                    Admin Sign in
+                    Admin Login
                 </button>
             </form>
 

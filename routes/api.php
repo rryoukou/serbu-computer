@@ -40,12 +40,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // PRODUCTS
         Route::get('/products', [ProductApiController::class, 'index']);
+        Route::get('/products/{product}', [ProductApiController::class, 'show']);
         Route::post('/products', [ProductApiController::class, 'store']);
         Route::put('/products/{product}', [ProductApiController::class, 'update']);
         Route::delete('/products/{product}', [ProductApiController::class, 'destroy']);
 
         // ORDERS
         Route::get('/orders', [OrderApiController::class, 'index']);
+        Route::post('/orders', [OrderApiController::class, 'store']);
         Route::put('/orders/{order}/status', [OrderApiController::class, 'updateStatus']);
 
         // USERS

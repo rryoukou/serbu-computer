@@ -159,9 +159,6 @@
                         <div class="relative">
                             <img src="{{ $order->user && $order->user->foto ? asset('storage/foto/' . $order->user->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($order->user->nama ?? 'G') . '&background=F0B22B&color=090069' }}"
                                 class="w-14 h-14 rounded-2xl object-cover border-2 border-white/10 group-hover/user:border-[#F0B22B] transition-all duration-500">
-                            <div
-                                class="absolute -bottom-1 -right-1 bg-green-500 w-4 h-4 rounded-full border-4 border-[#111827]">
-                            </div>
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="text-white text-sm font-black truncate tracking-wide">

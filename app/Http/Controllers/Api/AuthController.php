@@ -60,4 +60,16 @@ class AuthController extends Controller
             'message' => 'Logout berhasil'
         ]);
     }
+
+    /**
+     * AMBIL PROFIL SENDIRI
+     */
+    public function me(Request $request)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'Profil berhasil diambil',
+            'data' => clone $request->user()
+        ]);
+    }
 }

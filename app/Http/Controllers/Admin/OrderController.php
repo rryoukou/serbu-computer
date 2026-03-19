@@ -93,7 +93,8 @@ class OrderController extends Controller
             : 'menunggu_pembayaran_tunai';
 
         Order::create([
-'user_id' => auth()->id(),    'nama_produk' => $product->name,
+            'user_id' => $request->user_id ?? auth()->id(),
+            'nama_produk' => $product->name,
     'product_id' => $product->id,
     'qty' => $request->qty,
     'harga' => $product->price, // WAJIB ADA INI

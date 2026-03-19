@@ -59,18 +59,23 @@
                        class="w-full bg-[#2A314D]/50 text-gray-300 text-sm placeholder-gray-500 px-4 py-3 rounded-xl border border-white/5 focus:border-[#F0B22B]/50 focus:outline-none transition-all">
 
                 <div class="grid grid-cols-2 gap-3">
-                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
+                    <input type="text" 
+                           name="tanggal_lahir" 
+                           value="{{ old('tanggal_lahir') }}" 
+                           placeholder="Tanggal Lahir"
+                           onfocus="(this.type='date'); this.showPicker()"
+                           onblur="if(!this.value) this.type='text'"
                            class="w-full bg-[#2A314D]/50 text-gray-500 text-sm px-4 py-3 rounded-xl border border-white/5 focus:border-[#F0B22B]/50 focus:outline-none transition-all">
-                    
+
                     <select name="jenis_kelamin"
                             class="w-full bg-[#2A314D]/50 text-gray-500 text-sm px-4 py-3 rounded-xl border border-white/5 focus:border-[#F0B22B]/50 focus:outline-none transition-all">
-                        <option value="">Gender</option>
+                        <option value="" disabled {{ old('jenis_kelamin') == '' ? 'selected' : '' }} hidden>Jenis Kelamin</option>
                         <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
                         <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                 </div>
 
-                <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="No HP (Contoh: 0812...)"
+                <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="No HP "
                        class="w-full bg-[#2A314D]/50 text-gray-300 text-sm placeholder-gray-500 px-4 py-3 rounded-xl border border-white/5 focus:border-[#F0B22B]/50 focus:outline-none transition-all">
 
                 <textarea name="alamat" placeholder="Alamat Lengkap" rows="2"

@@ -20,6 +20,16 @@ class RegisterController extends Controller
             'jenis_kelamin' => 'nullable|in:L,P',
             'no_hp' => 'nullable',
             'alamat' => 'nullable',
+        ], [
+            'email.unique' => 'Email ini sudah terdaftar! Silakan login atau gunakan email lain.',
+            'username.unique' => 'Username ini sudah dipakai oleh orang lain!',
+            'password.min' => 'Password minimal harus 6 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'nama.required' => 'Nama lengkap wajib diisi.',
+            'username.required' => 'Username wajib diisi.',
+            'password.required' => 'Password wajib diisi.'
         ]);
 
         // simpan user baru

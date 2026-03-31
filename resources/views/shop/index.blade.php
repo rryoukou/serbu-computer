@@ -41,11 +41,11 @@
                     </form>
 
                     <div class="relative w-full sm:w-48">
-                        <select id="sortSelect" class="w-full px-4 py-2.5 bg-[#0c0c3d] border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#F0B22B] text-sm appearance-none">
-                            <option value="newest">Urutan: Terbaru</option>
-                            <option value="price-low">Urutan: Harga Terendah</option>
-                            <option value="price-high">Urutan: Harga Tertinggi</option>
-                            <option value="name">Urutan: Nama A-Z</option>
+                        <select id="sortSelect" class="w-full px-4 py-2.5 bg-[#0c0c3d] border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#F0B22B] text-sm appearance-none cursor-pointer">
+                            <option value="newest" class="bg-[#0c0c3d]">Urutan: Terbaru</option>
+                            <option value="price-low" class="bg-[#0c0c3d]">Urutan: Harga Terendah</option>
+                            <option value="price-high" class="bg-[#0c0c3d]">Urutan: Harga Tertinggi</option>
+                            <option value="name" class="bg-[#0c0c3d]">Urutan: Nama A-Z</option>
                         </select>
                     </div>
                 </div>

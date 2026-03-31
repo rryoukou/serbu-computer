@@ -117,14 +117,14 @@
         </div>
         <div>
             <label class="block text-gray-300 text-sm font-medium mb-2 ml-1">Jenis Kelamin</label>
-            <div class="relative">
-                <select name="jenis_kelamin" class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner appearance-none">
-                    <option value="">Pilih</option>
-                    <option value="L" @selected($user->jenis_kelamin == 'L')>Laki-laki</option>
-                    <option value="P" @selected($user->jenis_kelamin == 'P')>Perempuan</option>
+            <div class="relative group/select">
+                <select name="jenis_kelamin" class="w-full bg-white rounded-2xl px-5 py-3 text-gray-800 focus:ring-4 focus:ring-[#F0B22B]/50 outline-none transition-all shadow-inner appearance-none cursor-pointer">
+                    <option value="" class="text-gray-400">Pilih</option>
+                    <option value="L" @selected($user->jenis_kelamin == 'L') class="bg-white text-gray-800">Laki-laki</option>
+                    <option value="P" @selected($user->jenis_kelamin == 'P') class="bg-white text-gray-800">Perempuan</option>
                 </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#F0B22B] group-hover/select:translate-y-0.5 transition-transform">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
                 </div>
             </div>
         </div>

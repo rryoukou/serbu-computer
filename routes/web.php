@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Spatie\Sitemap\SitemapGenerator;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
 
 // ================= AUTH =================
 use App\Http\Controllers\Auth\LoginController;
@@ -204,3 +207,16 @@ Route::post('/orders', [OrderController::class, 'store'])
 
 
 });
+
+// Route::get('/generate-sitemap', function () {
+//     // Kita buat sitemap secara manual supaya pasti ada isinya
+//     Sitemap::create()
+//         ->add(Url::create('/')->setPriority(1.0)->setChangeFrequency('daily'))
+//         ->add(Url::create('/about')->setPriority(0.8)->setChangeFrequency('monthly'))
+//         ->add(Url::create('/products')->setPriority(0.9)->setChangeFrequency('daily'))
+//         // Kalau ada detail produk, ini akan membantu Google menemukannya
+//         ->add(Url::create('/search')->setPriority(0.5))
+//         ->writeToFile(public_path('sitemap.xml'));
+
+//     return 'Sitemap untuk Serbu Computer berhasil dibuat di folder public!';
+// });

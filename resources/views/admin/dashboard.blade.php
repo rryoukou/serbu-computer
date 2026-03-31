@@ -7,7 +7,7 @@
 {{-- Header dengan animasi --}}
 <div class="mb-10 reveal-anim" style="animation-delay: 0.1s">
     <h2 class="text-white text-2xl font-bold">Admin Dashboard Overview</h2>
-    <p class="text-gray-400 mt-2">Selamat datang kembali! Berikut adalah ringkasan performa toko Serbu Comp hari ini.</p>
+    <p class="text-gray-400 mt-2">Welcome back! Here is a summary of Serbu Comp's store performance today.</p>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -107,7 +107,7 @@
 
         @if($pendingOrders > 0)
             <p class="text-[10px] text-red-400/40 font-bold mt-1 uppercase tracking-tighter group-hover:text-red-500/70 transition-colors italic">
-                *Perlu tindakan segera
+                *Immediate action required
             </p>
         @endif
     </div>
@@ -124,7 +124,7 @@
        class="reveal-anim bg-[#F0B22B] p-6 rounded-[24px] shadow-lg flex items-center justify-between hover:scale-[1.05] hover:shadow-[#F0B22B]/40 active:scale-[0.98] transition-all duration-300 cursor-pointer group" style="animation-delay: 0.7s">
         <div>
             <p class="text-[#090069]/60 text-sm font-bold uppercase tracking-wider">Quick Action</p>
-            <h3 class="text-xl font-extrabold text-[#090069] mt-1">Manage Product</h3>
+            <h3 class="text-xl font-extrabold text-[#090069] mt-1">Manage Products</h3>
         </div>
         <div class="bg-white/20 p-3 rounded-2xl group-hover:bg-white/40 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#090069]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">

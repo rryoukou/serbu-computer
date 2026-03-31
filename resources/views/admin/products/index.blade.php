@@ -8,7 +8,7 @@
         <div class="reveal-anim" style="animation-delay: 0.1s">
             <h2 class="text-white text-2xl font-bold tracking-tight">Product Management</h2>
             <p class="text-gray-400 text-sm mt-1 uppercase tracking-widest">
-                Katalog Produk Serbu Comp
+                Serbu Comp Product Catalog
             </p>
         </div>
 
@@ -22,7 +22,7 @@
             {{-- SEARCH INPUT --}}
             <div class="relative w-full sm:w-80">
                 <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Cari nama produk, kategori, dll..."
+                    placeholder="Search product name, category, etc..."
                     class="w-full bg-[#090069] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all">
                 <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -46,9 +46,9 @@
                 {{-- SELECT CATEGORY --}}
                 <select name="category" onchange="this.form.submit()"
                     class="bg-[#090069] border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all cursor-pointer w-full sm:w-auto">
-                    <option value="">Semua Kategori</option>
+                    <option value="">All Categories</option>
                     <option value="Laptop" {{ request('category') == 'Laptop' ? 'selected' : '' }}>Laptop</option>
-                    <option value="Aksesoris" {{ request('category') == 'Aksesoris' ? 'selected' : '' }}>Aksesoris</option>
+                    <option value="Aksesoris" {{ request('category') == 'Aksesoris' ? 'selected' : '' }}>Accessories</option>
                 </select>
 
             </form>
@@ -96,17 +96,16 @@
                         <tr class="bg-white/5">
                             <th
                                 class="px-8 py-6 text-[#F0B22B] font-black uppercase text-[10px] tracking-[0.2em] text-center">
-                                Foto</th>
-                            <th class="px-8 py-6 text-[#F0B22B] font-black uppercase text-[10px] tracking-[0.2em]">Info
-                                Produk</th>
-                            <th class="px-8 py-6 text-[#F0B22B] font-black uppercase text-[10px] tracking-[0.2em]">Kategori
+                                Photo</th>
+                            <th class="px-8 py-6 text-[#F0B22B] font-black uppercase text-[10px] tracking-[0.2em]">Product Info</th>
+                            <th class="px-8 py-6 text-[#F0B22B] font-black uppercase text-[10px] tracking-[0.2em]">Category
                             </th>
                             <th
                                 class="px-8 py-6 text-[#F0B22B] font-black uppercase text-[10px] tracking-[0.2em] text-center">
-                                Stok</th>
+                                Stock</th>
                             <th
                                 class="px-8 py-6 text-[#F0B22B] font-black uppercase text-[10px] tracking-[0.2em] text-center">
-                                Aksi</th>
+                                Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/5">

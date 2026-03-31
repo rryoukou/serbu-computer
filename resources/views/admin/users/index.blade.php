@@ -11,7 +11,7 @@
                 Users Management
             </h2>
             <p class="text-gray-400 text-[10px] md:text-sm uppercase tracking-[0.2em] mt-1">
-                Data Lengkap Member Serbu Comp
+                Full Database of Serbu Comp Members
             </p>
         </div>
 
@@ -31,7 +31,7 @@
                 </select>
 
                 <div class="relative w-full sm:w-80">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari member..."
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search members..."
                         class="w-full bg-[#090069] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:border-[#F0B22B] focus:outline-none transition-all placeholder-gray-500" />
                     <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -64,10 +64,10 @@
                     <thead>
                         <tr class="bg-white/5 text-[#F0B22B] hidden md:table-row">
                             <th class="px-6 py-5 text-xs font-black uppercase tracking-widest">User</th>
-                            <th class="px-6 py-5 text-xs font-black uppercase tracking-widest">Kontak</th>
-                            <th class="px-6 py-5 text-xs font-black uppercase tracking-widest hidden xl:table-cell">Alamat
+                            <th class="px-6 py-5 text-xs font-black uppercase tracking-widest">Contact</th>
+                            <th class="px-6 py-5 text-xs font-black uppercase tracking-widest hidden xl:table-cell">Address
                             </th>
-                            <th class="px-6 py-5 text-xs font-black uppercase tracking-widest text-center">Profil</th>
+                            <th class="px-6 py-5 text-xs font-black uppercase tracking-widest text-center">Profile</th>
                             <th class="px-6 py-5 text-xs font-black uppercase tracking-widest text-center">Status</th>
                         </tr>
                     </thead>
@@ -100,7 +100,7 @@
                                 <td class="px-0 md:px-6 py-2 md:py-5">
                                     <div class="flex flex-col gap-0.5">
                                         <span
-                                            class="text-gray-500 text-[9px] font-black uppercase md:hidden mb-1 tracking-widest">Kontak
+                                            class="text-gray-500 text-[9px] font-black uppercase md:hidden mb-1 tracking-widest">Contact
                                             & Email</span>
                                         <p class="text-gray-200 text-sm font-medium truncate max-w-[250px]">
                                             {{ $user->email }}</p>
@@ -116,7 +116,7 @@
                                 <td class="px-0 md:px-6 py-4 md:py-5 text-center">
                                     <button onclick="showUserDetail({{ json_encode($user) }})"
                                         class="w-full md:w-auto bg-white/10 text-white hover:bg-[#F0B22B] hover:text-[#090069] px-5 py-2.5 rounded-xl text-[10px] font-black uppercase transition-all border border-white/5 active:scale-90">
-                                        Detail Profil
+                                        View Profile
                                     </button>
                                 </td>
 

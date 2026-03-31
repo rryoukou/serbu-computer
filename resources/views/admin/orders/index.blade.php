@@ -9,7 +9,7 @@
         <div class="reveal-anim" style="animation-delay: 0.1s">
             <h2 class="text-white text-2xl font-bold tracking-tight">Transaction Management</h2>
             <p class="text-gray-400 text-sm mt-1 uppercase tracking-widest">
-                Monitoring Real-time Data Transaksi Member
+                Real-time Monitoring of Member Transactions
             </p>
         </div>
 

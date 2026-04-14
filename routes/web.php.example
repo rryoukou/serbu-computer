@@ -1,0 +1,119 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/**
+ * ==========================================================================
+ * WEB ROUTES EXAMPLE (OBFUSCATED)
+ * ==========================================================================
+ * Petunjuk: Salin file ini menjadi 'web.php' dan ganti URL di bawah ini
+ * dengan URL rahasia pilihan Anda untuk meningkatkan keamanan.
+ */
+
+// ================= AUTH =================
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+
+// ================= PUBLIC =================
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ProductUserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopController;
+
+// ================= USER =================
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\WishlistController;
+
+// ================= ADMIN =================
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\UserController;
+
+/*
+|--------------------------------------------------------------------------
+| HOME
+|--------------------------------------------------------------------------
+*/
+Route::get('/', [PagesController::class, 'home'])->name('home');
+Route::get('/about', [PagesController::class, 'about'])->name('pages.about');
+
+/*
+|--------------------------------------------------------------------------
+| AUTH PENGGUNA
+|--------------------------------------------------------------------------
+*/
+Route::middleware('guest')->group(function () {
+    Route::get('/masuk', fn () => view('auth.login'))->name('login');
+    Route::post('/masuk', [LoginController::class, 'loginUser'])->name('login.user');
+    
+    Route::get('/daftar', fn () => view('auth.register'))->name('register');
+    Route::post('/daftar', [RegisterController::class, 'register']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| AUTH ADMIN (OBFUSCATED URL)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['guest', 'throttle:10,1'])->group(function () {
+    // GANTI URL DI BAWAH INI DENGAN URL RAHASIA ANDA
+    Route::get('/pintu-belakang-xyz', fn () => view('admin.auth.login'))->name('admin.login');
+    Route::post('/pintu-belakang-xyz', [LoginController::class, 'loginAdmin'])->name('admin.login.submit');
+});
+
+Route::post('/keluar', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| SHOP & PRODUCTS
+|--------------------------------------------------------------------------
+*/
+Route::get('/katalog', [ProductUserController::class, 'index'])->name('shop.index');
+Route::get('/katalog/{product}', [ProductUserController::class, 'show'])->name('shop.show');
+
+Route::get('/cari', [ProductController::class, 'searchPage'])->name('search.page');
+Route::get('/cari/hasil', [ProductController::class, 'search'])->name('search.results');
+
+/*
+|--------------------------------------------------------------------------
+| USER PROTECTED ROUTES
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'pengguna'])->group(function () {
+    Route::get('/user-panel', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/pengaturan-profil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/pengaturan-profil', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Checkout (Obfuscated)
+    Route::get('/proses-bayar/{product}', [CheckoutController::class, 'show'])->name('checkout.show');
+    Route::post('/proses-bayar/{product}', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    // Riwayat (Obfuscated)
+    Route::get('/history-belanja', [RiwayatController::class, 'index'])->name('riwayat.index');
+    Route::post('/history-belanja/{order}/cancel', [RiwayatController::class, 'cancel'])->name('riwayat.cancel');
+
+    // Wishlist (Obfuscated)
+    Route::post('/suka/{product}', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
+    Route::get('/daftar-suka', [WishlistController::class, 'index'])->name('wishlist.index');
+});
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN PROTECTED ROUTES (OBFUSCATED PREFIX)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['admin'])
+    ->prefix('management-system-xyz') // GANTI PREFIX INI DENGAN PREFIX RAHASIA ANDA
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/stats', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('items', AdminProductController::class);
+        Route::get('/pesanan', [OrderController::class, 'index'])->name('orders.index');
+        Route::post('/pesanan/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.status');
+        Route::get('/users-list', [UserController::class, 'index'])->name('users.index');
+        Route::post('users-list/{user}/toggle-ban', [UserController::class, 'toggleBan'])->name('users.toggleBan');
+});

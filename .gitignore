@@ -22,3 +22,19 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Security: Ignore real routes
+/routes/web.php
+/routes/api.php
+
+# Security: Ignore debug logs & private notes
+docker-ps.txt
+note.md
+
+# Security: Ignore API Controllers (Privasi Logika)
+/app/Http/Controllers/Api/
+
+# Databases
+database/*.mysql
+database/*.sql
+database/*.sqlite*

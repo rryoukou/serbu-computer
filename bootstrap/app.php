@@ -22,8 +22,20 @@ return Application::configure(basePath: dirname(__DIR__))
             'pengguna'  => PenggunaMiddleware::class,
         ]);
 
+        $middleware->prependToGroup('api', [
+            \App\Http\Middleware\ForceJsonResponse::class,
+        ]);
+
+        $middleware->trustProxies(at: '*');
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->shouldRenderJsonWhen(function ($request, $e) {
+            if ($request->is('api/*')) {
+                return true;
+            }
+
+            return $request->expectsJson();
+        });
     })
     ->create();

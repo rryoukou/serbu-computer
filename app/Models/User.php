@@ -25,6 +25,11 @@ class User extends Authenticatable
         'is_banned',
     ];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',

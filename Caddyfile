@@ -1,0 +1,7 @@
+serbucomputer.web.id {
+    reverse_proxy 127.0.0.1:8001
+}
+
+www.serbucomputer.web.id {
+    redir https://serbucomputer.web.id{uri}
+}

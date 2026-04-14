@@ -1,0 +1,33 @@
+fa7763c24b1a	es-teler-app	9000/tcp	Up 57 minutes	es-teler-kyuu88-app
+fdeb3e407bd8	es-teler-server	443/tcp, 2019/tcp, 443/udp, 0.0.0.0:8100->80/tcp, [::]:8100->80/tcp	Up 2 hours	caddy:2-alpine
+96a77992e7a3	es-teler-db	0.0.0.0:3307->3306/tcp, [::]:3307->3306/tcp	Up 2 hours	mariadb:10.11
+5350386744f5	ollama-server	0.0.0.0:11434->11434/tcp, [::]:11434->11434/tcp	Up 23 hours	ollama/ollama:latest
+4cac6471a532	laravel_pkl	443/tcp, 2019/tcp, 443/udp, 127.0.0.1:8091->80/tcp	Up 23 hours (healthy)	laravel-stack-pkl_app
+e20c6ee1e30a	laravel_adiloka	443/tcp, 2019/tcp, 443/udp, 127.0.0.1:8094->80/tcp	Up 23 hours (healthy)	laravel-stack-adiloka_app
+f7ce0fcc76cb	laravel_portfolio	443/tcp, 2019/tcp, 443/udp, 127.0.0.1:8095->80/tcp	Up 23 hours (healthy)	laravel-stack-portfolio_app
+dbdd1059271a	laravel_decidepro	443/tcp, 2019/tcp, 443/udp, 127.0.0.1:3009->80/tcp	Up 23 hours (healthy)	laravel-stack-decidepro_app
+8ab6a688ceeb	laravel_bintaro	443/tcp, 2019/tcp, 443/udp, 127.0.0.1:8093->80/tcp	Up 23 hours (healthy)	laravel-stack-bintaro_app
+d5d8afcc06e7	laravel_navvro	443/tcp, 2019/tcp, 443/udp, 127.0.0.1:8092->80/tcp	Up 23 hours (healthy)	laravel-stack-navvro_api
+a0a9873736ae	smk6-app	0.0.0.0:9098->9098/tcp, [::]:9098->9098/tcp	Up 9 days	smknegeri6malang-app
+0cb0df34cbad	senvanda-app-rahmatzaw-frontend	0.0.0.0:3007->3000/tcp, [::]:3007->3000/tcp	Up 11 days (healthy)	rahmat_zaw-frontend
+ffd9eeb74fed	senvanda-app-rahmatzaw-backend	0.0.0.0:8087->8080/tcp, [::]:8087->8080/tcp	Up 11 days	rahmat_zaw-backend
+0f90bc0ffeba	catur_jaya_app	0.0.0.0:1922->1922/tcp, [::]:1922->1922/tcp, 0.0.0.0:1980->1980/tcp, [::]:1980->1980/tcp	Up 12 days	catur-jaya-travel-app
+7253e3f59125	website-portofolio-frontend-1	127.0.0.1:3011->3000/tcp	Up 12 days	website-portofolio-frontend
+7cfca81fd4a3	website-portofolio-backend-1	127.0.0.1:8084->8080/tcp	Up 12 days	website-portofolio-backend
+70ea518205f6	porto-nopal-app	0.0.0.0:3579->3579/tcp, [::]:3579->3579/tcp	Up 2 weeks	porto-gw:latest
+5521da35316f	pgadmin_docker	443/tcp, 0.0.0.0:8081->80/tcp, [::]:8081->80/tcp	Up 3 weeks	dpage/pgadmin4
+0fa8d8e0c5ca	postgres_db	0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp	Up 3 weeks (healthy)	custom-postgres:17-alpine
+a6add3ed6196	redis_docker	0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp	Up 3 weeks (healthy)	redis:alpine
+d2c9d7c1c04c	portobook_melvin-app	127.0.0.1:3210->3000/tcp	Up 3 weeks (unhealthy)	portobookmelvin-portobook_app
+94d843d3334c	porto-pian	0.0.0.0:3093->3093/tcp, [::]:3093->3093/tcp	Up 3 weeks	porto-pian-porto-pian
+48737be87286	simmas-app	0.0.0.0:3115->3000/tcp, [::]:3115->3000/tcp	Up 3 weeks	simmasubig-app
+036a5d7b3063	fastunduh-frontend	0.0.0.0:3006->80/tcp, [::]:3006->80/tcp	Up 3 weeks	fastunduh-frontend
+92a81980b311	fastunduh-backend	0.0.0.0:8085->8080/tcp, [::]:8085->8080/tcp	Up 3 weeks	fastunduh-backend
+708c6cad6dce	hotel_royal_app	443/tcp, 2019/tcp, 443/udp, 0.0.0.0:8181->80/tcp, [::]:8181->80/tcp	Up 3 weeks (healthy)	hotel-royal-heaven-app
+d5e62afef092	elaris-fe	127.0.0.1:3005->3000/tcp	Up 3 weeks	elaris-noir--elaris-fe
+8556991283da	serbu-computer-app		Up 3 weeks	serbu-computer-serbu-app
+84374a6cb5b9	elaris-be	127.0.0.1:8088->8080/tcp	Up 3 weeks	elaris-noir--elaris-be
+7a94f9acaa50	neverland-backend	9000/tcp, 0.0.0.0:8089->80/tcp, [::]:8089->80/tcp, 0.0.0.0:8090->8080/tcp, [::]:8090->8080/tcp	Up 3 weeks (unhealthy)	portfolio-neverland-studio-v2-backend
+fb62dc113479	neverland-frontend	0.0.0.0:5173->5173/tcp, [::]:5173->5173/tcp	Up 3 weeks	node:20-alpine
+84fce98d0a06	nopal_laravel_app	443/tcp, 2019/tcp, 443/udp, 0.0.0.0:8096->80/tcp, [::]:8096->80/tcp	Up 6 days (healthy)	laravel-project-app
+4c372c3dfaa9	streetview_app	0.0.0.0:3010->3010/tcp, [::]:3010->3010/tcp	Up 3 weeks	streetview-streetview-app

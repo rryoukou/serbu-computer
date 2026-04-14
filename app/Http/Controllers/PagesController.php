@@ -16,28 +16,28 @@ class PagesController extends Controller
         // data FAQ (manual, tanpa database)
         $faqs = [
             [
-                'question' => 'Bagaimana cara membeli produk?',
-                'answer'   => 'Pilih produk yang kamu inginkan, masukkan ke keranjang, lalu lakukan checkout.'
+                'question' => 'Apakah bisa servis laptop di Serbu Computer?',
+                'answer'   => 'Tentu! Kami menerima servis berbagai merk laptop langsung di store kami di wilayah Sawojajar.'
             ],
             [
-                'question' => 'Apakah produk yang dijual bergaransi?',
-                'answer'   => 'Ya, semua produk kami memiliki garansi resmi sesuai ketentuan masing-masing brand.'
+                'question' => 'Apakah laptop yang dijual bergaransi?',
+                'answer'   => 'Semua unit laptop baru memiliki garansi resmi, dan untuk laptop bekas kami memberikan garansi toko agar Anda merasa aman.'
             ],
             [
-                'question' => 'Metode pembayaran apa saja yang tersedia?',
-                'answer'   => 'Kami mendukung transfer bank dan beberapa metode pembayaran digital.'
+                'question' => 'Apakah bisa tukar tambah laptop bekas?',
+                'answer'   => 'Bisa banget! Bawa laptop lama kamu ke store Serbu Computer Sawojajar untuk pengecekan dan penaksiran harga terbaik.'
             ],
             [
-                'question' => 'Berapa lama proses pengiriman?',
-                'answer'   => 'Pengiriman biasanya memakan waktu 2–4 hari kerja tergantung lokasi.'
+                'question' => 'Bagaimana cara pemesanan laptop & aksesoris laptop?',
+                'answer'   => 'Kamu bisa pesan langsung melalui website ini atau chat admin kami. Kami siap antar atau kamu bisa ambil langsung di store.'
             ],
         ];
 
         $gallery = [
-            'images/gallery/gal1.jpg',
-            'images/gallery/gal2.jpg',
-            'images/gallery/gal3.jpg',
-            'images/gallery/gal4.jpg',
+            'images/gallery/gal1.png',
+            'images/gallery/gal2.png',
+            'images/gallery/gal3.png',
+            'images/gallery/gal4.jpeg',
         ];
 
         return view('pages.home', compact('products', 'faqs', 'gallery'));

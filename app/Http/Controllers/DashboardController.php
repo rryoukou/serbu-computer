@@ -30,10 +30,10 @@ class DashboardController extends Controller
 
         // ✅ GALLERY (ASSET LOKAL)
         $gallery = [
-            'images/gallery/gal1.jpg',
-            'images/gallery/gal2.jpg',
-            'images/gallery/gal3.jpg',
-            'images/gallery/gal4.jpg',
+            'images/gallery/gal1.png',
+            'images/gallery/gal2.png',
+            'images/gallery/gal3.png',
+            'images/gallery/gal4.jpeg',
         ];
 
         return view('dashboard.index', [

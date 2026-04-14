@@ -51,11 +51,10 @@
             <h2 class="text-2xl md:text-3xl font-bold text-[#F0B22B] mb-4 uppercase tracking-wider">Sedikit Tentang Kami</h2>
             <div class="w-16 h-1 bg-[#F0B22B] mb-6 mx-auto md:mx-0"></div>
             <p class="text-gray-300 text-sm md:text-base leading-relaxed">
-                Serbu Comp adalah mitra terpercaya Anda dalam menyediakan laptop dan aksesoris berkualitas dengan harga terjangkau. 
-                Kami berkomitmen untuk membantu pelajar, profesional, dan kreator digital menemukan perangkat yang tepat.
+                Serbu Computer adalah mitra terpercaya Anda di Sawojajar dalam menyediakan layanan servis laptop, jual beli laptop, serta aksesoris berkualitas dengan harga terjangkau. Kami berkomitmen membantu pelajar, profesional, dan kreator digital di Sawojajar menemukan solusi perangkat IT yang tepat.
             </p>
             <p class="text-gray-300 text-sm md:text-base leading-relaxed mt-4">
-                Dengan layanan pemesanan yang mudah dan dukungan purna jual yang responsif, kami hadir untuk memastikan pengalaman berbelanja teknologi Anda menjadi lebih sederhana.
+                Dengan layanan pemesanan mudah dan dukungan purna jual responsif, kami hadir memastikan pengalaman servis dan belanja laptop Anda di Sawojajar menjadi jauh lebih sederhana, hemat, dan terpercaya.
             </p>
         </div>
     </div>
@@ -82,9 +81,9 @@
 
             <div class="absolute top-2 right-2 md:top-4 md:right-4 z-20">
                 @if($product->stock > 0)
-                    <span class="px-2 py-0.5 md:px-3 md:py-1 text-[7px] md:text-[10px] font-semibold rounded-full bg-[#F0B22B] text-black">Stok: {{ $product->stock }}</span>
+                    <span class="px-2 py-0.5 md:px-3 md:py-1 text-[7px] md:text-[10px] font-semibold rounded-full bg-[#F0B22B] text-black">Stock: {{ $product->stock }}</span>
                 @else
-                    <span class="px-2 py-0.5 md:px-3 md:py-1 text-[7px] md:text-[10px] font-semibold rounded-full bg-red-500 text-white">Habis</span>
+                    <span class="px-2 py-0.5 md:px-3 md:py-1 text-[7px] md:text-[10px] font-semibold rounded-full bg-red-500 text-white">Out</span>
                 @endif
             </div>
 
@@ -99,7 +98,7 @@
                         {{ $product->name }}
                     </h3>
                     <div class="mt-auto">
-                        <p class="text-gray-300 text-[8px] md:text-[10px] mb-0.5 md:mb-1">mulai dari :</p>
+                        <p class="text-gray-300 text-[8px] md:text-[10px] mb-0.5 md:mb-1">starts from :</p>
                         <p class="text-[#F0B22B] text-[9px] md:text-xs font-semibold transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-1">
                             Rp {{ number_format($product->price, 0, ',', '.') }}
                         </p>
@@ -116,7 +115,7 @@
 
                     <a href="{{ route('shop.show', $product->id) }}"
                        class="mt-auto inline-block bg-[#F0B22B] text-black px-2 md:px-4 py-1 md:py-1.5 rounded-full text-[8px] md:text-[10px] self-end font-bold transition-all duration-300 hover:bg-white hover:scale-105 hover:shadow-lg hover:shadow-[#F0B22B]/30 relative overflow-hidden after:absolute after:inset-0 after:bg-gradient-to-r after:from-white/10 after:to-transparent after:translate-x-[-100%] hover:after:translate-x-100 after:transition-transform after:duration-500">
-                        Lihat Detail
+                        View Details
                     </a>
                 </div>
             </div>

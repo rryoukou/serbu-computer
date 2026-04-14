@@ -51,11 +51,10 @@
             <h2 class="text-2xl md:text-3xl font-bold text-[#F0B22B] mb-4 uppercase tracking-wider">Sedikit Tentang Kami</h2>
             <div class="w-16 h-1 bg-[#F0B22B] mb-6 mx-auto md:mx-0"></div>
             <p class="text-gray-300 text-sm md:text-base leading-relaxed">
-                Serbu Comp adalah mitra terpercaya Anda dalam menyediakan laptop dan aksesoris berkualitas dengan harga terjangkau. 
-                Kami berkomitmen untuk membantu pelajar, profesional, dan kreator digital menemukan perangkat yang tepat.
+                Serbu Computer adalah mitra terpercaya Anda di Sawojajar dalam menyediakan layanan servis laptop, jual beli laptop, serta aksesoris berkualitas dengan harga terjangkau. Kami berkomitmen membantu pelajar, profesional, dan kreator digital di Sawojajar menemukan solusi perangkat IT yang tepat.
             </p>
             <p class="text-gray-300 text-sm md:text-base leading-relaxed mt-4">
-                Dengan layanan pemesanan yang mudah dan dukungan purna jual yang responsif, kami hadir untuk memastikan pengalaman berbelanja teknologi Anda menjadi lebih sederhana.
+                Dengan layanan pemesanan mudah dan dukungan purna jual responsif, kami hadir memastikan pengalaman servis dan belanja laptop Anda di Sawojajar menjadi jauh lebih sederhana, hemat, dan terpercaya.
             </p>
         </div>
     </div>

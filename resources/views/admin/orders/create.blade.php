@@ -14,10 +14,10 @@
             </a>
             <div>
                 <h2 class="text-white text-xl md:text-2xl font-bold tracking-tight">
-                    Tambah Transaksi Offline
+                    Add Offline Transaction
                 </h2>
                 <p class="text-gray-400 text-[10px] md:text-xs uppercase tracking-widest mt-1">
-                    Input transaksi pembeli langsung di toko
+                    Input walk-in customer transaction
                 </p>
             </div>
         </div>
@@ -33,18 +33,18 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="md:col-span-2 space-y-2">
                     <label class="text-[#F0B22B] text-[10px] md:text-xs font-bold uppercase tracking-wider ml-1">
-                        Pilih Produk
+                        Select Product
                     </label>
                     <div class="relative">
                         <select name="product_id" id="productSelect" required
                             class="w-full bg-[#090069]/40 border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-[#F0B22B] appearance-none cursor-pointer transition-all">
-                            <option value="" class="bg-[#090069]">-- Pilih Produk --</option>
+                            <option value="" class="bg-[#090069]">-- Select Product --</option>
                             @foreach($products as $product)
                                 <option value="{{ $product->id }}"
                                     data-price="{{ $product->price }}"
                                     data-stock="{{ $product->stock }}"
                                     class="bg-[#090069]">
-                                    {{ $product->name }} (Stok: {{ $product->stock }})
+                                    {{ $product->name }} (Stock: {{ $product->stock }})
                                 </option>
                             @endforeach
                         </select>
@@ -54,7 +54,7 @@
 
                 <div class="space-y-2">
                     <label class="text-[#F0B22B] text-[10px] md:text-xs font-bold uppercase tracking-wider ml-1">
-                        Jumlah (Qty)
+                        Quantity (Qty)
                     </label>
                     <input type="number" name="qty" id="qtyInput" min="1" value="1" required
                         class="w-full bg-[#090069]/40 border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-[#F0B22B] transition-all">
@@ -65,7 +65,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-2">
                     <label class="text-[#F0B22B] text-[10px] md:text-xs font-bold uppercase tracking-wider ml-1">
-                        Harga Satuan
+                        Unit Price
                     </label>
                     <div class="relative">
                         <input type="text" id="hargaDisplay" readonly
@@ -75,7 +75,7 @@
 
                 <div class="space-y-2">
                     <label class="text-[#F0B22B] text-[10px] md:text-xs font-bold uppercase tracking-wider ml-1">
-                        Total Harga
+                        Total Price
                     </label>
                     <div class="relative">
                         <input type="text" id="totalDisplay" readonly
@@ -89,7 +89,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-2">
                     <label class="text-[#F0B22B] text-[10px] md:text-xs font-bold uppercase tracking-wider ml-1">
-                        Metode Pembayaran
+                        Payment Method
                     </label>
                     <div class="relative">
                         <select name="metode_pembayaran" id="paymentMethod"
@@ -103,13 +103,13 @@
 
                 <div class="space-y-2">
                     <label class="text-[#F0B22B] text-[10px] md:text-xs font-bold uppercase tracking-wider ml-1">
-                        Status Transaksi
+                        Transaction Status
                     </label>
                     <div class="relative">
                         <select name="status" id="statusSelect"
                             class="w-full bg-[#090069]/40 border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-[#F0B22B] appearance-none cursor-not-allowed transition-all">
-                            <option value="menunggu_pembayaran_tunai" class="bg-[#090069]">Menunggu Pembayaran</option>
-                            <option value="menunggu_verifikasi" class="bg-[#090069]">Menunggu Verifikasi</option>
+                            <option value="menunggu_pembayaran_tunai" class="bg-[#090069]">Awaiting Payment</option>
+                            <option value="menunggu_verifikasi" class="bg-[#090069]">Awaiting Verification</option>
                             <!-- <option value="selesai" class="bg-[#090069]">Selesai (Lunas)</option> -->
                         </select>
                         <svg class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-[#F0B22B]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
@@ -125,7 +125,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                         </div>
                         <div class="flex-grow w-full text-center md:text-left">
-                            <p class="text-white font-bold text-sm mb-2">Upload Bukti Transfer</p>
+                            <p class="text-white font-bold text-sm mb-2">Upload Transfer Proof</p>
                             <input type="file" name="bukti_bayar" id="buktiInput"
                                 accept="image/*"
                                 class="block w-full text-xs text-gray-500
@@ -145,7 +145,7 @@
             <div class="pt-6 flex justify-end">
                 <button type="submit"
                     class="w-full md:w-auto min-w-[220px] px-8 py-4 bg-[#F0B22B] text-[#090069] rounded-2xl font-black uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-[#F0B22B]/20">
-                    Simpan Transaksi
+                    Save Transaction
                 </button>
             </div>
         </form>
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (qty > stock) {
             qty = stock;
             qtyInput.value = stock;
-            alert('Stok tidak mencukupi!');
+            alert('Insufficient stock!');
         }
 
         if (qty < 1) {

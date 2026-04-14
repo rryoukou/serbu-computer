@@ -8,7 +8,7 @@
         <div class="reveal-anim" style="animation-delay: 0.1s">
             <h2 class="text-white text-2xl font-bold tracking-tight">Product Management</h2>
             <p class="text-gray-400 text-sm mt-1 uppercase tracking-widest">
-                Serbu Comp Product Catalog
+                Serbu Computer Product Catalog
             </p>
         </div>
 
@@ -154,10 +154,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr>
-                                <td colspan="5" class="text-center py-20 text-gray-500 font-medium">Produk tidak
-                                    ditemukan</td>
-                            </tr>
+                                <td colspan="5" class="text-center py-20 text-gray-500 font-medium">Product not found</td>
                         @endforelse
                     </tbody>
                 </table>

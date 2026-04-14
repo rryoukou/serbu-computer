@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,7 +36,7 @@
             <button @click="sidebarOpen = true" class="text-[#F0B22B]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
-            <span class="ml-4 text-white font-bold uppercase tracking-widest text-sm">Serbu Comp Admin</span>
+            <span class="ml-4 text-white font-bold uppercase tracking-widest text-sm">Serbu Computer Admin</span>
         </div>
 
         <main class="main-container flex-1 overflow-y-auto p-6 md:p-10 shadow-2xl">

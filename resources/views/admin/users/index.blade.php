@@ -110,7 +110,7 @@
 
                                 <td class="px-0 md:px-6 py-2 md:py-5 hidden xl:table-cell">
                                     <p class="text-gray-400 text-xs italic line-clamp-2 max-w-[200px]">
-                                        {{ $user->alamat ?? 'Alamat belum diatur' }}</p>
+                                        {{ $user->alamat ?? 'Address not set' }}</p>
                                 </td>
 
                                 <td class="px-0 md:px-6 py-4 md:py-5 text-center">
@@ -122,7 +122,7 @@
 
                                 <td class="px-0 md:px-6 py-2 md:py-5 text-center">
                                     <form action="{{ route('admin.users.toggleBan', $user->id) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin {{ $user->is_banned ? 'mengaktifkan' : 'membanned' }} user ini?')"
+                                        onsubmit="return confirm('Are you sure you want to {{ $user->is_banned ? 'activate' : 'ban' }} this user?')"
                                         class="w-full md:w-auto">
                                         @csrf
                                         <button type="submit"
@@ -232,8 +232,8 @@
             document.getElementById('modalEmail').innerText = user.email;
             document.getElementById('modalNoHp').innerText = user.no_hp || '-';
             document.getElementById('modalTglLahir').innerText = user.tanggal_lahir || '-';
-            document.getElementById('modalGender').innerText = user.jenis_kelamin === 'L' ? 'Laki-Laki' : 'Perempuan';
-            document.getElementById('modalAlamat').innerText = user.alamat || 'Belum mengisi alamat.';
+            document.getElementById('modalGender').innerText = user.jenis_kelamin === 'L' ? 'Male' : 'Female';
+            document.getElementById('modalAlamat').innerText = user.alamat || 'Address not provided.';
             const fotoUrl = user.foto ? `/storage/foto/${user.foto}` :
                 `https://ui-avatars.com/api/?name=${encodeURIComponent(user.nama)}&background=F0B22B&color=090069`;
             document.getElementById('modalFoto').src = fotoUrl;

@@ -22,3 +22,17 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+# Security: Ignore debug logs & private notes
+docker-ps.txt
+note.md
+
+# Infrastructure & Hosting
+Dockerfile
+docker-compose.yml
+Caddyfile
+Makefile
+
+# Databases
+database/*.mysql
+database/*.sql
+database/*.sqlite*

@@ -43,7 +43,7 @@
         <div class="flex justify-center order-1">
             <div class="relative group">
                 <div class="absolute -inset-1 bg-gradient-to-r from-[#F0B22B] to-[#090069] rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                <img src="{{ asset('images/laptop-about.png') }}" alt="About" 
+                <img src="{{ asset('images/warung.jpeg') }}" alt="About" 
                     class="relative w-full max-w-md h-auto rounded-2xl shadow-2xl transition-transform duration-500 hover:scale-[1.02]">
             </div>
         </div>

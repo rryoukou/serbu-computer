@@ -36,7 +36,7 @@
 <section id="about-section" class="bg-gradient-to-b from-[#090069] to-[#0c0c3d] py-16 px-6 md:px-16 reveal-item opacity-0 transform translate-y-8 transition-all duration-700">
     <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
         <div class="rounded-2xl h-72 md:h-80 overflow-hidden shadow-2xl border border-white/10 transition-transform duration-500 hover:scale-[1.02]">
-            <img src="{{ asset('images/masag.jpeg') }}" class="w-full h-full object-cover"> 
+            <img src="{{ asset('images/warung.jpeg') }}" class="w-full h-full object-cover"> 
         </div>
 
         <div class="text-white">
@@ -58,7 +58,7 @@
         </div>
 
         <div class="rounded-2xl h-72 md:h-80 overflow-hidden shadow-2xl border border-white/10 order-1 md:order-2 mb-6 md:mb-0 transition-transform duration-500 hover:scale-[1.02]">
-            <img src="{{ asset('images/warung.jpeg') }}" class="w-full h-full object-cover">
+            <img src="{{ asset('images/gallery/gal3.jpeg') }}" class="w-full h-full object-cover">
         </div>
     </div>
 </section>

@@ -17,9 +17,24 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // 2. Seed Regular User
+        User::updateOrCreate(
+            ['username' => 'user'],
+            [
+                'email' => 'user@example.com',
+                'password' => \Illuminate\Support\Facades\Hash::make('password'),
+                'role' => 'pengguna',
+                'nama' => 'Bismillah User',
+                'tanggal_lahir' => '2000-01-01',
+                'jenis_kelamin' => 'P',
+                'no_hp' => '08987654321',
+                'alamat' => 'Jakarta, Indonesia',
+            ]
+        );
+
+        // 3. Call Product Seeder
+        // $this->call([
+        //     ProductSeeder::class,
+        // ]);
     }
 }
